@@ -1,4 +1,4 @@
-# Network Device Validation for Azure Stack
+# Network Device Validation for Azure Stack Z
 
 ## Background
 
