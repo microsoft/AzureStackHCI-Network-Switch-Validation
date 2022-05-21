@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/go-pdf/fpdf"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 type TemplateResult struct {
@@ -18,22 +18,15 @@ type TemplateResult struct {
 
 func resultAnalysis(pcapFilePath string) {
 	decodePacketLayer(pcapFilePath)
-	VLANResultValidation()
-	DHCPResultValidation()
-	BGPResultValidation()
-	LLDPResultValidation()
+	// VLANResultValidation()
+	OutputObj.ResultSummary = make(map[string][]string, 100)
+	OutputObj.DHCPResultValidation(&OutputObj.DHCPResult)
+	OutputObj.LLDPResultValidation(&OutputObj.LLDPResult)
+	OutputObj.BGPResultValidation(&OutputObj.BGPResult)
 
 	testDate := time.Now().Format("2006-01-02 15:04:05")
-	yamlObj := &YamlObj{
-		TimeDate:      testDate,
-		ResultSummary: ResultSummary,
-		VLANResult:    VLANResult,
-		LLDPResult:    LLDPResult,
-		DHCPResult:    DHCPResult,
-		BGPResult:     BGPResult,
-	}
-
-	writeToYAML(yamlObj, yamlFilePath)
+	OutputObj.TimeDate = testDate
+	writeToYAML(OutputObj, yamlFilePath)
 	outputResultByTemplate()
 	outputPDFbyFile()
 }
@@ -50,13 +43,19 @@ func outputResultByTemplate() {
 	`
 
 	ret := TemplateResult{
-		TasksWithResult: ResultSummary,
+		TasksWithResult: OutputObj.ResultSummary,
 	}
 
 	t := template.New("resultTemplate")
 	t, err := t.Parse(resultTemplate)
 	if err != nil {
 		log.Fatalln("parse file: ", err)
+		return
+	}
+
+	err = t.Execute(os.Stdout, ret)
+	if err != nil {
+		log.Fatalln("execute: ", err)
 		return
 	}
 

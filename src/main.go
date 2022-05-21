@@ -5,14 +5,13 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net"
 	"os"
 
 	"github.com/google/gopacket/pcap"
 	"gopkg.in/ini.v1"
 )
 
-type YamlObj struct {
+type OutputType struct {
 	TimeDate      string              `yaml:"TimeDate"`
 	ResultSummary map[string][]string `yaml:"ResultSummary"`
 	VLANResult    map[int]struct{}    `yaml:"VLANResult"`
@@ -37,20 +36,11 @@ var (
 	yamlFilePath      = "./result.yml"
 	resultSummaryFile = "./result.txt"
 
-	INIObj        INIType
-	VLANResult    = make(map[int]struct{}, 5)
-	LLDPResult    LLDPResultType
-	DHCPResult    DHCPResultType
-	BGPResult     BGPResultType
-	ResultSummary = make(map[string][]string, 20)
+	INIObj    = &INIType{}
+	OutputObj = &OutputType{}
 
-	intfName           string
-	packetMaxSize      = int32(9216)
-	HostInterfaceIP    net.IP
-	HostInterfaceMAC   net.HardwareAddr
-	SwitchInterfaceIP  net.IP
-	SwitchInterfaceMAC net.HardwareAddr
-	InputHostIP        string
+	intfName      string
+	packetMaxSize = int32(9216)
 )
 
 func init() {
@@ -72,13 +62,13 @@ func main() {
 
 	fileIsExist(iniFilePath)
 	loadIniFile(iniFilePath)
-	getInterfaceByIP()
+	// getInterfaceByIP()
 	// Start processing packets
-	fmt.Println("Processing, please wait up to ~2 mins, otherwise please double check if the interface has live traffic.")
-	writePcapFile(intfName)
+	// fmt.Println("Processing, please wait up to ~2 mins, otherwise please double check if the interface has live traffic.")
+	// writePcapFile(intfName)
 	fileIsExist(pcapFilePath)
 	resultAnalysis(pcapFilePath)
-	printResultSummary()
+	// printResultSummary()
 	fmt.Println()
 }
 

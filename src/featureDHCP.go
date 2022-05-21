@@ -1,11 +1,7 @@
 package main
 
 import (
-	"context"
-	"log"
 	"net"
-	"os/exec"
-	"time"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -27,7 +23,7 @@ func decodeDHCPPacket(packet gopacket.Packet) bool {
 	return false
 }
 
-func decodeDHCPRelayPacket(packet gopacket.Packet) {
+func (d *DHCPResultType) decodeDHCPRelayPacket(packet gopacket.Packet) {
 	DHCPLayer := packet.Layer(layers.LayerTypeDHCPv4)
 	if DHCPLayer != nil {
 		DHCPType := DHCPLayer.(*layers.DHCPv4)
@@ -37,53 +33,25 @@ func decodeDHCPRelayPacket(packet gopacket.Packet) {
 			// fmt.Println(DHCPType.Contents)
 			// fmt.Println(DHCPType.RelayAgentIP)
 			// fmt.Println(dstMac.String())
-			DHCPResult.RelayAgentIP = DHCPType.RelayAgentIP
-			DHCPResult.DHCPPacketDetected = true
+			d.RelayAgentIP = DHCPType.RelayAgentIP
+			d.DHCPPacketDetected = true
 		}
 	}
 }
 
-func triggerWinDHCP() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // The cancel should be deferred so resources are cleaned up
-	cmd := exec.CommandContext(ctx, "ipconfig", "/renew")
-	err := cmd.Run()
-	if err != nil {
-		log.Println("cmd exec error:", err)
-	}
-	if ctx.Err() == context.DeadlineExceeded {
-		log.Println("Command timed out")
-		return
-	}
-}
-
-func triggerLinuxDHCP() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // The cancel should be deferred so resources are cleaned up
-	cmd := exec.CommandContext(ctx, "dhclient")
-	err := cmd.Run()
-	if err != nil {
-		log.Println("cmd exec error:", err)
-	}
-	if ctx.Err() == context.DeadlineExceeded {
-		log.Println("Command timed out")
-		return
-	}
-}
-
-func DHCPResultValidation() {
+func (o *OutputType) DHCPResultValidation(d *DHCPResultType) {
 	var restultFail []string
 
-	if !DHCPResult.DHCPPacketDetected {
+	if !d.DHCPPacketDetected {
 		restultFail = append(restultFail, DHCPPacket_NOT_Detect)
 	}
-	if DHCPResult.RelayAgentIP == nil {
+	if d.RelayAgentIP == nil {
 		restultFail = append(restultFail, DHCPRelay_AgentIP_Not_Detect)
 	}
 
 	if len(restultFail) == 0 {
-		ResultSummary["DHCPRelay - PASS"] = restultFail
+		o.ResultSummary["DHCPRelay - PASS"] = restultFail
 	} else {
-		ResultSummary["DHCPRelay - FAIL"] = restultFail
+		o.ResultSummary["DHCPRelay - FAIL"] = restultFail
 	}
 }

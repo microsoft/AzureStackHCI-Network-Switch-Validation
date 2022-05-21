@@ -1,12 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"os"
-	"text/template"
-)
-
 const (
 	// Output
 	GENERATE_PDF_OUTPUT = "Result PDF File Generated"
@@ -39,30 +32,30 @@ const (
 	WRONG_MTU_SIZE = "Incorrect MTU Size"
 )
 
-func printResultSummary() {
-	fmt.Println("\n### Result Summary ###")
-	var resultTemplate = `
-{{range $key, $value := .TasksWithResult}}
-{{- $key -}}
-	{{range $value}}
-  	- {{. -}}
-	{{end}}
-{{end}}
-	`
-	ret := TemplateResult{
-		TasksWithResult: ResultSummary,
-	}
+// func printResultSummary() {
+// 	fmt.Println("\n### Result Summary ###")
+// 	var resultTemplate = `
+// {{range $key, $value := .TasksWithResult}}
+// {{- $key -}}
+// 	{{range $value}}
+//   	- {{. -}}
+// 	{{end}}
+// {{end}}
+// 	`
+// 	ret := TemplateResult{
+// 		TasksWithResult: OutputObj.ResultSummary,
+// 	}
 
-	t := template.New("resultTemplate")
-	t, err := t.Parse(resultTemplate)
-	if err != nil {
-		log.Fatalln("parse file: ", err)
-		return
-	}
+// 	t := template.New("resultTemplate")
+// 	t, err := t.Parse(resultTemplate)
+// 	if err != nil {
+// 		log.Fatalln("parse file: ", err)
+// 		return
+// 	}
 
-	err = t.Execute(os.Stdout, ret)
-	if err != nil {
-		log.Fatalln("execute: ", err)
-		return
-	}
-}
+// 	err = t.Execute(os.Stdout, ret)
+// 	if err != nil {
+// 		log.Fatalln("execute: ", err)
+// 		return
+// 	}
+// }

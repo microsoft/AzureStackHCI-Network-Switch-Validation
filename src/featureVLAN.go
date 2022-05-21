@@ -14,7 +14,13 @@ var (
 	PVSTDestMAC = "01:00:0c:cc:cc:cd"
 )
 
-func decodePVSTPacket(packet gopacket.Packet) {
+type VLANResultType map[int]struct{}
+
+func newVLANResult() *VLANResultType {
+	return &VLANResultType{}
+}
+
+func (v *VLANResultType) decodePVSTPacket(packet gopacket.Packet) {
 	// All VLANs
 	EthernetLayer := packet.Layer(layers.LayerTypeEthernet)
 	if EthernetLayer != nil {
@@ -22,17 +28,17 @@ func decodePVSTPacket(packet gopacket.Packet) {
 		if net.HardwareAddr(EthernetType.DstMAC).String() == PVSTDestMAC {
 			lenPayload := len(EthernetType.Payload)
 			vlanID := bytesToDec(EthernetType.Payload[lenPayload-2 : lenPayload])
-			if _, ok := VLANResult[int(vlanID)]; !ok {
-				VLANResult[int(vlanID)] = struct{}{}
+			if _, ok := (*v)[int(vlanID)]; !ok {
+				(*v)[int(vlanID)] = struct{}{}
 			}
 		}
 	}
 }
 
-func VLANResultValidation() {
+func (o *OutputType) VLANResultValidation(v *VLANResultType) {
 	var restultFail []string
 	var vlanList []int
-	for k := range VLANResult {
+	for k := range *v {
 		vlanList = append(vlanList, k)
 	}
 
@@ -44,9 +50,9 @@ func VLANResultValidation() {
 		return INIObj.VlanIDs[i] < INIObj.VlanIDs[j]
 	})
 
-	if len(VLANResult) == len(INIObj.VlanIDs) {
-		for _, v := range INIObj.VlanIDs {
-			if _, ok := VLANResult[v]; !ok {
+	if len(*v) == len(INIObj.VlanIDs) {
+		for _, i := range INIObj.VlanIDs {
+			if _, ok := (*v)[i]; !ok {
 				vlanError := fmt.Sprintf("%s - Input: %v, Found: %v", VLAN_NOT_MATCH, INIObj.VlanIDs, vlanList)
 				restultFail = append(restultFail, vlanError)
 			}
@@ -57,8 +63,8 @@ func VLANResultValidation() {
 	}
 
 	if len(restultFail) == 0 {
-		ResultSummary["VLAN - PASS"] = restultFail
+		o.ResultSummary["VLAN - PASS"] = restultFail
 	} else {
-		ResultSummary["VLAN - FAIL"] = restultFail
+		o.ResultSummary["VLAN - FAIL"] = restultFail
 	}
 }
