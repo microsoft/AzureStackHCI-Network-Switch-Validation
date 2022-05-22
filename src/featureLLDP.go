@@ -96,14 +96,14 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType) {
 		restultFail = append(restultFail, errMsg)
 	}
 
-	if _, ok := o.VLANResult[l.VLANID]; !ok {
-		var vlanList []int
-		for k := range o.VLANResult {
-			vlanList = append(vlanList, k)
-		}
-		errMsg := fmt.Sprintf("%s - VLANLIST:%v, Found: %d", WRONG_LLDP_VLAN_ID, vlanList, l.VLANID)
-		restultFail = append(restultFail, errMsg)
-	}
+	// if _, ok := o.VLANResult[l.VLANID]; !ok {
+	// 	var vlanList []int
+	// 	for k := range o.VLANResult {
+	// 		vlanList = append(vlanList, k)
+	// 	}
+	// 	errMsg := fmt.Sprintf("%s - VLANLIST:%v, Found: %d", WRONG_LLDP_VLAN_ID, vlanList, l.VLANID)
+	// 	restultFail = append(restultFail, errMsg)
+	// }
 	if l.ETS.ETSTotalPG != uint8(INIObj.ETSMaxClass) {
 		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_ETS_MAX_CLASSES, INIObj.ETSMaxClass, l.ETS.ETSTotalPG)
 		restultFail = append(restultFail, errMsg)

@@ -6,15 +6,16 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 
 	"github.com/google/gopacket/pcap"
 	"gopkg.in/ini.v1"
 )
 
 type OutputType struct {
-	TimeDate      string              `yaml:"TimeDate"`
+	TestDate      time.Time           `yaml:"TimeDate"`
 	ResultSummary map[string][]string `yaml:"ResultSummary"`
-	VLANResult    map[int]struct{}    `yaml:"VLANResult"`
+	VLANResult    VLANResultType      `yaml:"VLANResult"`
 	LLDPResult    LLDPResultType      `yaml:"LLDPResult"`
 	DHCPResult    DHCPResultType      `yaml:"DHCPResult"`
 	BGPResult     BGPResultType       `yaml:"BGPResult"`
@@ -31,10 +32,8 @@ type INIType struct {
 }
 
 var (
-	logFilePath       = "./result.log"
-	pcapFilePath      = "./result.pcap"
-	yamlFilePath      = "./result.yml"
-	resultSummaryFile = "./result.txt"
+	logFilePath  = "./result.log"
+	pcapFilePath = "./result.pcap"
 
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
@@ -68,8 +67,7 @@ func main() {
 	// writePcapFile(intfName)
 	fileIsExist(pcapFilePath)
 	resultAnalysis(pcapFilePath)
-	// printResultSummary()
-	fmt.Println()
+	OutputObj.outputPDFbyFile()
 }
 
 func fileIsExist(filepath string) {
@@ -92,7 +90,7 @@ func loadIniFile(filePath string) {
 	INIObj.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
 	INIObj.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
 	INIObj.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
-	fmt.Println(INIObj)
+	// fmt.Println(INIObj)
 }
 
 func getInterfaceByIP() {

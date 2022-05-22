@@ -2,6 +2,7 @@ package main
 
 const (
 	// Output
+	CONSOLE_OUTPUT      = "Validation Summary Result:"
 	GENERATE_PDF_OUTPUT = "Result PDF File Generated"
 
 	// Host
@@ -31,31 +32,3 @@ const (
 	// MTU
 	WRONG_MTU_SIZE = "Incorrect MTU Size"
 )
-
-// func printResultSummary() {
-// 	fmt.Println("\n### Result Summary ###")
-// 	var resultTemplate = `
-// {{range $key, $value := .TasksWithResult}}
-// {{- $key -}}
-// 	{{range $value}}
-//   	- {{. -}}
-// 	{{end}}
-// {{end}}
-// 	`
-// 	ret := TemplateResult{
-// 		TasksWithResult: OutputObj.ResultSummary,
-// 	}
-
-// 	t := template.New("resultTemplate")
-// 	t, err := t.Parse(resultTemplate)
-// 	if err != nil {
-// 		log.Fatalln("parse file: ", err)
-// 		return
-// 	}
-
-// 	err = t.Execute(os.Stdout, ret)
-// 	if err != nil {
-// 		log.Fatalln("execute: ", err)
-// 		return
-// 	}
-// }

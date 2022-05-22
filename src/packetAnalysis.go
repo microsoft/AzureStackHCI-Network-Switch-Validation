@@ -76,7 +76,7 @@ func decodePacketLayer(pcapFilePath string) {
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
 
-		// OutputObj.VLANResult.decodePVSTPacket(packet)
+		OutputObj.VLANResult.decodePVSTPacket(packet)
 
 		if decodeDHCPPacket(packet) {
 			OutputObj.DHCPResult.DHCPPacketDetected = true
@@ -91,6 +91,8 @@ func decodePacketLayer(pcapFilePath string) {
 			OutputObj.BGPResult.SwitchInterfaceMAC, OutputObj.BGPResult.HostInterfaceMAC = getPacketMACs(packet)
 			OutputObj.BGPResult.SwitchInterfaceIP, OutputObj.BGPResult.HostInterfaceIP = getPacketIPv4s(packet)
 		}
+
+		OutputObj.TestDate = packet.Metadata().Timestamp
 	}
 }
 
@@ -101,13 +103,6 @@ func bytesToDec(bytes []byte) int64 {
 		log.Fatalln(err)
 	}
 	return decNum
-}
-
-func delFile(filename string) {
-	err := os.Remove(filename)
-	if err != nil {
-		log.Fatalln("remove file:", err)
-	}
 }
 
 func getPacketMACs(packet gopacket.Packet) (SrcMac, DstMac net.HardwareAddr) {
