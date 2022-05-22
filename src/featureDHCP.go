@@ -29,7 +29,7 @@ func (d *DHCPResultType) decodeDHCPRelayPacket(packet gopacket.Packet) {
 		DHCPType := DHCPLayer.(*layers.DHCPv4)
 		_, dstMac := getPacketMACs(packet)
 		// Exclude broadcast dhcp
-		if (string(DHCPType.RelayAgentIP) != "0.0.0.0") && dstMac.String() != "ff:ff:ff:ff:ff:ff" {
+		if (string(DHCPType.RelayAgentIP) != "0.0.0.0") && dstMac != "ff:ff:ff:ff:ff:ff" {
 			// fmt.Println(DHCPType.Contents)
 			// fmt.Println(DHCPType.RelayAgentIP)
 			// fmt.Println(dstMac.String())

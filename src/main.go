@@ -60,14 +60,17 @@ func main() {
 	flag.Parse()
 
 	fileIsExist(iniFilePath)
-	loadIniFile(iniFilePath)
-	// getInterfaceByIP()
-	// Start processing packets
-	// fmt.Println("Processing, please wait up to ~2 mins, otherwise please double check if the interface has live traffic.")
-	// writePcapFile(intfName)
+	INIObj.loadIniFile(iniFilePath)
+
+	getInterfaceByIP()
+	fmt.Println("Processing, please wait up to ~2 mins, otherwise please double check if the interface has live traffic.")
+	writePcapFile(intfName)
+
 	fileIsExist(pcapFilePath)
-	resultAnalysis(pcapFilePath)
+	OutputObj.resultAnalysis(pcapFilePath, INIObj)
 	OutputObj.outputPDFbyFile()
+
+	// fmt.Printf("%#v\n", OutputObj)
 }
 
 func fileIsExist(filepath string) {
@@ -78,19 +81,18 @@ func fileIsExist(filepath string) {
 	log.Println(filepath, "founded.")
 }
 
-func loadIniFile(filePath string) {
+func (i *INIType) loadIniFile(filePath string) {
 	cfg, err := ini.Load(filePath)
 	if err != nil {
 		log.Fatalf("Fail to read file: %v\n", err)
 	}
-	INIObj.HostInterfaceIP = cfg.Section("host").Key("hostInterfaceIP").String()
-	INIObj.VlanIDs = cfg.Section("vlan").Key("vlanIDs").Ints(",")
-	INIObj.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
-	INIObj.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
-	INIObj.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
-	INIObj.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
-	INIObj.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
-	// fmt.Println(INIObj)
+	i.HostInterfaceIP = cfg.Section("host").Key("hostInterfaceIP").String()
+	i.VlanIDs = cfg.Section("vlan").Key("vlanIDs").Ints(",")
+	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
+	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
+	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
+	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
+	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
 }
 
 func getInterfaceByIP() {

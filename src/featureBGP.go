@@ -1,18 +1,16 @@
 package main
 
 import (
-	"net"
-
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 )
 
 type BGPResultType struct {
 	BGPTCPPacketDetected bool
-	SwitchInterfaceIP    net.IP
-	SwitchInterfaceMAC   net.HardwareAddr
-	HostInterfaceIP      net.IP
-	HostInterfaceMAC     net.HardwareAddr
+	SwitchInterfaceIP    string
+	SwitchInterfaceMAC   string
+	HostInterfaceIP      string
+	HostInterfaceMAC     string
 }
 
 func decodeBGPPacket(packet gopacket.Packet) bool {

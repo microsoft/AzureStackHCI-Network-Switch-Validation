@@ -2,7 +2,7 @@ package main
 
 const (
 	// Output
-	CONSOLE_OUTPUT      = "Validation Summary Result:"
+	CONSOLE_OUTPUT      = "### Validation Summary Result ###"
 	GENERATE_PDF_OUTPUT = "Result PDF File Generated"
 
 	// Host

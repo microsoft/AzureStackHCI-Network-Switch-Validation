@@ -79,7 +79,7 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 	}
 }
 
-func (o *OutputType) LLDPResultValidation(l *LLDPResultType) {
+func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
 	var restultFail []string
 
 	if len(l.SysDes) == 0 {
@@ -91,35 +91,32 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType) {
 	if len(l.PortName) == 0 {
 		restultFail = append(restultFail, NO_LLDP_PORT_SUBTYPE)
 	}
-	if l.MTU != INIObj.MTUSize {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_MAXIMUM_FRAME_SIZE, INIObj.MTUSize, l.MTU)
+	if l.MTU != i.MTUSize {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_MAXIMUM_FRAME_SIZE, i.MTUSize, l.MTU)
 		restultFail = append(restultFail, errMsg)
 	}
 
-	// if _, ok := o.VLANResult[l.VLANID]; !ok {
-	// 	var vlanList []int
-	// 	for k := range o.VLANResult {
-	// 		vlanList = append(vlanList, k)
-	// 	}
-	// 	errMsg := fmt.Sprintf("%s - VLANLIST:%v, Found: %d", WRONG_LLDP_VLAN_ID, vlanList, l.VLANID)
-	// 	restultFail = append(restultFail, errMsg)
-	// }
-	if l.ETS.ETSTotalPG != uint8(INIObj.ETSMaxClass) {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_ETS_MAX_CLASSES, INIObj.ETSMaxClass, l.ETS.ETSTotalPG)
+	if !sliceContains(o.VLANResult.VLANIDs, l.VLANID) {
+		errMsg := fmt.Sprintf("%s - VLANList:%v, Found: %d", WRONG_LLDP_VLAN_ID, o.VLANResult.VLANIDs, l.VLANID)
+		restultFail = append(restultFail, errMsg)
+	}
+
+	if l.ETS.ETSTotalPG != uint8(i.ETSMaxClass) {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_ETS_MAX_CLASSES, i.ETSMaxClass, l.ETS.ETSTotalPG)
 		restultFail = append(restultFail, errMsg)
 	}
 	etsBWString := mapintToSlicestring(l.ETS.ETSBWbyPGID)
-	if etsBWString != INIObj.ETSBWbyPG {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_ETS_BW, INIObj.ETSBWbyPG, etsBWString)
+	if etsBWString != i.ETSBWbyPG {
+		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_ETS_BW, i.ETSBWbyPG, etsBWString)
 		restultFail = append(restultFail, errMsg)
 	}
-	if l.PFC.PFCMaxClasses != uint8(INIObj.PFCMaxClass) {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_PFC_MAX_CLASSES, INIObj.PFCMaxClass, l.PFC.PFCMaxClasses)
+	if l.PFC.PFCMaxClasses != uint8(i.PFCMaxClass) {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_PFC_MAX_CLASSES, i.PFCMaxClass, l.PFC.PFCMaxClasses)
 		restultFail = append(restultFail, errMsg)
 	}
 	pfcEnableString := mapintToSlicestring(l.PFC.PFCPriorityEnabled)
-	if pfcEnableString != INIObj.PFCPriorityEnabled {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_PFC_ENABLE, INIObj.PFCPriorityEnabled, pfcEnableString)
+	if pfcEnableString != i.PFCPriorityEnabled {
+		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_PFC_ENABLE, i.PFCPriorityEnabled, pfcEnableString)
 		restultFail = append(restultFail, errMsg)
 	}
 

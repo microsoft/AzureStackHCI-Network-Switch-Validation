@@ -3,9 +3,7 @@ package main
 import (
 	"context"
 	"encoding/hex"
-	"fmt"
 	"log"
-	"net"
 	"os"
 	"os/exec"
 	"strconv"
@@ -19,7 +17,7 @@ import (
 
 func writePcapFile(intfName string) {
 	var (
-		// false will only collect packages to the interface
+		// False will only collect packages to the interface
 		promiscuous    bool          = true
 		timeout        time.Duration = -1 * time.Second
 		handle         *pcap.Handle
@@ -48,11 +46,9 @@ func writePcapFile(intfName string) {
 	triggerLinuxDHCP()
 	start := 0
 	for packet := range packetSource.Packets() {
-		// Process packet here
-		// fmt.Println(packet)
 		w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
 		start++
-		fmt.Printf("Collecting Network Packages: [%d / %d (Max)]\n", start, packetCountMax)
+		log.Printf("Collecting Network Packages: [%d / %d (Max)]\n", start, packetCountMax)
 		// Set maximum packets to collect
 		if start > packetCountMax {
 			break
@@ -66,33 +62,32 @@ func OpenLiveTimeout(handle *pcap.Handle, sessionTimeout time.Duration) {
 	log.Printf("Reach preset max session time %v, close live collection.\n", sessionTimeout)
 }
 
-func decodePacketLayer(pcapFilePath string) {
+func (o *OutputType) decodePacketLayer(pcapFilePath string) {
 	handle, err := pcap.OpenOffline(pcapFilePath)
 	if err != nil {
-		fmt.Printf("Error opening %s, error:%v", pcapFilePath, err)
 		log.Fatalf("Error opening %s, error:%v", pcapFilePath, err)
 	}
 	defer handle.Close()
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
 
-		OutputObj.VLANResult.decodePVSTPacket(packet)
+		o.VLANResult.decodePVSTPacket(packet)
 
 		if decodeDHCPPacket(packet) {
-			OutputObj.DHCPResult.DHCPPacketDetected = true
-			OutputObj.DHCPResult.decodeDHCPRelayPacket(packet)
+			o.DHCPResult.DHCPPacketDetected = true
+			o.DHCPResult.decodeDHCPRelayPacket(packet)
 		}
 
-		OutputObj.LLDPResult.decodeLLDPPacket(packet)
-		OutputObj.LLDPResult.decodeLLDPInfoPacket(packet)
+		o.LLDPResult.decodeLLDPPacket(packet)
+		o.LLDPResult.decodeLLDPInfoPacket(packet)
 
 		if decodeBGPPacket(packet) {
-			OutputObj.BGPResult.BGPTCPPacketDetected = true
-			OutputObj.BGPResult.SwitchInterfaceMAC, OutputObj.BGPResult.HostInterfaceMAC = getPacketMACs(packet)
-			OutputObj.BGPResult.SwitchInterfaceIP, OutputObj.BGPResult.HostInterfaceIP = getPacketIPv4s(packet)
+			o.BGPResult.BGPTCPPacketDetected = true
+			o.BGPResult.SwitchInterfaceMAC, o.BGPResult.HostInterfaceMAC = getPacketMACs(packet)
+			o.BGPResult.SwitchInterfaceIP, o.BGPResult.HostInterfaceIP = getPacketIPv4s(packet)
 		}
 
-		OutputObj.TestDate = packet.Metadata().Timestamp
+		o.TestDate = packet.Metadata().Timestamp
 	}
 }
 
@@ -105,24 +100,24 @@ func bytesToDec(bytes []byte) int64 {
 	return decNum
 }
 
-func getPacketMACs(packet gopacket.Packet) (SrcMac, DstMac net.HardwareAddr) {
+func getPacketMACs(packet gopacket.Packet) (SrcMac, DstMac string) {
 	EthernetLayer := packet.Layer(layers.LayerTypeEthernet)
 	if EthernetLayer != nil {
 		EthernetType := EthernetLayer.(*layers.Ethernet)
-		return EthernetType.SrcMAC, EthernetType.DstMAC
+		return EthernetType.SrcMAC.String(), EthernetType.DstMAC.String()
 	}
 	log.Fatalf("Not able to decode the network packet: %#v\n", packet)
-	return nil, nil
+	return "", ""
 }
 
-func getPacketIPv4s(packet gopacket.Packet) (SrcIP, DstIP net.IP) {
+func getPacketIPv4s(packet gopacket.Packet) (SrcIP, DstIP string) {
 	IPv4Layer := packet.Layer(layers.LayerTypeIPv4)
 	if IPv4Layer != nil {
 		IPv4Type := IPv4Layer.(*layers.IPv4)
-		return IPv4Type.SrcIP, IPv4Type.DstIP
+		return IPv4Type.SrcIP.String(), IPv4Type.DstIP.String()
 	}
 	log.Fatalf("Not able to decode the network packet: %#v\n", packet)
-	return nil, nil
+	return "", ""
 }
 
 func triggerWinDHCP() {
@@ -151,4 +146,13 @@ func triggerLinuxDHCP() {
 		log.Println("Command timed out")
 		return
 	}
+}
+
+func sliceContains(elems []int, v int) bool {
+	for _, i := range elems {
+		if v == i {
+			return true
+		}
+	}
+	return false
 }

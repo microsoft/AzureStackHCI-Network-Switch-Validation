@@ -27,16 +27,17 @@ func (v *VLANResultType) decodePVSTPacket(packet gopacket.Packet) {
 			lenPayload := len(EthernetType.Payload)
 			vlanID := bytesToDec(EthernetType.Payload[lenPayload-2 : lenPayload])
 
-			if !contains(v.VLANIDs, int(vlanID)) {
+			if !sliceContains(v.VLANIDs, int(vlanID)) {
 				v.VLANIDs = append(v.VLANIDs, int(vlanID))
 			}
 		}
 	}
 }
 
-func (o *OutputType) VLANResultValidation(v *VLANResultType) {
+func (o *OutputType) VLANResultValidation(v *VLANResultType, i *INIType) {
 	var restultFail []string
 	var vlanList []int
+
 	for k := range v.VLANIDs {
 		vlanList = append(vlanList, k)
 	}
@@ -45,12 +46,12 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType) {
 		return vlanList[i] < vlanList[j]
 	})
 
-	sort.Slice(INIObj.VlanIDs, func(i, j int) bool {
-		return INIObj.VlanIDs[i] < INIObj.VlanIDs[j]
+	sort.Slice(i.VlanIDs, func(m, n int) bool {
+		return i.VlanIDs[m] < i.VlanIDs[n]
 	})
 
-	if !reflect.DeepEqual(v.VLANIDs, INIObj.VlanIDs) {
-		vlanError := fmt.Sprintf("%s - Input: %v, Found: %v", VLAN_NOT_MATCH, INIObj.VlanIDs, vlanList)
+	if !reflect.DeepEqual(v.VLANIDs, i.VlanIDs) {
+		vlanError := fmt.Sprintf("%s - Input: %v, Found: %v", VLAN_NOT_MATCH, i.VlanIDs, vlanList)
 		restultFail = append(restultFail, vlanError)
 	}
 
@@ -59,13 +60,4 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType) {
 	} else {
 		o.ResultSummary["VLAN - FAIL"] = restultFail
 	}
-}
-
-func contains(elems []int, v int) bool {
-	for _, i := range elems {
-		if v == i {
-			return true
-		}
-	}
-	return false
 }
