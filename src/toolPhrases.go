@@ -19,11 +19,13 @@ const (
 	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected"
 
 	// LLDP
+	CHASIS_ID_TYPE                = "MAC Address"
 	NO_LLDP_SYS_DSC               = "No System Description Founded"
 	NO_LLDP_CHASSIS_SUBTYPE       = "No Chassis Subtype Founded"
 	NO_LLDP_PORT_SUBTYPE          = "No Port Subtype Founded"
 	WRONG_LLDP_MAXIMUM_FRAME_SIZE = "Incorrect Maximum Frame Size"
 	WRONG_LLDP_VLAN_ID            = "Incorrect Port VLAN ID"
+	NO_LLDP_IEEE_8021_Subtype3    = "No LLDP IEEE 802.1 VLAN Name (Subtype 3) Founded"
 	WRONG_LLDP_ETS_MAX_CLASSES    = "Incorrect ETS Maximum Number of Traffic Classes"
 	WRONG_LLDP_ETS_BW             = "Incorrect ETS Class Bandwidth Configured"
 	WRONG_LLDP_PFC_MAX_CLASSES    = "Incorrect PFC Maximum Number of Traffic Classes"

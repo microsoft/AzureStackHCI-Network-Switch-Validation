@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/google/gopacket"
@@ -10,13 +11,15 @@ import (
 )
 
 type LLDPResultType struct {
-	SysDes   string
-	PortName string
-	ChasisID string
-	VLANID   int
-	MTU      int
-	ETS      ETSType
-	PFC      PFCType
+	SysDes           string
+	PortName         string
+	ChasisID         string
+	ChasisIDType     string
+	VLANID           int
+	IEEE8021Subtype3 []uint16
+	MTU              int
+	ETS              ETSType
+	PFC              PFCType
 }
 
 type PFCType struct {
@@ -35,14 +38,10 @@ func (l *LLDPResultType) decodeLLDPPacket(packet gopacket.Packet) {
 		LLDPType := LLDPLayer.(*layers.LinkLayerDiscovery)
 		ChassisIDHex := hex.EncodeToString(LLDPType.ChassisID.ID)
 		l.ChasisID = ChassisIDHex
+		l.ChasisIDType = LLDPType.ChassisID.Subtype.String()
 		l.PortName = string(LLDPType.PortID.ID)
 
 		for _, v := range LLDPType.Values {
-			// Subtype: Maximum Frame Size 0x04
-			if v.Length == 6 && v.Value[3] == 4 {
-				l.MTU = int(bytesToDec(v.Value[4:6]))
-			}
-
 			// Subtype: Priority Flow Control Configuration 0x0b
 			if v.Length == 6 && v.Value[3] == 11 {
 				l.PFC.PFCMaxClasses = uint8(bytesToDec(v.Value[4:5]))
@@ -76,6 +75,20 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 	if LLDPInfoLayer != nil {
 		LLDPInfoType := LLDPInfoLayer.(*layers.LinkLayerDiscoveryInfo)
 		l.SysDes = LLDPInfoType.SysDescription
+
+		info8023, err := LLDPInfoType.Decode8023()
+		if err != nil {
+			log.Println(err)
+		}
+		l.MTU = int(info8023.MTU)
+
+		info8021, err := LLDPInfoType.Decode8021()
+		if err != nil {
+			log.Println(err)
+		}
+		for _, v := range info8021.VLANNames {
+			l.IEEE8021Subtype3 = append(l.IEEE8021Subtype3, v.ID)
+		}
 	}
 }
 
@@ -85,12 +98,16 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
 	if len(l.SysDes) == 0 {
 		restultFail = append(restultFail, NO_LLDP_SYS_DSC)
 	}
-	if len(l.ChasisID) != 12 {
+	if l.ChasisIDType != CHASIS_ID_TYPE {
 		restultFail = append(restultFail, NO_LLDP_CHASSIS_SUBTYPE)
 	}
 	if len(l.PortName) == 0 {
 		restultFail = append(restultFail, NO_LLDP_PORT_SUBTYPE)
 	}
+	if len(l.IEEE8021Subtype3) == 0 {
+		restultFail = append(restultFail, NO_LLDP_IEEE_8021_Subtype3)
+	}
+
 	if l.MTU != i.MTUSize {
 		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_MAXIMUM_FRAME_SIZE, i.MTUSize, l.MTU)
 		restultFail = append(restultFail, errMsg)
