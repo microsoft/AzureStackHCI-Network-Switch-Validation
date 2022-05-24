@@ -91,13 +91,13 @@ func (o *OutputType) decodePacketLayer(pcapFilePath string) {
 	}
 }
 
-func bytesToDec(bytes []byte) int64 {
+func bytesToDec(bytes []byte) int {
 	hexNum := hex.EncodeToString(bytes)
 	decNum, err := strconv.ParseInt(hexNum, 16, 32)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return decNum
+	return int(decNum)
 }
 
 func getPacketMACs(packet gopacket.Packet) (SrcMac, DstMac string) {
