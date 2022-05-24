@@ -7,12 +7,24 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 ## How to use the tool
 
 - Prepare a host which has at least two NICs which connect to switch device under test (DUT)
-- Download the exe and ini files from this repo and store them in a folder on the host
+- Download from [Release page](https://github.com/microsoft/AzureStackHCI-Network-Switch-Validation/releases) and store them in a folder on the host
 - If necessary, edit the ini file to represent your environment
-- Run the SwitchValidationTool.exe
-- Review the report.
+- Run the SwitchValidationTool.exe 
+- Review the report. (Result report will be PDF, and check sample reports under `sampleResult` folder.)
 
 The validation tool will collect network traffic and decode packages to validate protocol value required. 
+
+### Platform Support
+
+#### Windows
+
+Tested: Windows 11, Windows Server 2019
+Untested: Other Windows versions
+
+#### Linux
+
+Tested: Ubuntu Linux 20.04
+Untested: Other Linux versions
 
 ### Preparation
 
@@ -23,31 +35,22 @@ The following shows the reference lab setup that can be modified accordingly bas
 
 The following image demonstrates a sample switch configuration based on [DellOS10](./switchReferenceConfig/Dell_OS10.conf)
 
-Notice:
+##### Notice:
 
 - Spanning Tree mode must be PVST for tool to capture all VLANID.
 - LLDP must be enabled.
 
-#### Download Validation Tool
-
-- Download the right version based on the host OS.
-  - [Windows Version](./switchValidationTool.exe)
-  - [Linux Version](./switchValidationTool)
-- Download [input.ini](input.ini) file.
-- Update input variables accordingly.
-
-```
-C:\>switchValidationTool.exe -h
-Usage of switchValidationTool.exe:
-  -iniFilePath string
-        Please input INI file path. (default "./input.ini")
-```
 
 ### Execution and Troubleshooting
 
 **Tool must be run with Administrator/Sudo privilege**
 
 ```
+C:\>switchValidationTool.exe -h
+Usage of switchValidationTool.exe:
+  -iniFilePath string
+        Please input INI file path. (default "./input.ini")
+
 C:\>switchValidationTool.exe
 2022/05/07 10:49:48 main.go:90: ./input.ini found.
 {10.10.10.11/24 [710 711 712] 9214 8 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0 8 0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0}
@@ -60,14 +63,22 @@ Collecting Network Packages: [3 / 300 (Max)]
 Collecting Network Packages: [261 / 300 (Max)]
 2022/05/07 10:51:21 packetCollect.go:61: Reach preset max session time 1m30s, close live collection.
 2022/05/07 10:51:21 main.go:90: ./result.pcap founded.
-Result PDF File Generated
+### Validation Summary Result ###
 
-### Result Summary ###
+        BGP - PASS
 
-BGP - PASS
-DHCPRelay - PASS
-LLDP - PASS
-VLAN - PASS
+        DHCPRelay - PASS
+
+        LLDP - FAIL
+                - No LLDP IEEE 802.1 VLAN Name (Subtype 3) Founded
+                - Incorrect Maximum Frame Size - Input:9214, Found: 9216
+                - Incorrect ETS Class Bandwidth Configured:
+                Input:0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+                Found: 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1
+
+        VLAN - PASS
+
+        Result PDF File Generated
 ```
 
 - To avoid endless running, the tool has preset maximum timeout condition, and will stop collecting whenever hit first.
@@ -85,32 +96,34 @@ VLAN - PASS
   - result.pcap
   - result.log
 
-## Sample Result
 
-Result report will be PDF, and check sample results under `sampleResult` folder.
+## What will be validated
+### Current Version
 
-## What will be validated in current version
-
-### BGP
+#### BGP
 
 - TCP destination port 179
 
-### DHCP Relay
+#### DHCP Relay
 
 - UDP destination port 67
 
-### LLDP
+#### LLDP
 
 - Subtype 1 (Native VLAN)
 - Subtype 3 (All VLANs)
 - Subtype 4 (MTU)
 - Subtype 9 (ETS Configuration)
 - Subtype B (PFC)
-- Chassis sub type: MAC Address
+- Chassis ID Type: MAC Address
 
-### VLAN
+#### VLAN
 
 - VLAN IDs allowed in the trunk
+
+### Todo List
+- Advance MTU: Cross hosts L2 port testing.
+- Advance DCB: Cross hosts traffic bandwidth testing.
 
 ## Common Questions
 
@@ -121,25 +134,6 @@ Please check [Troubleshooting_Manual](./Troubleshooting_Manual.md) to find match
 ### Host not able to run the tool or `alert security scan required`
 
 Current version is still beta version, so hasn't signed, so that cause the alert, but it will be passed if running with `administrator` level.
-
-# Platform Support
-
-**Windows**
-
-Tested: Windows 11, Windows Server 2019
-
-Untested: Other Windows versions
-
-**Linux**
-
-Tested: Ubuntu Linux 20.04
-
-Untested: Other Linux versions
-
-
-**Other**
-
-No other platforms are tested at this time
 
 # Contributing
 
