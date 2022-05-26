@@ -22,7 +22,7 @@ func (o *OutputType) resultAnalysis(pcapFilePath string, i *INIType) {
 	o.BGPResultValidation(&o.BGPResult)
 }
 
-func (o *OutputType) outputPDFbyFile() {
+func (o *OutputType) outputPDFbyFile(pdfFilePath string) {
 
 	var resultTemplate = `
 	{{range $key, $value := .}}
@@ -78,10 +78,10 @@ func (o *OutputType) outputPDFbyFile() {
 	pdf.SetFont("Arial", "", 14)
 	pdf.SetTextColor(0, 0, 0)
 	pdf.MultiCell(0, 8, retSummary.String(), "", "", false)
-	err = pdf.OutputFileAndClose("result.pdf")
-	if err != nil {
-		log.Fatalln("pdf creation failed: ", err)
-	}
+	// err = pdf.OutputFileAndClose(pdfFilePath)
+	// if err != nil {
+	// 	log.Fatalln("pdf creation failed: ", err)
+	// }
 
 	pdf.AddPage()
 	yamlBytes, err := yaml.Marshal(OutputObj)
@@ -91,7 +91,7 @@ func (o *OutputType) outputPDFbyFile() {
 
 	pdf.SetFont("Arial", "", 10)
 	pdf.MultiCell(0, 5, string(yamlBytes), "", "", false)
-	err = pdf.OutputFileAndClose("result.pdf")
+	err = pdf.OutputFileAndClose(pdfFilePath)
 	if err != nil {
 		log.Fatalln("pdf creation failed: ", err)
 	}

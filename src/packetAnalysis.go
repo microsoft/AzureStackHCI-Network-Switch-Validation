@@ -1,11 +1,9 @@
 package main
 
 import (
-	"context"
 	"encoding/hex"
 	"log"
 	"os"
-	"os/exec"
 	"strconv"
 	"time"
 
@@ -15,7 +13,7 @@ import (
 	"github.com/google/gopacket/pcapgo"
 )
 
-func writePcapFile(intfName string) {
+func writePcapFile(intfName, pcapFilePath string) {
 	var (
 		// False will only collect packages to the interface
 		promiscuous    bool          = true
@@ -23,7 +21,7 @@ func writePcapFile(intfName string) {
 		handle         *pcap.Handle
 		packetCountMax int = 300
 		// Duration default unit is nanosecond
-		sessionTimeout time.Duration = 90000000000
+		sessionTimeout time.Duration = 900000000000
 	)
 	// Open output pcap file and write header
 	f, _ := os.Create(pcapFilePath)
@@ -41,16 +39,13 @@ func writePcapFile(intfName string) {
 
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 
-	// Refresh interface to collect dhcp packet
-	triggerWinDHCP()
-	triggerLinuxDHCP()
 	start := 0
 	for packet := range packetSource.Packets() {
 		w.WritePacket(packet.Metadata().CaptureInfo, packet.Data())
 		start++
-		log.Printf("Collecting Network Packages: [%d / %d (Max)]\n", start, packetCountMax)
+		log.Printf("Collecting Network Packages from Interface %s: [%d / %d (Max)]\n", intfName, start, packetCountMax)
 		// Set maximum packets to collect
-		if start > packetCountMax {
+		if start >= packetCountMax {
 			break
 		}
 	}
@@ -118,34 +113,6 @@ func getPacketIPv4s(packet gopacket.Packet) (SrcIP, DstIP string) {
 	}
 	log.Fatalf("Not able to decode the network packet: %#v\n", packet)
 	return "", ""
-}
-
-func triggerWinDHCP() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // The cancel should be deferred so resources are cleaned up
-	cmd := exec.CommandContext(ctx, "ipconfig", "/renew")
-	err := cmd.Run()
-	if err != nil {
-		log.Println("cmd exec error:", err)
-	}
-	if ctx.Err() == context.DeadlineExceeded {
-		log.Println("Command timed out")
-		return
-	}
-}
-
-func triggerLinuxDHCP() {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // The cancel should be deferred so resources are cleaned up
-	cmd := exec.CommandContext(ctx, "dhclient")
-	err := cmd.Run()
-	if err != nil {
-		log.Println("cmd exec error:", err)
-	}
-	if ctx.Err() == context.DeadlineExceeded {
-		log.Println("Command timed out")
-		return
-	}
 }
 
 func sliceContains(elems []int, v int) bool {

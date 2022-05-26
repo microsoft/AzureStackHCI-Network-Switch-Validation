@@ -6,6 +6,7 @@ const (
 	GENERATE_PDF_OUTPUT = "Result PDF File Generated"
 
 	// Host
+	NO_INTF        = "!!! No Interfaces being detected"
 	INTF_NOT_MATCH = "[Error] No matched host interface founded by IP, please check all host interfaces in menu and update input.ini accordingly."
 
 	// VLAN
@@ -19,6 +20,7 @@ const (
 	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected"
 
 	// LLDP
+	NO_LLDP_PACKET                = "!!! No LLDP Packets Detected via the Interface"
 	CHASIS_ID_TYPE                = "MAC Address"
 	NO_LLDP_SYS_DSC               = "No System Description Founded"
 	NO_LLDP_CHASSIS_SUBTYPE       = "No Chassis Subtype Founded"

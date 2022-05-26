@@ -113,8 +113,8 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
 		restultFail = append(restultFail, errMsg)
 	}
 
-	if !sliceContains(o.VLANResult.VLANIDs, l.VLANID) {
-		errMsg := fmt.Sprintf("%s - VLANList:%v, Found: %d", WRONG_LLDP_VLAN_ID, o.VLANResult.VLANIDs, l.VLANID)
+	if !sliceContains(i.VlanIDs, l.VLANID) {
+		errMsg := fmt.Sprintf("%s - VLANList:%v, Found: %d", WRONG_LLDP_VLAN_ID, i.VlanIDs, l.VLANID)
 		restultFail = append(restultFail, errMsg)
 	}
 
