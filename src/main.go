@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -36,8 +35,7 @@ type INIType struct {
 }
 
 var (
-	logFilePath   = "./result/result.log"
-	npcapFilePath = "npcap_install.ps1"
+	logFilePath = "./result/result.log"
 
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
@@ -66,7 +64,7 @@ func main() {
 
 	fileIsExist(iniFilePath)
 	INIObj.loadIniFile(iniFilePath)
-	Check_Npcap(npcapFilePath)
+	Check_Npcap()
 
 	getInterfaceByIP()
 	if len(intfNameMap) > 0 {
@@ -123,32 +121,6 @@ func (i *INIType) loadIniFile(filePath string) {
 	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
 }
 
-// func getInterfaceByIP() {
-// 	interfaces, err := pcap.FindAllDevs()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	matchFlag := false
-// 	for _, intf := range interfaces {
-// 		for _, address := range intf.Addresses {
-// 			fmt.Println(intf, address)
-// 			maskNum, _ := address.Netmask.Size()
-// 			lintfName := intf.Name
-// 			intfIPMask := fmt.Sprintf("%v/%d", address.IP, maskNum)
-// 			if intfIPMask == INIObj.HostInterfaceIP {
-// 				intfName = lintfName
-// 				log.Printf("Found matched host interface by IP: %s - %s\n", intfIPMask, intfName)
-// 				matchFlag = true
-// 				return
-// 			}
-// 		}
-// 	}
-// 	if !matchFlag {
-// 		log.Printf("%s: %s - %s\n", INTF_NOT_MATCH, INIObj.HostInterfaceIP, intfName)
-// 		return
-// 	}
-// }
-
 func getInterfaceByIP() {
 	interfaces, err := pcap.FindAllDevs()
 	if err != nil {
@@ -164,19 +136,13 @@ func getInterfaceByIP() {
 	}
 }
 
-func Check_Npcap(filePath string) {
-	fileIsExist(filePath)
-	abs, err := filepath.Abs(filePath)
+func Check_Npcap() {
+	// install libpcap: sudo apt install libpcap-dev -y
+	out, err := exec.Command("sudo", "apt", "install", "libpcap-dev", "-y").Output()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	pscmd := fmt.Sprintf("'& %s'", abs)
-	cmd := exec.Command("powershell", "-noexit", pscmd)
-	err = cmd.Run()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	log.Println("Npcap is installed.")
+	log.Println(string(out))
 }
 
 func CheckFileName(filename string) string {
