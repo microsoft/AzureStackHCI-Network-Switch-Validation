@@ -1,10 +1,10 @@
-name: Create Windows Artifact
+name: Create Linux Artifact
 
 on:
   push:
-    branches: [ release_windows]
+    branches: [ release_linux]
   pull_request:
-    branches: [ release_windows]
+    branches: [ release_linux]
 
 jobs:
 
@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         go-version: [1.18]
-        goos: [windows]
+        goos: [linux]
         release-filename: [SwitchValidationTool]
 
     runs-on: ubuntu-latest
@@ -36,7 +36,6 @@ jobs:
         go mod tidy
         GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ./${{ matrix.goos }}/
         cp input.ini ./${{ matrix.goos }}/
-        cp npcap_install.ps1 ./${{ matrix.goos }}/
 
     - name: Test Go
       run: |
