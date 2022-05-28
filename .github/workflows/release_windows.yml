@@ -1,4 +1,4 @@
-name: Create Artifact
+name: Create Windows Artifact
 
 on:
   push:
