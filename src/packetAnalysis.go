@@ -21,7 +21,7 @@ func writePcapFile(intfName, pcapFilePath string) {
 		handle         *pcap.Handle
 		packetCountMax int = 300
 		// Duration default unit is nanosecond
-		sessionTimeout time.Duration = 900000000000
+		sessionTimeout time.Duration = 90000000000
 	)
 	// Open output pcap file and write header
 	f, _ := os.Create(pcapFilePath)

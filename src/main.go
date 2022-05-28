@@ -7,6 +7,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/google/gopacket/pcap"
@@ -33,7 +36,8 @@ type INIType struct {
 }
 
 var (
-	logFilePath = "./result.log"
+	logFilePath   = "./result/result.log"
+	npcapFilePath = "npcap_install.ps1"
 
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
@@ -62,27 +66,27 @@ func main() {
 
 	fileIsExist(iniFilePath)
 	INIObj.loadIniFile(iniFilePath)
+	Check_Npcap(npcapFilePath)
 
 	getInterfaceByIP()
 	if len(intfNameMap) > 0 {
 		log.Println(intfNameMap)
-		pcapFolder := "./pcap"
-		if _, err := os.Stat(pcapFolder); errors.Is(err, os.ErrNotExist) {
-			err := os.Mkdir(pcapFolder, os.ModePerm)
-			if err != nil {
-				log.Println(err)
-			}
-		}
-		for intfName, ipString := range intfNameMap {
-			pcapFilePath := fmt.Sprintf("./pcap/%s.pcap", ipString)
+		tmpPCAPfolder := "tmpPcap"
+		CreateFolder(tmpPCAPfolder)
+		for intfName, intfDes := range intfNameMap {
+			pcapFilePath := fmt.Sprintf("%s/%s.pcap", tmpPCAPfolder, intfDes)
 			writePcapFile(intfName, pcapFilePath)
 			fileIsExist(pcapFilePath)
 			OutputObj.resultAnalysis(pcapFilePath, INIObj)
 			log.Println(OutputObj)
 			if len(OutputObj.LLDPResult.SysDes) != 0 {
-				pdfFilePath := fmt.Sprintf("%s.pdf", ipString)
+				resultfolder := "result"
+				CreateFolder(resultfolder)
+				nbrport := OutputObj.LLDPResult.PortName
+				fileName := CheckFileName(nbrport)
+				pdfFilePath := fmt.Sprintf("%s/%s.pdf", resultfolder, fileName)
 				OutputObj.outputPDFbyFile(pdfFilePath)
-				pcapFileNewPath := fmt.Sprintf("./%s.pcap", ipString)
+				pcapFileNewPath := fmt.Sprintf("%s/%s.pcap", resultfolder, fileName)
 				err := os.Rename(pcapFilePath, pcapFileNewPath)
 				if err != nil {
 					log.Fatal(err)
@@ -91,6 +95,7 @@ func main() {
 				log.Println(NO_LLDP_PACKET + intfName)
 			}
 		}
+		return
 	} else {
 		log.Fatalln(NO_INTF)
 	}
@@ -152,9 +157,40 @@ func getInterfaceByIP() {
 	for _, intf := range interfaces {
 		for _, address := range intf.Addresses {
 			if address.Netmask != nil {
-				log.Println(intf.Name, address.IP, intf.Description)
+				// log.Println(intf.Name, address.IP, intf.Description)
 				intfNameMap[intf.Name] = intf.Description
 			}
+		}
+	}
+}
+
+func Check_Npcap(filePath string) {
+	fileIsExist(filePath)
+	abs, err := filepath.Abs(filePath)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	pscmd := fmt.Sprintf("'& %s'", abs)
+	cmd := exec.Command("powershell", "-noexit", pscmd)
+	err = cmd.Run()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Println("Npcap is installed.")
+}
+
+func CheckFileName(filename string) string {
+	filename = strings.Replace(filename, "/", "_", -1)
+	filename = strings.Replace(filename, `\`, "_", -1)
+	filename = strings.Replace(filename, `:`, "_", -1)
+	return filename
+}
+
+func CreateFolder(folderName string) {
+	if _, err := os.Stat(folderName); errors.Is(err, os.ErrNotExist) {
+		err := os.Mkdir(folderName, os.ModePerm)
+		if err != nil {
+			log.Println(err)
 		}
 	}
 }

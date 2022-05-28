@@ -78,23 +78,33 @@ func (o *OutputType) outputPDFbyFile(pdfFilePath string) {
 	pdf.SetFont("Arial", "", 14)
 	pdf.SetTextColor(0, 0, 0)
 	pdf.MultiCell(0, 8, retSummary.String(), "", "", false)
-	// err = pdf.OutputFileAndClose(pdfFilePath)
-	// if err != nil {
-	// 	log.Fatalln("pdf creation failed: ", err)
-	// }
 
 	pdf.AddPage()
-	yamlBytes, err := yaml.Marshal(OutputObj)
+	resultDetaillBytes, err := yaml.Marshal(OutputObj)
 	if err != nil {
 		log.Fatalln("YAML marshal failed, err:", err)
 	}
 
 	pdf.SetFont("Arial", "", 10)
-	pdf.MultiCell(0, 5, string(yamlBytes), "", "", false)
+	pdf.MultiCell(0, 5, string(resultDetaillBytes), "", "", false)
 	err = pdf.OutputFileAndClose(pdfFilePath)
 	if err != nil {
 		log.Fatalln("pdf creation failed: ", err)
 	}
+
+	pdf.AddPage()
+	iniBytes, err := yaml.Marshal(INIObj)
+	if err != nil {
+		log.Fatalln("YAML marshal failed, err:", err)
+	}
+
+	pdf.SetFont("Arial", "", 10)
+	pdf.MultiCell(0, 5, string(iniBytes), "", "", false)
+	err = pdf.OutputFileAndClose(pdfFilePath)
+	if err != nil {
+		log.Fatalln("pdf creation failed: ", err)
+	}
+
 	fmt.Println(GENERATE_PDF_OUTPUT)
 }
 
