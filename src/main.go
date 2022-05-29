@@ -25,7 +25,6 @@ type OutputType struct {
 }
 
 type INIType struct {
-	HostInterfaceIP    string
 	VlanIDs            []int
 	MTUSize            int
 	ETSMaxClass        int
@@ -112,7 +111,6 @@ func (i *INIType) loadIniFile(filePath string) {
 	if err != nil {
 		log.Fatalf("Fail to read file: %v\n", err)
 	}
-	i.HostInterfaceIP = cfg.Section("host").Key("hostInterfaceIP").String()
 	i.VlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
 	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
 	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
