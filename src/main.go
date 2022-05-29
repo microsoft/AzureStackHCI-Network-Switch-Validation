@@ -26,7 +26,6 @@ type OutputType struct {
 }
 
 type INIType struct {
-	HostInterfaceIP    string
 	VlanIDs            []int
 	MTUSize            int
 	ETSMaxClass        int
@@ -42,7 +41,6 @@ var (
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
 
-	// intfName      = "\\Device\\NPF_{D63D7017-9A01-42F2-B2DB-C34055E3BDBD}"
 	intfNameMap   = make(map[string]interface{}, 20)
 	packetMaxSize = int32(9216)
 )
@@ -114,7 +112,6 @@ func (i *INIType) loadIniFile(filePath string) {
 	if err != nil {
 		log.Fatalf("Fail to read file: %v\n", err)
 	}
-	i.HostInterfaceIP = cfg.Section("host").Key("hostInterfaceIP").String()
 	i.VlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
 	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
 	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
@@ -122,32 +119,6 @@ func (i *INIType) loadIniFile(filePath string) {
 	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
 	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
 }
-
-// func getInterfaceByIP() {
-// 	interfaces, err := pcap.FindAllDevs()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	matchFlag := false
-// 	for _, intf := range interfaces {
-// 		for _, address := range intf.Addresses {
-// 			fmt.Println(intf, address)
-// 			maskNum, _ := address.Netmask.Size()
-// 			lintfName := intf.Name
-// 			intfIPMask := fmt.Sprintf("%v/%d", address.IP, maskNum)
-// 			if intfIPMask == INIObj.HostInterfaceIP {
-// 				intfName = lintfName
-// 				log.Printf("Found matched host interface by IP: %s - %s\n", intfIPMask, intfName)
-// 				matchFlag = true
-// 				return
-// 			}
-// 		}
-// 	}
-// 	if !matchFlag {
-// 		log.Printf("%s: %s - %s\n", INTF_NOT_MATCH, INIObj.HostInterfaceIP, intfName)
-// 		return
-// 	}
-// }
 
 func getInterfaceByIP() {
 	interfaces, err := pcap.FindAllDevs()

@@ -10,6 +10,7 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Download from [Release page](https://github.com/microsoft/AzureStackHCI-Network-Switch-Validation/releases) and store them in a folder on the host
 - If necessary, edit the ini file to represent your environment
 - Run the SwitchValidationTool.exe 
+- The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
 - Review the report. (Result report will be PDF, and check sample reports under `sampleResult` folder.)
 
 The validation tool will collect network traffic and decode packages to validate protocol value required. 
