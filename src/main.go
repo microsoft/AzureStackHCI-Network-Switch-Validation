@@ -34,7 +34,7 @@ type INIType struct {
 }
 
 var (
-	logFilePath = "./result/result.log"
+	logFilePath = "./result.log"
 
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
