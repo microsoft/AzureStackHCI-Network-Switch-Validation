@@ -35,8 +35,6 @@ jobs:
         cd ./src
         go mod tidy
         GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ./${{ matrix.goos }}/
-        cp input.ini ./${{ matrix.goos }}/
-        cp npcap_install.ps1 ./${{ matrix.goos }}/
 
     - name: Test Go
       run: |

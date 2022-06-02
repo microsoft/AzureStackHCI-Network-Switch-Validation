@@ -92,7 +92,7 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 	}
 }
 
-func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
+func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var restultFail []string
 
 	if len(l.SysDes) == 0 {

@@ -34,7 +34,7 @@ func (v *VLANResultType) decodePVSTPacket(packet gopacket.Packet) {
 	}
 }
 
-func (o *OutputType) VLANResultValidation(v *VLANResultType, i *INIType) {
+func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 	var restultFail []string
 	var vlanList []int
 

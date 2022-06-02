@@ -20,6 +20,7 @@ func writePcapFile(intfName, pcapFilePath string) {
 		timeout        time.Duration = -1 * time.Second
 		handle         *pcap.Handle
 		packetCountMax int = 300
+		packetMaxSize      = int32(9216)
 		// Duration default unit is nanosecond
 		sessionTimeout time.Duration = 90000000000
 	)

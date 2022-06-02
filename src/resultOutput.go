@@ -13,7 +13,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func (o *OutputType) resultAnalysis(pcapFilePath string, i *INIType) {
+func (o *OutputType) resultAnalysis(pcapFilePath string, i *InputType) {
 	o.decodePacketLayer(pcapFilePath)
 	o.ResultSummary = map[string][]string{}
 	o.VLANResultValidation(&o.VLANResult, i)
@@ -93,7 +93,7 @@ func (o *OutputType) outputPDFbyFile(pdfFilePath string) {
 	}
 
 	pdf.AddPage()
-	iniBytes, err := yaml.Marshal(INIObj)
+	iniBytes, err := yaml.Marshal(inputObj)
 	if err != nil {
 		log.Fatalln("YAML marshal failed, err:", err)
 	}
