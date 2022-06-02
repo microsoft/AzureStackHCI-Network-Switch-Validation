@@ -15,8 +15,19 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 
 The validation tool will collect network traffic and decode packages to validate protocol value required. 
 
+### Logic Diagram
+```mermaid
+flowchart LR
+
+A[Execute Tool] -->|Scan Active Interfaces| B(Decode collected pcap files)
+B --> C{Has Valid LLDP Packet?}
+C -->|True| D[Generate Report]
+C -->|False| E[Skip]
+```
 
 ### Platform Support
+
+##### note: [libpcap](https://www.tcpdump.org/) is required for the tool to run, and the tool will automatically check and install it if missing.
 
 #### Linux
 
@@ -27,6 +38,7 @@ Untested: Other Linux versions
 
 Tested: Windows 11, Windows Server 2019
 Untested: Other Windows versions
+
 
 ### Preparation
 
