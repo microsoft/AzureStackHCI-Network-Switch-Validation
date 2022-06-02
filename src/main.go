@@ -35,7 +35,7 @@ type INIType struct {
 }
 
 var (
-	logFilePath   = "./result/result.log"
+	logFilePath   = "./result.log"
 	npcapFilePath = "npcap_install.ps1"
 
 	INIObj    = &INIType{}
