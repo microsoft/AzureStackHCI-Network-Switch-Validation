@@ -19,15 +19,14 @@ The validation tool will collect network traffic and decode packages to validate
 ```mermaid
 flowchart LR
 
-A[Execute Tool] -->|Scan Active Interfaces| B(Decode collected pcap files)
-B --> C{Has Valid LLDP Packet?}
-C -->|True| D[Generate Report]
-C -->|False| E[Skip]
+A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
+B --> C{Match Requirements?}
+C --> |True|D(Send report to MSFT)
+C --> |False|E[Review switch configuration]
+E --> |Update input variables accordingly and re-test | A
 ```
 
 ### Platform Support
-
-##### note: [libpcap](https://www.tcpdump.org/) is required for the tool to run, and the tool will automatically check and install it if missing.
 
 #### Linux
 
@@ -60,23 +59,28 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 **Tool must be run with Administrator/Sudo privilege**
 
 ```
-C:\>switchValidationTool.exe -h
-Usage of switchValidationTool.exe:
-  -iniFilePath string
-        Please input INI file path. (default "./input.ini")
+PS C:\> Import-Module .\SwitchValidation.psm1 -Force
+PS C:\> Get-Command -m SwitchValidation
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Function        Invoke-SwitchValidation                            0.0        SwitchValidation
+PS C:\> Get-Help Invoke-SwitchValidation
+NAME
+    Invoke-SwitchValidation
+SYNOPSIS
+    Execute Invoke-SwitchValidation on Windows
+SYNTAX
+    Invoke-SwitchValidation [-ifIndex] <UInt32> [[-vlanIDs] <String>] [[-mtu] <UInt32>] [[-etsMaxClass] <UInt32>]
+    [[-etsBWbyPG] <String>] [[-pfcMaxClass] <UInt32>] [[-pfcPriorityEnabled] <String>] [<CommonParameters>]
 
-C:\>switchValidationTool.exe
-2022/05/07 10:49:48 main.go:90: ./input.ini found.
-{10.10.10.11/24 [710 711 712] 9214 8 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0 8 0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0}
-2022/05/07 10:49:48 main.go:121: Found matched host interface by IP: 10.10.10.11/24 - \Device\NPF_{96CB802D-E41B-477E-BC46-B37A001AD1EF}
-Processing, please wait up to ~2 mins, otherwise please double check if the interface has live traffic.
-Collecting Network Packages: [1 / 300 (Max)]
-Collecting Network Packages: [2 / 300 (Max)]
-Collecting Network Packages: [3 / 300 (Max)]
+C:\> Invoke-SwitchValidation -ifIndex 15
+interface Ethernet1 is selected
+-interfaceAlias "Wi-Fi" -interfaceGUID "{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
+PS C:\repos\Jupyter_Notebook\Go\projects\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [1 / 300 (Max)]
+2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [2 / 300 (Max)]
+2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [3 / 300 (Max)]
 ...
-Collecting Network Packages: [261 / 300 (Max)]
-2022/05/07 10:51:21 packetCollect.go:61: Reach preset max session time 1m30s, close live collection.
-2022/05/07 10:51:21 main.go:90: ./result.pcap founded.
+2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [300 / 300 (Max)]
 ### Validation Summary Result ###
 
         BGP - PASS
@@ -101,11 +105,6 @@ Collecting Network Packages: [261 / 300 (Max)]
   - 300 network packets
 
 - Please double check the interface connection and configuration if no network packet being collected.
-
-### Post Execution
-
-- Please check the result and re-test if need.
-- Please upload all files under `result` folder to MSFT for further validation.
 
 
 ## What will be validated
@@ -144,10 +143,9 @@ The tool is written by Go and using [gopacket](https://pkg.go.dev/github.com/goo
 
 For Linux: Run `sudo apt install libpcap-dev`
 
-For Windows, here are three options:
-- Option 1: Run `npcap_install.ps1` in release package, which will automatically install Npcap.
-- Option 2: Install [Npcap](https://npcap.com/) manually, which includes libpcap.
-- Option 3: Install [Wireshark](https://www.wireshark.org/) manually, which includes Npcap.
+For Windows, here are options:
+- Option 1: Install [Npcap](https://npcap.com/), which includes libpcap.
+- Option 2: Install [Wireshark](https://www.wireshark.org/), which includes Npcap.
 
 ##### Note: libpcap only need to be installed once, and can be uninstalled after the validation.
 

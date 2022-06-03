@@ -57,7 +57,7 @@ func main() {
 
 	// Scan and collect traffic data to pcap file
 	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
-	writePcapFile(inputObj.InterfaceGUID, pcapFilePath)
+	writePcapFile(inputObj, pcapFilePath)
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
 	log.Println(OutputObj)
@@ -81,8 +81,8 @@ func (i *InputType) loadInputVariable() {
 	flag.StringVar(&i.ETSBWbyPG, "etsBWbyPG", "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", "bandwidth for PGID in ETS configuration")
 	flag.IntVar(&i.PFCMaxClass, "pfcMaxClass", 8, "maximum PFC enabled traffic classes in PFC configuration")
 	flag.StringVar(&i.PFCPriorityEnabled, "pfcPriorityEnabled", "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0", "PFC for priority in PFC configuration")
-	flag.StringVar(&i.InterfaceGUID, "interfaceGUID", "1", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
-	flag.StringVar(&i.InterfaceAlias, "interfaceAlias", "1", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
+	flag.StringVar(&i.InterfaceGUID, "interfaceGUID", "", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
+	flag.StringVar(&i.InterfaceAlias, "interfaceAlias", "", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
 
 	flag.Parse()
 	res := strings.Split(vlanIDs, ",")
