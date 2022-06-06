@@ -7,27 +7,27 @@ const (
 
 	// Host
 	NO_INTF        = "!!! No Interfaces being detected"
-	INTF_NOT_MATCH = "[Error] No matched host interface founded by IP, please check all host interfaces in menu and update input.ini accordingly."
+	INTF_NOT_MATCH = "[Error] No matched host interface found by IP, please check all host interfaces in menu and update input.ini accordingly."
 
 	// VLAN
 	VLAN_NOT_MATCH = "VLAN Not Match"
 
 	// DHCPRelay
-	DHCPPacket_NOT_Detect        = "DHCP Packet Not Detected"
-	DHCPRelay_AgentIP_Not_Detect = "DHCP Relay Agent IP Not Detected"
+	DHCPPacket_NOT_Detect        = "DHCP Packet Not Detected from switch"
+	DHCPRelay_AgentIP_Not_Detect = "DHCP Relay Agent IP Not Detected from switch"
 
 	// DHCPRelay
-	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected"
+	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected from switch"
 
 	// LLDP
-	NO_LLDP_PACKET                = "!!! No LLDP Packets Detected via the Interface"
+	NO_LLDP_PACKET                = "!!! No LLDP Packets Detected from switch via the Interface"
 	CHASIS_ID_TYPE                = "MAC Address"
-	NO_LLDP_SYS_DSC               = "No System Description Founded"
-	NO_LLDP_CHASSIS_SUBTYPE       = "No Chassis Subtype Founded"
-	NO_LLDP_PORT_SUBTYPE          = "No Port Subtype Founded"
+	NO_LLDP_SYS_DSC               = "No System Description detected from switch"
+	NO_LLDP_CHASSIS_SUBTYPE       = "No Chassis Subtype detected from switch"
+	NO_LLDP_PORT_SUBTYPE          = "No Port Subtype detected from switch"
 	WRONG_LLDP_MAXIMUM_FRAME_SIZE = "Incorrect Maximum Frame Size"
 	WRONG_LLDP_VLAN_ID            = "Incorrect Port VLAN ID"
-	NO_LLDP_IEEE_8021_Subtype3    = "No LLDP IEEE 802.1 VLAN Name (Subtype 3) Founded"
+	NO_LLDP_IEEE_8021_Subtype3    = "No LLDP IEEE 802.1 VLAN Name (Subtype 3) detected from switch"
 	WRONG_LLDP_ETS_MAX_CLASSES    = "Incorrect ETS Maximum Number of Traffic Classes"
 	WRONG_LLDP_ETS_BW             = "Incorrect ETS Class Bandwidth Configured"
 	WRONG_LLDP_PFC_MAX_CLASSES    = "Incorrect PFC Maximum Number of Traffic Classes"
