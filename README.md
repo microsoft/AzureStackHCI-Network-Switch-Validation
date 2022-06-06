@@ -10,7 +10,6 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Download from [Release page](https://github.com/microsoft/AzureStackHCI-Network-Switch-Validation/releases) and store them in a folder on the host
 - If necessary, edit the ini file to represent your environment
 - Run the SwitchValidationTool.exe
-- The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
 - Review the report. (Result report will be PDF, and check sample reports under `sampleResult` folder.)
 
 The validation tool will collect network traffic and decode packages to validate protocol value required. 
@@ -19,25 +18,19 @@ The validation tool will collect network traffic and decode packages to validate
 ```mermaid
 flowchart LR
 
-A[Execute Tool] -->|Scan Active Interfaces| B(Decode collected pcap files)
-B --> C{Has Valid LLDP Packet?}
-C -->|True| D[Generate Report]
-C -->|False| E[Skip]
+A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
+B --> C{Match Requirements?}
+C --> |True|D(Send report to MSFT)
+C --> |False|E[Review switch configuration]
+E --> |Update input variables accordingly and re-test | A
 ```
 
 ### Platform Support
-
-##### note: [libpcap](https://www.tcpdump.org/) is required for the tool to run, and the tool will automatically check and install it if missing.
 
 #### Linux
 
 Tested: Ubuntu Linux 20.04
 Untested: Other Linux versions
-
-#### Windows
-
-Tested: Windows 11, Windows Server 2019
-Untested: Other Windows versions
 
 ### Preparation
 
@@ -101,12 +94,6 @@ Collecting Network Packages: [261 / 300 (Max)]
 
 - Please double check the interface connection and configuration if no network packet being collected.
 
-### Post Execution
-
-- Please check the result and re-test if need.
-- Please upload all files under `result` folder to MSFT for further validation.
-
-
 ## What will be validated
 ### Current Version
 
@@ -142,11 +129,6 @@ Collecting Network Packages: [261 / 300 (Max)]
 The tool is written by Go and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap) which requires [libpcap](https://github.com/google/gopacket/blob/master/pcap/pcap_windows.go) pre-installed. The tool will automatically install libpcap based on OS, so Internet is required for the host.
 
 For Linux: Run `sudo apt install libpcap-dev`
-
-For Windows, here are three options:
-- Option 1: Run `npcap_install.ps1` in release package, which will automatically install Npcap.
-- Option 2: Install [Npcap](https://npcap.com/) manually, which includes libpcap.
-- Option 3: Install [Wireshark](https://www.wireshark.org/) manually, which includes Npcap.
 
 ##### Note: libpcap only need to be installed once, and can be uninstalled after the validation.
 

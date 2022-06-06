@@ -1,17 +1,13 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"log"
 	"os"
-	"os/exec"
-	"strings"
 	"time"
 
-	"github.com/google/gopacket/pcap"
 	"gopkg.in/ini.v1"
 )
 
@@ -25,6 +21,7 @@ type OutputType struct {
 }
 
 type INIType struct {
+	interfaceName      string
 	VlanIDs            []int
 	MTUSize            int
 	ETSMaxClass        int
@@ -38,10 +35,6 @@ var (
 
 	INIObj    = &INIType{}
 	OutputObj = &OutputType{}
-
-	// intfName      = "\\Device\\NPF_{D63D7017-9A01-42F2-B2DB-C34055E3BDBD}"
-	intfNameMap   = make(map[string]interface{}, 20)
-	packetMaxSize = int32(9216)
 )
 
 func init() {
@@ -60,42 +53,15 @@ func main() {
 	var iniFilePath string
 	flag.StringVar(&iniFilePath, "iniFilePath", "./input.ini", "Please input INI file path.")
 	flag.Parse()
-
 	fileIsExist(iniFilePath)
 	INIObj.loadIniFile(iniFilePath)
-	Check_Npcap()
 
-	getInterfaceByIP()
-	if len(intfNameMap) > 0 {
-		log.Println(intfNameMap)
-		tmpPCAPfolder := "tmpPcap"
-		CreateFolder(tmpPCAPfolder)
-		for intfName, intfDes := range intfNameMap {
-			pcapFilePath := fmt.Sprintf("%s/%s.pcap", tmpPCAPfolder, intfDes)
-			writePcapFile(intfName, pcapFilePath)
-			fileIsExist(pcapFilePath)
-			OutputObj.resultAnalysis(pcapFilePath, INIObj)
-			log.Println(OutputObj)
-			if len(OutputObj.LLDPResult.SysDes) != 0 {
-				resultfolder := "result"
-				CreateFolder(resultfolder)
-				nbrport := OutputObj.LLDPResult.PortName
-				fileName := CheckFileName(nbrport)
-				pdfFilePath := fmt.Sprintf("%s/%s.pdf", resultfolder, fileName)
-				OutputObj.outputPDFbyFile(pdfFilePath)
-				pcapFileNewPath := fmt.Sprintf("%s/%s.pcap", resultfolder, fileName)
-				err := os.Rename(pcapFilePath, pcapFileNewPath)
-				if err != nil {
-					log.Fatal(err)
-				}
-			} else {
-				log.Println(NO_LLDP_PACKET + intfName)
-			}
-		}
-		return
-	} else {
-		log.Fatalln(NO_INTF)
-	}
+	pcapFilePath := fmt.Sprintf("./%s.pcap", INIObj.interfaceName)
+	writePcapFile(INIObj.interfaceName, pcapFilePath)
+	fileIsExist(pcapFilePath)
+	OutputObj.resultAnalysis(pcapFilePath, INIObj)
+	pdfFilePath := fmt.Sprintf("./%s.pdf", INIObj.interfaceName)
+	OutputObj.outputPDFbyFile(pdfFilePath)
 }
 
 func fileIsExist(filepath string) {
@@ -111,50 +77,11 @@ func (i *INIType) loadIniFile(filePath string) {
 	if err != nil {
 		log.Fatalf("Fail to read file: %v\n", err)
 	}
+	i.interfaceName = cfg.Section("host").Key("interfaceName").String()
 	i.VlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
 	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
 	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
 	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
 	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
 	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
-}
-
-func getInterfaceByIP() {
-	interfaces, err := pcap.FindAllDevs()
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, intf := range interfaces {
-		for _, address := range intf.Addresses {
-			if address.Netmask != nil {
-				// log.Println(intf.Name, address.IP, intf.Description)
-				intfNameMap[intf.Name] = intf.Description
-			}
-		}
-	}
-}
-
-func Check_Npcap() {
-	// install libpcap: sudo apt install libpcap-dev -y
-	out, err := exec.Command("sudo", "apt", "install", "libpcap-dev", "-y").Output()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	log.Println(string(out))
-}
-
-func CheckFileName(filename string) string {
-	filename = strings.Replace(filename, "/", "_", -1)
-	filename = strings.Replace(filename, `\`, "_", -1)
-	filename = strings.Replace(filename, `:`, "_", -1)
-	return filename
-}
-
-func CreateFolder(folderName string) {
-	if _, err := os.Stat(folderName); errors.Is(err, os.ErrNotExist) {
-		err := os.Mkdir(folderName, os.ModePerm)
-		if err != nil {
-			log.Println(err)
-		}
-	}
 }
