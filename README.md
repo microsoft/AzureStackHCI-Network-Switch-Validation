@@ -53,6 +53,16 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 - Spanning Tree mode must be PVST for tool to capture all VLANID.
 - LLDP must be enabled.
 
+#### Get Test Host Interface Index
+The index of interface which connected to switch is required for Windows OS users, so please check and validate the `ifIndex` number for your own test host which will be used for the tool execution.
+```
+PS C:\> Get-NetAdapter
+Name                      InterfaceDescription            ifIndex Status                   
+----                      --------------------            ------- ------                   
+Wi-Fi                     Intel(R) Wi-Fi 6                16       Up               
+Ethernet 1                Ethernet Adapter                2        Up    
+```
+Please check [Get-NetAdapter](https://docs.microsoft.com/en-us/powershell/module/netadapter/get-netadapter?view=windowsserver2022-ps) for more detail.
 
 ### Execution and Troubleshooting
 
@@ -73,10 +83,10 @@ SYNTAX
     Invoke-SwitchValidation [-ifIndex] <UInt32> [[-vlanIDs] <String>] [[-mtu] <UInt32>] [[-etsMaxClass] <UInt32>]
     [[-etsBWbyPG] <String>] [[-pfcMaxClass] <UInt32>] [[-pfcPriorityEnabled] <String>] [<CommonParameters>]
 
-C:\> Invoke-SwitchValidation -ifIndex 15
+C:\> Invoke-SwitchValidation -ifIndex [Your Interface ifIndex Number]
 interface Ethernet1 is selected
 -interfaceAlias "Wi-Fi" -interfaceGUID "{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
-PS C:\repos\Jupyter_Notebook\Go\projects\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [1 / 300 (Max)]
+PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [1 / 300 (Max)]
 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [2 / 300 (Max)]
 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [3 / 300 (Max)]
 ...
