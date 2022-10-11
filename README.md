@@ -1,5 +1,8 @@
 #  Azure Stack HCI - Network Switch Device Validation
 
+## Note 
+Please use `release_windows` branch as main branch at this moment as this branch is still in progress.
+
 ## Background
 
 This tool is intended to be used as a device testing tool for Azure Stack HCI. For more information on the requirements, please see: [Physical network requirements for Azure Stack HCI](https://docs.microsoft.com/en-us/azure-stack/hci/concepts/physical-network-requirements)
