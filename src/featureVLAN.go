@@ -46,12 +46,12 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *INIType) {
 		return vlanList[i] < vlanList[j]
 	})
 
-	sort.Slice(i.VlanIDs, func(m, n int) bool {
-		return i.VlanIDs[m] < i.VlanIDs[n]
+	sort.Slice(i.TrunkVlanList, func(m, n int) bool {
+		return i.TrunkVlanList[m] < i.TrunkVlanList[n]
 	})
 
-	if !reflect.DeepEqual(v.VLANIDs, i.VlanIDs) {
-		vlanError := fmt.Sprintf("%s - Input: %v, Found: %v", VLAN_NOT_MATCH, i.VlanIDs, vlanList)
+	if !reflect.DeepEqual(v.VLANIDs, i.TrunkVlanList) {
+		vlanError := fmt.Sprintf("%s - Input: %v, Found: %v", VLAN_NOT_MATCH, i.TrunkVlanList, vlanList)
 		restultFail = append(restultFail, vlanError)
 	}
 
