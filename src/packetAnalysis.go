@@ -67,7 +67,7 @@ func (o *OutputType) decodePacketLayer(pcapFilePath string) {
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
 
-		o.VLANResult.decodePVSTPacket(packet)
+		// o.VLANResult.decodePVSTPacket(packet)
 
 		if decodeDHCPPacket(packet) {
 			o.DHCPResult.DHCPPacketDetected = true
