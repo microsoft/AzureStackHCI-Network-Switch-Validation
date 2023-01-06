@@ -46,7 +46,6 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 
 ##### Notice:
 
-- Spanning Tree mode must be PVST for tool to capture all VLANID.
 - LLDP must be enabled.
 
 
@@ -97,41 +96,33 @@ Collecting Network Packages: [261 / 300 (Max)]
 
 - Please double check the interface connection and configuration if no network packet being collected.
 
-## What will be validated
-### Current Version
+## Validation Support List
 
-#### BGP
-
-- TCP destination port 179
-
-#### DHCP Relay
-
-- UDP destination port 67
-
-#### LLDP
-
-- Subtype 1 (Native VLAN)
-- Subtype 3 (All VLANs)
-- Subtype 4 (MTU)
-- Subtype 9 (ETS Configuration)
-- Subtype B (PFC)
-- Chassis ID Type: MAC Address
-
-#### VLAN
-
-- VLAN IDs allowed in the trunk
-
-### Todo List
-- Advance MTU: Cross hosts L2 port testing.
-- Advance DCB: Cross hosts traffic bandwidth testing.
+| Category | Validation Feature | Status |
+|--------------|-----------|------------|
+| LLDP | IEEE 802.1 Port VLAN ID (Subtype=1) |Support|
+| LLDP | IEEE 802.1 VLAN Name List (Subtype=3) |Support|
+| LLDP | IEEE 802.1 Link Aggregation (Subtype=7) |Support|
+| LLDP | IEEE 802.1 ETS Configuration (Subtype=9) |Support|
+| LLDP | IEEE 802.1 PFC Configuration (Subtype=B)  |Support|
+| LLDP | IEEE 802.3 Maximum Frame Size (Subtype=4) |Support|
+| VLAN | Native VLAN |Support|
+| VLAN | All Trunked VLAN |Support|
+| BGP | BGP TCP Establishment |Support|
+| DHCP Relay| DHCP Relay Agent Discover  |Support|
+| DCB| Cross hosts traffic bandwidth testing |To Do|
 
 ## Common Questions
 
 ### Error "Could't load wpcap.dll" when run the tool.
 
-The tool is written by Go and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap) which requires [libpcap](https://github.com/google/gopacket/blob/master/pcap/pcap_windows.go) pre-installed. The tool will automatically install libpcap based on OS, so Internet is required for the host.
+The tool is written by Go and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap) which requires [libpcap](https://github.com/google/gopacket/blob/master/pcap/pcap_windows.go) pre-installed.
 
-For Linux: Run `sudo apt install libpcap-dev`
+For Linux: 
+ ```
+ sudo apt update
+ sudo apt install libpcap-dev
+ ```
 
 ##### Note: libpcap only need to be installed once, and can be uninstalled after the validation.
 
