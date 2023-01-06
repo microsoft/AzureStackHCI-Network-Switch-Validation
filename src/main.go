@@ -61,10 +61,11 @@ func main() {
 	// Scan and collect traffic data to pcap file
 	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
 	writePcapFile(inputObj, pcapFilePath)
+	// pcapFilePath := "./test/success_lldp.pcap"
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
 	log.Println(OutputObj)
-	pdfFilePath := fmt.Sprintf("./%s.pdf", inputObj.InterfaceAlias)
+	pdfFilePath := fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
 	OutputObj.outputPDFbyFile(pdfFilePath)
 }
 
