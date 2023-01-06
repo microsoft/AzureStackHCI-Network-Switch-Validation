@@ -97,12 +97,14 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 		}
 		// Subtype3_VLANList
 		for _, v := range info8021.VLANNames {
-			VLANNameList = append(VLANNameList, int(v.ID))
+			VLANIDList = append(VLANIDList, int(v.ID))
 		}
-		l.Subtype3_VLANList = RemoveSliceDup(VLANNameList)
+		l.Subtype3_VLANList = RemoveSliceDup(VLANIDList)
+		// Update Global Var for VLAN feature validation
+		VLANIDList = l.Subtype3_VLANList
 
 		// Subtype1_PortVLANID
-		NativeVLANID := int(info8021.PVID)
+		NativeVLANID = int(info8021.PVID)
 		l.Subtype1_PortVLANID = NativeVLANID
 
 		// Subtype7_LinkAgg
@@ -122,12 +124,14 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
 	if len(l.PortName) == 0 {
 		restultFail = append(restultFail, NO_LLDP_PORT_SUBTYPE)
 	}
-	if len(l.Subtype3_VLANList) != len(i.TrunkVlanList) {
-		restultFail = append(restultFail, INCORRECT_LLDP_Subtype3_VLANList)
-	}
 
 	if l.Subtype1_PortVLANID != i.NativeVlanID {
 		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype1_PortVLANID, i.NativeVlanID, l.Subtype1_PortVLANID)
+		restultFail = append(restultFail, errMsg)
+	}
+
+	if len(l.Subtype3_VLANList) != len(i.AllVlanIDs) {
+		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype3_VLANList, i.AllVlanIDs, l.Subtype3_VLANList)
 		restultFail = append(restultFail, errMsg)
 	}
 

@@ -67,7 +67,7 @@ func (o *OutputType) decodePacketLayer(pcapFilePath string) {
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
 
-		o.VLANResult.decodePVSTPacket(packet)
+		// o.VLANResult.decodePVSTPacket(packet)
 
 		if decodeDHCPPacket(packet) {
 			o.DHCPResult.DHCPPacketDetected = true
@@ -114,13 +114,4 @@ func getPacketIPv4s(packet gopacket.Packet) (SrcIP, DstIP string) {
 	}
 	log.Fatalf("Not able to decode the network packet: %#v\n", packet)
 	return "", ""
-}
-
-func sliceContains(elems []int, v int) bool {
-	for _, i := range elems {
-		if v == i {
-			return true
-		}
-	}
-	return false
 }

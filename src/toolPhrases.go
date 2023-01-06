@@ -10,7 +10,8 @@ const (
 	INTF_NOT_MATCH = "[Error] No matched host interface found by IP, please check all host interfaces in menu and update input.ini accordingly."
 
 	// VLAN
-	VLAN_NOT_MATCH = "VLAN Not Match"
+	INCORRECT_NATIVE_VLAN_ID = "Incorrect Native VLAN ID"
+	INCORRECT_VLAN_ID_LIST   = "Incorrect VLAN ID List"
 
 	// DHCPRelay
 	DHCPPacket_NOT_Detect        = "DHCP Packet Not Detected from switch"
