@@ -23,7 +23,8 @@ type OutputType struct {
 type InputType struct {
 	InterfaceGUID      string
 	InterfaceAlias     string
-	VlanIDs            []int
+	NativeVlanID       int
+	AllVlanIDs         []int
 	MTUSize            int
 	ETSMaxClass        int
 	ETSBWbyPG          string
@@ -34,8 +35,10 @@ type InputType struct {
 var (
 	logFilePath = "./result.log"
 
-	inputObj  = &InputType{}
-	OutputObj = &OutputType{}
+	inputObj     = &InputType{}
+	OutputObj    = &OutputType{}
+	VLANIDList   []int
+	NativeVLANID int
 )
 
 func init() {
@@ -74,8 +77,9 @@ func fileIsExist(filepath string) {
 }
 
 func (i *InputType) loadInputVariable() {
-	var vlanIDs string
-	flag.StringVar(&vlanIDs, "vlanIDs", "710,711,712", "vlan list string separate with comma")
+	var allVlanIDs string
+	flag.IntVar(&i.NativeVlanID, "nativeVlanID", 1, "native vlan id")
+	flag.StringVar(&allVlanIDs, "allVlanIDs", "710,711,712", "vlan list string separate with comma")
 	flag.IntVar(&i.MTUSize, "mtu", 9214, "mtu value configured on the switch interface")
 	flag.IntVar(&i.ETSMaxClass, "etsMaxClass", 8, "maximum number of traffic classes in ETS configuration")
 	flag.StringVar(&i.ETSBWbyPG, "etsBWbyPG", "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", "bandwidth for PGID in ETS configuration")
@@ -85,13 +89,13 @@ func (i *InputType) loadInputVariable() {
 	flag.StringVar(&i.InterfaceAlias, "interfaceAlias", "", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
 
 	flag.Parse()
-	res := strings.Split(vlanIDs, ",")
+	res := strings.Split(allVlanIDs, ",")
 	for _, vlan := range res {
 		vlanid, err := strconv.Atoi(vlan)
 		if err != nil {
 			log.Fatalln(err)
 		}
-		i.VlanIDs = append(i.VlanIDs, vlanid)
+		i.AllVlanIDs = append(i.AllVlanIDs, vlanid)
 	}
 
 	// Powershell interfaceGUID: "{0217D729-CED0-4D06-9C66-592E032A37A8}"
@@ -99,4 +103,16 @@ func (i *InputType) loadInputVariable() {
 	goInterface := fmt.Sprintf(`\Device\NPF_%s`, i.InterfaceGUID)
 	i.InterfaceGUID = goInterface
 	// log.Printf("InputObj:%#v\n", i)
+}
+
+func RemoveSliceDup(intSlice []int) []int {
+	set := make(map[int]bool)
+	nonDupSlice := []int{}
+	for _, item := range intSlice {
+		if _, value := set[item]; !value {
+			set[item] = true
+			nonDupSlice = append(nonDupSlice, item)
+		}
+	}
+	return nonDupSlice
 }

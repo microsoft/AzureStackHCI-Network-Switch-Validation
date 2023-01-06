@@ -28,16 +28,15 @@ E --> |Update input variables accordingly and re-test | A
 
 ### Platform Support
 
-#### Linux
-
-Tested: Ubuntu Linux 20.04
-Untested: Other Linux versions
-
 #### Windows
 
 Tested: Windows 11, Windows Server 2019
 Untested: Other Windows versions
 
+#### Linux
+
+Tested: Ubuntu Linux 20.04
+Untested: Other Linux versions
 
 ### Preparation
 
@@ -50,7 +49,6 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 
 ##### Notice:
 
-- Spanning Tree mode must be PVST for tool to capture all VLANID.
 - LLDP must be enabled.
 
 #### Get Test Host Interface Index
@@ -98,7 +96,6 @@ PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from
         DHCPRelay - PASS
 
         LLDP - FAIL
-                - No LLDP IEEE 802.1 VLAN Name (Subtype 3) Founded
                 - Incorrect Maximum Frame Size - Input:9214, Found: 9216
                 - Incorrect ETS Class Bandwidth Configured:
                 Input:0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
@@ -117,33 +114,21 @@ PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from
 - Please double check the interface connection and configuration if no network packet being collected.
 
 
-## What will be validated
-### Current Version
+## Validation Support List
 
-#### BGP
-
-- TCP destination port 179
-
-#### DHCP Relay
-
-- UDP destination port 67
-
-#### LLDP
-
-- Subtype 1 (Native VLAN)
-- Subtype 3 (All VLANs)
-- Subtype 4 (MTU)
-- Subtype 9 (ETS Configuration)
-- Subtype B (PFC)
-- Chassis ID Type: MAC Address
-
-#### VLAN
-
-- VLAN IDs allowed in the trunk
-
-### Todo List
-- Advance MTU: Cross hosts L2 port testing.
-- Advance DCB: Cross hosts traffic bandwidth testing.
+| Category | Validation Feature | Status |
+|--------------|-----------|------------|
+| LLDP | IEEE 802.1 Port VLAN ID (Subtype=1) |Support|
+| LLDP | IEEE 802.1 VLAN Name List (Subtype=3) |Support|
+| LLDP | IEEE 802.1 Link Aggregation (Subtype=7) |Support|
+| LLDP | IEEE 802.1 ETS Configuration (Subtype=9) |Support|
+| LLDP | IEEE 802.1 PFC Configuration (Subtype=B)  |Support|
+| LLDP | IEEE 802.3 Maximum Frame Size (Subtype=4) |Support|
+| VLAN | Native VLAN |Support|
+| VLAN | All Trunked VLAN |Support|
+| BGP | BGP TCP Establishment |Support|
+| DHCP Relay| DHCP Relay Agent Discover  |Support|
+| DCB| Cross hosts traffic bandwidth testing |To Do|
 
 ## Common Questions
 
