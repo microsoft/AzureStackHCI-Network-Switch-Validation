@@ -33,6 +33,7 @@ type INIType struct {
 
 var (
 	logFilePath = "./result.log"
+	// pcapFilePath = "./test/success_lldp.pcap"
 
 	INIObj       = &INIType{}
 	OutputObj    = &OutputType{}
@@ -54,7 +55,7 @@ func init() {
 
 func main() {
 	var iniFilePath string
-	flag.StringVar(&iniFilePath, "iniFilePath", "./input.ini", "Please input INI file path.")
+	flag.StringVar(&iniFilePath, "iniFilePath", "./test/input.ini", "Please input INI file path.")
 	flag.Parse()
 	fileIsExist(iniFilePath)
 	INIObj.loadIniFile(iniFilePath)
@@ -83,7 +84,7 @@ func (i *INIType) loadIniFile(filePath string) {
 	}
 	i.InterfaceName = cfg.Section("host").Key("interfaceName").String()
 	i.NativeVlanID = cfg.Section("vlan").Key("nativeVlanID").MustInt()
-	i.AllVlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
+	i.AllVlanIDs = cfg.Section("vlan").Key("allVlanIDs").ValidInts(",")
 	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
 	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
 	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")

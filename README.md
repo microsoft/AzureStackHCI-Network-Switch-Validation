@@ -78,7 +78,6 @@ Collecting Network Packages: [261 / 300 (Max)]
         DHCPRelay - PASS
 
         LLDP - FAIL
-                - No LLDP IEEE 802.1 VLAN Name (Subtype 3) Founded
                 - Incorrect Maximum Frame Size - Input:9214, Found: 9216
                 - Incorrect ETS Class Bandwidth Configured:
                 Input:0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
