@@ -38,7 +38,7 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *INIType) {
 		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_NATIVE_VLAN_ID, i.NativeVlanID, v.NativeVlanID)
 		restultFail = append(restultFail, errMsg)
 	}
-
+	fmt.Println()
 	if len(v.AllVlanIDs) != len(i.AllVlanIDs) {
 		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_VLAN_ID_LIST, i.AllVlanIDs, v.AllVlanIDs)
 		restultFail = append(restultFail, errMsg)
