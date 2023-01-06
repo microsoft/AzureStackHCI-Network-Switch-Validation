@@ -21,8 +21,9 @@ type OutputType struct {
 }
 
 type INIType struct {
-	interfaceName      string
-	VlanIDs            []int
+	InterfaceName      string
+	NativeVlanID       int
+	AllVlanIDs         []int
 	MTUSize            int
 	ETSMaxClass        int
 	ETSBWbyPG          string
@@ -33,8 +34,10 @@ type INIType struct {
 var (
 	logFilePath = "./result.log"
 
-	INIObj    = &INIType{}
-	OutputObj = &OutputType{}
+	INIObj       = &INIType{}
+	OutputObj    = &OutputType{}
+	VLANIDList   []int
+	NativeVLANID int
 )
 
 func init() {
@@ -55,12 +58,13 @@ func main() {
 	flag.Parse()
 	fileIsExist(iniFilePath)
 	INIObj.loadIniFile(iniFilePath)
+	fmt.Println(INIObj)
 
-	pcapFilePath := fmt.Sprintf("./%s.pcap", INIObj.interfaceName)
-	writePcapFile(INIObj.interfaceName, pcapFilePath)
+	pcapFilePath := fmt.Sprintf("./%s.pcap", INIObj.InterfaceName)
+	writePcapFile(INIObj.InterfaceName, pcapFilePath)
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, INIObj)
-	pdfFilePath := fmt.Sprintf("./%s.pdf", INIObj.interfaceName)
+	pdfFilePath := fmt.Sprintf("./%s.pdf", INIObj.InterfaceName)
 	OutputObj.outputPDFbyFile(pdfFilePath)
 }
 
@@ -77,11 +81,24 @@ func (i *INIType) loadIniFile(filePath string) {
 	if err != nil {
 		log.Fatalf("Fail to read file: %v\n", err)
 	}
-	i.interfaceName = cfg.Section("host").Key("interfaceName").String()
-	i.VlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
+	i.InterfaceName = cfg.Section("host").Key("interfaceName").String()
+	i.NativeVlanID = cfg.Section("vlan").Key("nativeVlanID").MustInt()
+	i.AllVlanIDs = cfg.Section("vlan").Key("vlanIDs").ValidInts(",")
 	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
 	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
 	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
 	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
 	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
+}
+
+func RemoveSliceDup(intSlice []int) []int {
+	set := make(map[int]bool)
+	nonDupSlice := []int{}
+	for _, item := range intSlice {
+		if _, value := set[item]; !value {
+			set[item] = true
+			nonDupSlice = append(nonDupSlice, item)
+		}
+	}
+	return nonDupSlice
 }

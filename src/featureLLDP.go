@@ -11,20 +11,21 @@ import (
 )
 
 type LLDPResultType struct {
-	SysDes           string
-	PortName         string
-	ChasisID         string
-	ChasisIDType     string
-	VLANID           int
-	IEEE8021Subtype3 []uint16
-	MTU              int
-	ETS              ETSType
-	PFC              PFCType
+	SysDes                string
+	PortName              string
+	ChasisID              string
+	ChasisIDType          string
+	Subtype1_PortVLANID   int
+	Subtype3_VLANList     []int
+	Subtype4_MaxFrameSize int
+	Subtype7_LinkAggCap   bool
+	Subtype9_ETS          ETSType
+	SubtypeB_PFC          PFCType
 }
 
 type PFCType struct {
-	PFCMaxClasses      int
-	PFCPriorityEnabled map[int]int
+	PFCMaxClasses int
+	PFCConfig     map[int]int
 }
 
 type ETSType struct {
@@ -44,26 +45,34 @@ func (l *LLDPResultType) decodeLLDPPacket(packet gopacket.Packet) {
 		for _, v := range LLDPType.Values {
 			// Subtype: Priority Flow Control Configuration 0x0b
 			if v.Length == 6 && v.Value[3] == 11 {
-				l.PFC.PFCMaxClasses = bytesToDec(v.Value[4:5])
+				l.SubtypeB_PFC.PFCMaxClasses = bytesToDec(v.Value[4:5])
 				PFCStatusDec := bytesToDec(v.Value[5:])
-				l.PFC.PFCPriorityEnabled = postProPFCStatus(PFCStatusDec)
+				l.SubtypeB_PFC.PFCConfig = postProPFCStatus(PFCStatusDec)
 			}
 
-			//Subtype: Port VLAN ID 0x01
-			if v.Length == 6 && v.Value[3] == 1 {
-				l.VLANID = bytesToDec(v.Value[4:])
-			}
+			// //Subtype: ETS Recommendation 0x0a
+			// if v.Length == 25 && v.Value[3] == 10 {
+			// 	PGIDs := hex.EncodeToString(v.Value[5:9])
+			// 	BWbyPGID := make(map[int]int)
+			// 	if len(PGIDs) != 0 {
+			// 		l.Subtype9_ETS.ETSTotalPG = len(PGIDs)
+			// 		for i := 0; i < 8; i++ {
+			// 			BWbyPGID[i] = int(v.Value[9+i])
+			// 		}
+			// 		l.Subtype9_ETS.ETSBWbyPGID = BWbyPGID
+			// 	}
+			// }
 
-			//Subtype: ETS Recommendation 0x0a
-			if v.Length == 25 && v.Value[3] == 10 {
+			//Subtype: ETS Configuration 0x09
+			if v.Length == 25 && v.Value[3] == 9 {
 				PGIDs := hex.EncodeToString(v.Value[5:9])
 				BWbyPGID := make(map[int]int)
 				if len(PGIDs) != 0 {
-					l.ETS.ETSTotalPG = len(PGIDs)
+					l.Subtype9_ETS.ETSTotalPG = len(PGIDs)
 					for i := 0; i < 8; i++ {
 						BWbyPGID[i] = int(v.Value[9+i])
 					}
-					l.ETS.ETSBWbyPGID = BWbyPGID
+					l.Subtype9_ETS.ETSBWbyPGID = BWbyPGID
 				}
 			}
 		}
@@ -80,15 +89,26 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 		if err != nil {
 			log.Println(err)
 		}
-		l.MTU = int(info8023.MTU)
+		l.Subtype4_MaxFrameSize = int(info8023.MTU)
 
 		info8021, err := LLDPInfoType.Decode8021()
 		if err != nil {
 			log.Println(err)
 		}
+		// Subtype3_VLANList
 		for _, v := range info8021.VLANNames {
-			l.IEEE8021Subtype3 = append(l.IEEE8021Subtype3, v.ID)
+			VLANIDList = append(VLANIDList, int(v.ID))
 		}
+		l.Subtype3_VLANList = RemoveSliceDup(VLANIDList)
+		// Update Global Var for VLAN feature validation
+		VLANIDList = l.Subtype3_VLANList
+
+		// Subtype1_PortVLANID
+		NativeVLANID = int(info8021.PVID)
+		l.Subtype1_PortVLANID = NativeVLANID
+
+		// Subtype7_LinkAgg
+		l.Subtype7_LinkAggCap = info8021.LinkAggregation.Supported
 	}
 }
 
@@ -104,36 +124,43 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *INIType) {
 	if len(l.PortName) == 0 {
 		restultFail = append(restultFail, NO_LLDP_PORT_SUBTYPE)
 	}
-	if len(l.IEEE8021Subtype3) == 0 {
-		restultFail = append(restultFail, NO_LLDP_IEEE_8021_Subtype3)
-	}
 
-	if l.MTU != i.MTUSize {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_MAXIMUM_FRAME_SIZE, i.MTUSize, l.MTU)
+	if l.Subtype1_PortVLANID != i.NativeVlanID {
+		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype1_PortVLANID, i.NativeVlanID, l.Subtype1_PortVLANID)
 		restultFail = append(restultFail, errMsg)
 	}
 
-	if !sliceContains(i.VlanIDs, l.VLANID) {
-		errMsg := fmt.Sprintf("%s - VLANList:%v, Found: %d", WRONG_LLDP_VLAN_ID, i.VlanIDs, l.VLANID)
+	if len(l.Subtype3_VLANList) != len(i.AllVlanIDs) {
+		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype3_VLANList, i.AllVlanIDs, l.Subtype3_VLANList)
 		restultFail = append(restultFail, errMsg)
 	}
 
-	if l.ETS.ETSTotalPG != i.ETSMaxClass {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_ETS_MAX_CLASSES, i.ETSMaxClass, l.ETS.ETSTotalPG)
+	if l.Subtype4_MaxFrameSize != i.MTUSize {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_MAXIMUM_FRAME_SIZE, i.MTUSize, l.Subtype4_MaxFrameSize)
 		restultFail = append(restultFail, errMsg)
 	}
-	etsBWString := mapintToSlicestring(l.ETS.ETSBWbyPGID)
+
+	if !l.Subtype7_LinkAggCap {
+		errMsg := fmt.Sprint(UNSUPPORT_LINK_AGGREGATION)
+		restultFail = append(restultFail, errMsg)
+	}
+
+	if l.Subtype9_ETS.ETSTotalPG != i.ETSMaxClass {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_ETS_MAX_CLASSES, i.ETSMaxClass, l.Subtype9_ETS.ETSTotalPG)
+		restultFail = append(restultFail, errMsg)
+	}
+	etsBWString := mapintToSlicestring(l.Subtype9_ETS.ETSBWbyPGID)
 	if etsBWString != i.ETSBWbyPG {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_ETS_BW, i.ETSBWbyPG, etsBWString)
+		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", INCORRECT_LLDP_ETS_BW, i.ETSBWbyPG, etsBWString)
 		restultFail = append(restultFail, errMsg)
 	}
-	if l.PFC.PFCMaxClasses != i.PFCMaxClass {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", WRONG_LLDP_PFC_MAX_CLASSES, i.PFCMaxClass, l.PFC.PFCMaxClasses)
+	if l.SubtypeB_PFC.PFCMaxClasses != i.PFCMaxClass {
+		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_PFC_MAX_CLASSES, i.PFCMaxClass, l.SubtypeB_PFC.PFCMaxClasses)
 		restultFail = append(restultFail, errMsg)
 	}
-	pfcEnableString := mapintToSlicestring(l.PFC.PFCPriorityEnabled)
+	pfcEnableString := mapintToSlicestring(l.SubtypeB_PFC.PFCConfig)
 	if pfcEnableString != i.PFCPriorityEnabled {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", WRONG_LLDP_PFC_ENABLE, i.PFCPriorityEnabled, pfcEnableString)
+		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", INCORRECT_LLDP_PFC_ENABLE, i.PFCPriorityEnabled, pfcEnableString)
 		restultFail = append(restultFail, errMsg)
 	}
 
