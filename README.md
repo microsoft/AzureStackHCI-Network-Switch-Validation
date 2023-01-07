@@ -78,11 +78,16 @@ NAME
 SYNOPSIS
     Execute Invoke-SwitchValidation on Windows
 SYNTAX
-    Invoke-SwitchValidation [-ifIndex] <UInt32> [[-vlanIDs] <String>] [[-mtu] <UInt32>] [[-etsMaxClass] <UInt32>]
-    [[-etsBWbyPG] <String>] [[-pfcMaxClass] <UInt32>] [[-pfcPriorityEnabled] <String>] [<CommonParameters>]
+    Invoke-SwitchValidation [-ifIndex] <UInt32> [-nativeVlanID] <UInt32> [-allVlanIDs] <String> [[-mtu] <UInt32>]
+    [[-etsMaxClass] <UInt32>] [[-etsBWbyPG] <String>] [[-pfcMaxClass] <UInt32>] [[-pfcPriorityEnabled] <String>]
+    [<CommonParameters>]
 
-C:\> Invoke-SwitchValidation -ifIndex [Your Interface ifIndex Number]
-interface Ethernet1 is selected
+C:\> Invoke-SwitchValidation
+Supply values for the following parameters:
+ifIndex: [Your Interface ifIndex Number], example: 12
+nativeVlanID: [Switch Port Native VLAN ID], example: 710
+allVlanIDs: [Switch Trunk Allowed VLAN IDs], example: 710,711,712
+interface Wi-Fi is selected
 -interfaceAlias "Wi-Fi" -interfaceGUID "{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
 PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [1 / 300 (Max)]
 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [2 / 300 (Max)]
