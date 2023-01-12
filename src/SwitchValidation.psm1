@@ -83,12 +83,21 @@ function Invoke-SwitchValidation {
       if ($intf.ifIndex -eq $ifIndex ) {
         $inftAlias = $intf.InterfaceAlias -replace " ",""
         $inftGUID = $intf.InterfaceGuid
-        write-host "interface $inftAlias is selected"
+        # Windows NIC name is different from Linux, which need to be converted before use in gopacket lib.
+        # PS C:\Users\liunick\Downloads\Test> Get-NetAdapter | Select-Object InterfaceAlias,InterfaceIndex,InterfaceGuid,DeviceName
+        # InterfaceAlias InterfaceIndex InterfaceGuid                          DeviceName
+        # -------------- -------------- -------------                          ----------
+        # NIC1                      18 {A91A8E1F-C8B3-4D96-A403-78B9E758EA38} \Device\{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}
+        #####
+        # Powershell interfaceGUID: "{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
+        # Gopacket interface format: "\Device\NPF_{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
+        $interfaceGUID="Device\NPF_$($inftGUID)"
+        write-host "## Interface Name $inftAlias is selected, [Debug InterfaceGUID: $interfaceGUID] ##"
       } 
     }
     
-    if ($inftGUID -ne "" -and $inftAlias -ne "") {
-      $arguments += "-interfaceAlias `"$inftAlias`" -interfaceGUID `"$($inftGUID)`""
+    if ($interfaceGUID -ne "" -and $inftAlias -ne "") {
+      $arguments += "-interfaceAlias `"$inftAlias`" -interfaceGUID `"$($interfaceGUID)`""
       if ($nativeVlanID -ne 0) {
         $arguments += " -nativeVlanID `"$nativeVlanID`""
       }
