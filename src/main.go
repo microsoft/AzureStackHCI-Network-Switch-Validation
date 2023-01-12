@@ -64,7 +64,7 @@ func main() {
 	// pcapFilePath := "./test/success_lldp.pcap"
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
-	log.Println(OutputObj)
+	// log.Println(OutputObj)
 	pdfFilePath := fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
 	OutputObj.outputPDFbyFile(pdfFilePath)
 }
@@ -98,12 +98,6 @@ func (i *InputType) loadInputVariable() {
 		}
 		i.AllVlanIDs = append(i.AllVlanIDs, vlanid)
 	}
-
-	// Powershell interfaceGUID: "{0217D729-CED0-4D06-9C66-592E032A37A8}"
-	// Gopacket interface format: "\Device\NPF_{0217D729-CED0-4D06-9C66-592E032A37A8}"
-	goInterface := fmt.Sprintf(`\Device\NPF_%s`, i.InterfaceGUID)
-	i.InterfaceGUID = goInterface
-	// log.Printf("InputObj:%#v\n", i)
 }
 
 func RemoveSliceDup(intSlice []int) []int {
