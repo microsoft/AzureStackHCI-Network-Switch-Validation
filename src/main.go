@@ -72,13 +72,15 @@ func main() {
 	// pcapFilePath := "./test/success_lldp.pcap"
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
-	log.Println(OutputObj)
+	// log.Println(OutputObj)
 	pdfFilePath := fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
 	yamlFilePath := fmt.Sprintf("./Report_%s.yml", inputObj.InterfaceAlias)
 	jsonFilePath := fmt.Sprintf("./Report_%s.json", inputObj.InterfaceAlias)
 	OutputObj.outputPDFFile(pdfFilePath)
 	OutputObj.outputYAMLFile(yamlFilePath)
 	OutputObj.outputJSONFile(jsonFilePath)
+	fmt.Println("---------------------")
+	fmt.Println(GENERATE_REPORT_FILES)
 }
 
 func fileIsExist(filepath string) {

@@ -40,91 +40,6 @@ func (o *OutputType) RoleTypeResult() {
 	}
 }
 
-// func (o *OutputType) outputPDFbyFile(pdfFilePath string) {
-
-// 	var resultTemplate = `
-// 	{{range $key, $value := .}}
-// 	{{$key -}}
-// 		{{range $value}}
-// 		- {{. -}}
-// 		{{end}}
-// 	{{end}}
-// 	`
-// 	ret := OutputObj.ResultSummary
-
-// 	t := template.New("resultTemplate")
-// 	t, err := t.Parse(resultTemplate)
-// 	if err != nil {
-// 		log.Fatalln("parse file: ", err)
-// 		return
-// 	}
-
-// 	fmt.Print(CONSOLE_OUTPUT)
-// 	err = t.Execute(os.Stdout, ret)
-// 	if err != nil {
-// 		log.Fatalln("execute: ", err)
-// 		return
-// 	}
-
-// 	var retSummary bytes.Buffer
-// 	err = t.Execute(&retSummary, ret)
-// 	if err != nil {
-// 		log.Fatalln("execute: ", err)
-// 		return
-// 	}
-
-// 	pdf := fpdf.New("P", "mm", "A4", "")
-// 	pdf.AddPage()
-// 	pdf.SetFont("Arial", "B", 16)
-
-// 	var titleResult string
-// 	if OutputObj.resultPass() {
-// 		pdf.SetTextColor(0, 220, 0)
-// 		titleResult = "PASS"
-// 	} else {
-// 		pdf.SetTextColor(220, 0, 0)
-// 		titleResult = "FAIL"
-// 	}
-
-// 	reportDate := time.Now().Format("2006-01-02 15:04:05")
-// 	titleName := fmt.Sprintf("%s - Validation Report\n", reportDate)
-
-// 	pdf.Cell(0, 10, titleName)
-// 	pdf.Ln(10.0)
-
-// 	pdf.SetFont("Arial", "", 14)
-// 	pdf.SetTextColor(0, 0, 0)
-// 	pdf.MultiCell(0, 8, retSummary.String(), "", "", false)
-
-// 	pdf.AddPage()
-// 	resultDetaillBytes, err := yaml.Marshal(OutputObj)
-// 	if err != nil {
-// 		log.Fatalln("YAML marshal failed, err:", err)
-// 	}
-
-// 	pdf.SetFont("Arial", "", 10)
-// 	pdf.MultiCell(0, 5, string(resultDetaillBytes), "", "", false)
-// 	err = pdf.OutputFileAndClose(pdfFilePath)
-// 	if err != nil {
-// 		log.Fatalln("pdf creation failed: ", err)
-// 	}
-
-// 	pdf.AddPage()
-// 	iniBytes, err := yaml.Marshal(inputObj)
-// 	if err != nil {
-// 		log.Fatalln("YAML marshal failed, err:", err)
-// 	}
-
-// 	pdf.SetFont("Arial", "", 10)
-// 	pdf.MultiCell(0, 5, string(iniBytes), "", "", false)
-// 	err = pdf.OutputFileAndClose(pdfFilePath)
-// 	if err != nil {
-// 		log.Fatalln("pdf creation failed: ", err)
-// 	}
-
-// 	fmt.Println(GENERATE_PDF_OUTPUT)
-// }
-
 func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf := fpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
@@ -191,26 +106,25 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	if err != nil {
 		log.Fatalln("pdf creation failed: ", err)
 	}
-	fmt.Println(GENERATE_PDF_OUTPUT)
 }
 
 func (o *OutputType) outputYAMLFile(yamlFilePath string) {
 	out, err := yaml.Marshal(o)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 
 	f, err := os.Create(yamlFilePath)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 	defer f.Close()
 
 	_, err = f.Write(out)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 }
@@ -218,20 +132,20 @@ func (o *OutputType) outputYAMLFile(yamlFilePath string) {
 func (o *OutputType) outputJSONFile(jsonFilePath string) {
 	out, err := json.MarshalIndent(o, "", "  ")
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 
 	f, err := os.Create(jsonFilePath)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 	defer f.Close()
 
 	_, err = f.Write(out)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 }
