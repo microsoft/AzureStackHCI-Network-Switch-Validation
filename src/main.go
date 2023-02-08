@@ -11,13 +11,21 @@ import (
 	"gopkg.in/ini.v1"
 )
 
+type TypeResult struct {
+	TypeName  string
+	TypePass  string
+	TypeLog   string
+	TypeRoles []string
+}
+
 type OutputType struct {
-	TestDate      time.Time           `yaml:"TimeDate"`
-	ResultSummary map[string][]string `yaml:"ResultSummary"`
-	VLANResult    VLANResultType      `yaml:"VLANResult"`
-	LLDPResult    LLDPResultType      `yaml:"LLDPResult"`
-	DHCPResult    DHCPResultType      `yaml:"DHCPResult"`
-	BGPResult     BGPResultType       `yaml:"BGPResult"`
+	TestDate          time.Time         `yaml:"TestDate"`
+	RoleReportSummary map[string]string `yaml:"ResultSummary"`
+	TypeReportSummary []TypeResult      `yaml:"TypeSummary"`
+	VLANResult        VLANResultType    `yaml:"VLANResult"`
+	LLDPResult        LLDPResultType    `yaml:"LLDPResult"`
+	DHCPResult        DHCPResultType    `yaml:"DHCPResult"`
+	BGPResult         BGPResultType     `yaml:"BGPResult"`
 }
 
 type INIType struct {
@@ -66,7 +74,13 @@ func main() {
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, INIObj)
 	pdfFilePath := fmt.Sprintf("./%s.pdf", INIObj.InterfaceName)
-	OutputObj.outputPDFbyFile(pdfFilePath)
+	yamlFilePath := fmt.Sprintf("./%s.pdf", INIObj.InterfaceName)
+	jsonFilePath := fmt.Sprintf("./%s.pdf", INIObj.InterfaceName)
+	OutputObj.outputPDFFile(pdfFilePath)
+	OutputObj.outputYAMLFile(yamlFilePath)
+	OutputObj.outputJSONFile(jsonFilePath)
+	fmt.Println("---------------------")
+	fmt.Println(GENERATE_REPORT_FILES)
 }
 
 func fileIsExist(filepath string) {

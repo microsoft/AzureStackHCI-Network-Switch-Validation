@@ -71,21 +71,8 @@ Collecting Network Packages: [3 / 300 (Max)]
 Collecting Network Packages: [261 / 300 (Max)]
 2022/05/07 10:51:21 packetCollect.go:61: Reach preset max session time 1m30s, close live collection.
 2022/05/07 10:51:21 main.go:90: ./result.pcap founded.
-### Validation Summary Result ###
-
-        BGP - PASS
-
-        DHCPRelay - PASS
-
-        LLDP - FAIL
-                - Incorrect Maximum Frame Size - Input:9214, Found: 9216
-                - Incorrect ETS Class Bandwidth Configured:
-                Input:0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
-                Found: 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1
-
-        VLAN - PASS
-
-        Result PDF File Generated
+---------------------
+Report Files have been generated.
 ```
 
 - To avoid endless running, the tool has preset maximum timeout condition, and will stop collecting whenever hit first.
