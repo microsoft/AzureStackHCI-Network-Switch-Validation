@@ -11,13 +11,21 @@ import (
 	"time"
 )
 
+type TypeResult struct {
+	TypeName  string
+	TypePass  string
+	TypeLog   string
+	TypeRoles []string
+}
+
 type OutputType struct {
-	TestDate      time.Time           `yaml:"TimeDate"`
-	ResultSummary map[string][]string `yaml:"ResultSummary"`
-	VLANResult    VLANResultType      `yaml:"VLANResult"`
-	LLDPResult    LLDPResultType      `yaml:"LLDPResult"`
-	DHCPResult    DHCPResultType      `yaml:"DHCPResult"`
-	BGPResult     BGPResultType       `yaml:"BGPResult"`
+	TestDate          time.Time         `yaml:"TestDate"`
+	RoleReportSummary map[string]string `yaml:"ResultSummary"`
+	TypeReportSummary []TypeResult      `yaml:"TypeSummary"`
+	VLANResult        VLANResultType    `yaml:"VLANResult"`
+	LLDPResult        LLDPResultType    `yaml:"LLDPResult"`
+	DHCPResult        DHCPResultType    `yaml:"DHCPResult"`
+	BGPResult         BGPResultType     `yaml:"BGPResult"`
 }
 
 type InputType struct {
@@ -64,9 +72,13 @@ func main() {
 	// pcapFilePath := "./test/success_lldp.pcap"
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
-	// log.Println(OutputObj)
+	log.Println(OutputObj)
 	pdfFilePath := fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
-	OutputObj.outputPDFbyFile(pdfFilePath)
+	yamlFilePath := fmt.Sprintf("./Report_%s.yml", inputObj.InterfaceAlias)
+	jsonFilePath := fmt.Sprintf("./Report_%s.json", inputObj.InterfaceAlias)
+	OutputObj.outputPDFFile(pdfFilePath)
+	OutputObj.outputYAMLFile(yamlFilePath)
+	OutputObj.outputJSONFile(jsonFilePath)
 }
 
 func fileIsExist(filepath string) {
@@ -80,7 +92,7 @@ func fileIsExist(filepath string) {
 func (i *InputType) loadInputVariable() {
 	var allVlanIDs string
 	flag.IntVar(&i.NativeVlanID, "nativeVlanID", 1, "native vlan id")
-	flag.StringVar(&allVlanIDs, "allVlanIDs", "710,711,712", "vlan list string separate with comma")
+	flag.StringVar(&allVlanIDs, "allVlanIDs", "1,710,711,712", "vlan list string separate with comma")
 	flag.IntVar(&i.MTUSize, "mtu", 9214, "mtu value configured on the switch interface")
 	flag.IntVar(&i.ETSMaxClass, "etsMaxClass", 8, "maximum number of traffic classes in ETS configuration")
 	flag.StringVar(&i.ETSBWbyPG, "etsBWbyPG", "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", "bandwidth for PGID in ETS configuration")
