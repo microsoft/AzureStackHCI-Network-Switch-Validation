@@ -94,21 +94,8 @@ PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from
 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [3 / 300 (Max)]
 ...
 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [300 / 300 (Max)]
-### Validation Summary Result ###
-
-        BGP - PASS
-
-        DHCPRelay - PASS
-
-        LLDP - FAIL
-                - Incorrect Maximum Frame Size - Input:9214, Found: 9216
-                - Incorrect ETS Class Bandwidth Configured:
-                Input:0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
-                Found: 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1
-
-        VLAN - PASS
-
-        Result PDF File Generated
+---------------------
+Report Files have been generated.
 ```
 
 - To avoid endless running, the tool has preset maximum timeout condition, and will stop collecting whenever hit first.

@@ -106,26 +106,25 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	if err != nil {
 		log.Fatalln("pdf creation failed: ", err)
 	}
-	fmt.Println(GENERATE_PDF_OUTPUT)
 }
 
 func (o *OutputType) outputYAMLFile(yamlFilePath string) {
 	out, err := yaml.Marshal(o)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 
 	f, err := os.Create(yamlFilePath)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 	defer f.Close()
 
 	_, err = f.Write(out)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 }
@@ -133,20 +132,20 @@ func (o *OutputType) outputYAMLFile(yamlFilePath string) {
 func (o *OutputType) outputJSONFile(jsonFilePath string) {
 	out, err := json.MarshalIndent(o, "", "  ")
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 
 	f, err := os.Create(jsonFilePath)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 	defer f.Close()
 
 	_, err = f.Write(out)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 		return
 	}
 }

@@ -14,8 +14,8 @@ const (
 	INPUT_VARIABLES       = "Input Variables"
 
 	// Output
-	CONSOLE_OUTPUT      = "### Validation Summary Result ###"
-	GENERATE_PDF_OUTPUT = "Result PDF File Generated, Please Check in Path Folder"
+	CONSOLE_OUTPUT        = "### Validation Summary Result ###"
+	GENERATE_REPORT_FILES = "Report Files have been generated."
 
 	// Host
 	NO_INTF        = "!!! No Interfaces being detected"

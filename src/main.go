@@ -79,6 +79,8 @@ func main() {
 	OutputObj.outputPDFFile(pdfFilePath)
 	OutputObj.outputYAMLFile(yamlFilePath)
 	OutputObj.outputJSONFile(jsonFilePath)
+	fmt.Println("---------------------")
+	fmt.Println(GENERATE_REPORT_FILES)
 }
 
 func fileIsExist(filepath string) {
