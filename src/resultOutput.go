@@ -67,16 +67,24 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	}
 	pdf.Ln(10)
 
-	pdf.SetFont("Arial", "B", 16)
-	pdf.Cell(100, 10, TYPE_SUMMARY_TITTLE)
-	pdf.Ln(10)
-
-	pdf.SetFont("Arial", "", 12)
-	typeReportBytes, err := yaml.Marshal(o.TypeReportSummary)
-	if err != nil {
-		log.Fatalln("YAML marshal failed, err:", err)
+	// Only Report Failed Types if any
+	var TypeFailReport []TypeResult
+	for i, v := range o.TypeReportSummary {
+		if v.TypePass == FAIL {
+			TypeFailReport = append(TypeFailReport, o.TypeReportSummary[i])
+		}
 	}
-	pdf.MultiCell(0, 5, string(typeReportBytes), "", " ", false)
+	if len(TypeFailReport) > 0 {
+		pdf.SetFont("Arial", "B", 16)
+		pdf.Cell(100, 10, TEST_FAIL_TYPE)
+		pdf.Ln(10)
+		pdf.SetFont("Arial", "", 12)
+		typeReportBytes, err := yaml.Marshal(TypeFailReport)
+		if err != nil {
+			log.Fatalln("YAML marshal failed, err:", err)
+		}
+		pdf.MultiCell(0, 5, string(typeReportBytes), "", " ", false)
+	}
 
 	// Logs
 	pdf.AddPage()

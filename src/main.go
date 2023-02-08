@@ -67,9 +67,9 @@ func main() {
 	inputObj.loadInputVariable()
 
 	// Scan and collect traffic data to pcap file
-	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
-	writePcapFile(inputObj, pcapFilePath)
-	// pcapFilePath := "./test/success_lldp.pcap"
+	// pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
+	// writePcapFile(inputObj, pcapFilePath)
+	pcapFilePath := "./test/success_lldp.pcap"
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
 	// log.Println(OutputObj)
