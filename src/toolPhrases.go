@@ -15,7 +15,7 @@ const (
 
 	// Output
 	CONSOLE_OUTPUT      = "### Validation Summary Result ###"
-	GENERATE_PDF_OUTPUT = "Result PDF File Generated"
+	GENERATE_PDF_OUTPUT = "Result PDF File Generated, Please Check in Path Folder"
 
 	// Host
 	NO_INTF        = "!!! No Interfaces being detected"
