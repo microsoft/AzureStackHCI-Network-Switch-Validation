@@ -9,7 +9,7 @@ const (
 	PASS                  = "Pass"
 	FAIL                  = "Fail"
 	REPORT_SUMMARY_TITTLE = "Supported Role-Types"
-	TYPE_SUMMARY_TITTLE   = "Type Result with Log"
+	TEST_FAIL_TYPE        = "Test Fail Types"
 	ALL_LOGS              = "ALL Detail Logs"
 	INPUT_VARIABLES       = "Input Variables"
 
