@@ -30,23 +30,19 @@ type VLANResultType struct {
 // }
 
 func (o *OutputType) VLANResultValidation(v *VLANResultType, i *INIType) {
-	var restultFail []string
 	v.NativeVlanID = NativeVLANID
 	v.AllVlanIDs = VLANIDList
 
-	if v.NativeVlanID != i.NativeVlanID {
-		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_NATIVE_VLAN_ID, i.NativeVlanID, v.NativeVlanID)
-		restultFail = append(restultFail, errMsg)
-	}
-	fmt.Println()
+	var VLANReportType TypeResult
+
+	VLANReportType.TypeName = VLAN
 	if len(v.AllVlanIDs) != len(i.AllVlanIDs) {
 		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_VLAN_ID_LIST, i.AllVlanIDs, v.AllVlanIDs)
-		restultFail = append(restultFail, errMsg)
-	}
-
-	if len(restultFail) == 0 {
-		o.ResultSummary["VLAN - PASS"] = restultFail
+		VLANReportType.TypePass = FAIL
+		VLANReportType.TypeLog = errMsg
 	} else {
-		o.ResultSummary["VLAN - FAIL"] = restultFail
+		VLANReportType.TypePass = PASS
 	}
+	VLANReportType.TypeRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
+	o.TypeReportSummary = append(o.TypeReportSummary, VLANReportType)
 }

@@ -28,15 +28,18 @@ func decodeBGPPacket(packet gopacket.Packet) bool {
 }
 
 func (o *OutputType) BGPResultValidation(b *BGPResultType) {
-	var restultFail []string
+
+	var BGPReportType TypeResult
+
+	BGPReportType.TypeName = BGP
 
 	if !b.BGPTCPPacketDetected {
-		restultFail = append(restultFail, BGPPacket_NOT_Detect)
+		BGPReportType.TypePass = FAIL
+		BGPReportType.TypeLog = BGPPacket_NOT_Detect
+	} else {
+		BGPReportType.TypePass = PASS
 	}
 
-	if len(restultFail) == 0 {
-		o.ResultSummary["BGP - PASS"] = restultFail
-	} else {
-		o.ResultSummary["BGP - FAIL"] = restultFail
-	}
+	BGPReportType.TypeRoles = []string{COMPUTESDN}
+	o.TypeReportSummary = append(o.TypeReportSummary, BGPReportType)
 }
