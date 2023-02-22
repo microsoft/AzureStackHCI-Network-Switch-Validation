@@ -69,8 +69,13 @@ func main() {
 	// Scan and collect traffic data to pcap file
 	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
 	writePcapFile(inputObj, pcapFilePath)
-	// pcapFilePath := "./test/all_fail.pcap"
-	// pcapFilePath := "./test/storage_pass.pcap"
+	// srcFolder, err := os.Getwd()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// testFolder := filepath.Join(srcFolder, "test")
+	// testInputFolder := filepath.Join(testFolder, "testInput")
+	// pcapFilePath := filepath.Join(testInputFolder, "storage_pass.pcap")
 	fileIsExist(pcapFilePath)
 	OutputObj.resultAnalysis(pcapFilePath, inputObj)
 	// log.Println(OutputObj)

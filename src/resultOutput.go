@@ -61,7 +61,7 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 		if value == FAIL {
 			pdf.SetTextColor(255, 0, 0)
 		} else {
-			pdf.SetTextColor(0, 0, 0)
+			pdf.SetTextColor(0, 255, 0)
 		}
 		roleTitle := fmt.Sprintf("%s - %s", key, value)
 		pdf.Cell(40, 10, roleTitle)
@@ -69,6 +69,7 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	}
 	pdf.Ln(10)
 
+	pdf.SetTextColor(0, 0, 0)
 	pdf.SetFont("Arial", "B", 16)
 	pdf.Cell(100, 10, FEATURE_SUMMARY_TITTLE)
 	pdf.Ln(10)
@@ -93,7 +94,7 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 		pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
 		pdf.Ln(7)
 		pdf.CellFormat(titleWidth, 7, "RoleType", "1", 0, "", false, 0, "")
-		pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ","), "1", 0, "", false, 0, "")
+		pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ", "), "1", 0, "", false, 0, "")
 		// Line break
 		pdf.Ln(10)
 	}

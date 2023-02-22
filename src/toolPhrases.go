@@ -3,8 +3,8 @@ package main
 const (
 	//Role Types
 	MANAGEMENT             = "Management"
-	COMPUTEBASIC           = "Compute(Basic)"
-	COMPUTESDN             = "Compute(SDN)"
+	COMPUTEBASIC           = "Compute (Basic)"
+	COMPUTESDN             = "Compute (SDN)"
 	STORAGE                = "Storage"
 	PASS                   = "Pass"
 	FAIL                   = "Fail"
@@ -30,15 +30,15 @@ const (
 	// LLDP
 	LLDP_Subtype1_PortVLANID = "LLDP - Port VLAN ID (Subtype = 1)"
 	LLDP_Subtype1_NOT_DETECT = "LLDP Subtype1 not detected from switch"
-	LLDP_Subtype1_MISMATCH   = "LLDP Subtype1 Mismatch"
+	LLDP_Subtype1_MISMATCH   = "LLDP Subtype1 Mismatch, please check switch VLAN configuration"
 
 	LLDP_Subtype3_VLANList   = "LLDP - VLAN Name (Subtype = 3)"
 	LLDP_Subtype3_NOT_DETECT = "LLDP Subtype3 not detected from switch"
-	LLDP_Subtype3_MISMATCH   = "LLDP Subtype3 Mismatch"
+	LLDP_Subtype3_MISMATCH   = "LLDP Subtype3 Mismatch, please check switch VLAN configuration"
 
 	LLDP_Subtype4_MAX_FRAME_SIZE = "LLDP - Maximum Frame Size (Subtype = 4)"
 	LLDP_Subtype4_NOT_DETECT     = "LLDP Subtype4 not detected from switch"
-	LLDP_Subtype4_MISMATCH       = "LLDP Subtype4 Mismatch"
+	LLDP_Subtype4_MISMATCH       = "LLDP Subtype4 Mismatch, please check switch MTU configuration"
 
 	LLDP_Subtype7_LINK_AGGREGATION = "LLDP - Link Aggregation (Subtype = 7)"
 	LLDP_Subtype7_NOT_DETECT       = "LLDP Subtype7 not detected from switch"

@@ -212,7 +212,7 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	// pfcBWMap := stringToMap(i.PFCPriorityEnabled)
 	// pfcLogs := comparePriorityMap(l.SubtypeB_PFC.PFCConfig, pfcBWMap)
 	detectPfcConfig := mapToString(l.SubtypeB_PFC.PFCConfig)
-	if detectPfcConfig == i.PFCPriorityEnabled {
+	if detectPfcConfig != i.PFCPriorityEnabled {
 		errMsg := fmt.Sprintf("%s - Detect %s, but should be %s", LLDP_SubtypeB_PFC_ENABLE_MISMATCH, detectPfcConfig, i.PFCPriorityEnabled)
 		LLDPPFCEnableReportType.FeaturePass = FAIL
 		LLDPPFCEnableReportType.FeatureLog = errMsg
