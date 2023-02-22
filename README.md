@@ -9,9 +9,8 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Prepare a host which has at least two NICs which connect to switch device under test (DUT)
 - Download from [Release page](https://github.com/microsoft/AzureStackHCI-Network-Switch-Validation/releases) and store them in a folder on the host
 - If necessary, edit the ini file to represent your environment
-- Run the SwitchValidationTool.exe 
 - The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
-- Review the report. (Result report will be PDF, and check sample reports under `sampleResult` folder.)
+- Review the sample report. (Result report will be PDF/JSON/YAML, and check sample reports under `sampleResult` folder.)
 
 The validation tool will collect network traffic and decode packages to validate protocol value required. 
 
@@ -38,7 +37,7 @@ Untested: Other Windows versions
 Tested: Ubuntu Linux 20.04
 Untested: Other Linux versions
 
-### Preparation
+## Preparation
 
 The following shows the reference lab setup that can be modified accordingly based on needs.
 ![Reference Lab Setup](./images/switchValidationLab01.png)
@@ -50,6 +49,14 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 ##### Notice:
 
 - LLDP must be enabled.
+
+## Get Start
+
+### Run On Windows
+
+#### Download Tool Files
+- SwitchValidation.psm1
+- SwitchValidationTool.exe
 
 #### Get Test Host Interface Index
 The index of interface which connected to switch is required for Windows OS users, so please check and validate the `ifIndex` number for your own test host which will be used for the tool execution.
@@ -66,7 +73,7 @@ Please check [Get-NetAdapter](https://docs.microsoft.com/en-us/powershell/module
 
 **Tool must be run with Administrator/Sudo privilege**
 
-```
+```powershell
 PS C:\> Import-Module .\SwitchValidation.psm1 -Force
 PS C:\> Get-Command -m SwitchValidation
 CommandType     Name                                               Version    Source
@@ -97,6 +104,66 @@ PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from
 ---------------------
 Report Files have been generated.
 ```
+- 
+### Run On Linux
+
+#### Download Tool Files
+- input.ini
+- SwitchValidationTool
+
+#### Update Variables in ini file
+Update switch configured value in ini file, so the tool can parse and compare with what actually detect based on network packages. 
+```ini
+# ini format
+[host]
+# ifconfig intf name
+interfaceName="eth0"
+# Switch Information
+# Switch vlan allowed via Trunk
+[vlan]
+nativeVlanID=1
+allVlanIDs=1,710,711,712
+
+# Switch interface configured MTU
+[mtu]
+mtuSize = 9214
+
+# Optional input if different from default below
+# All classes and stay in order
+; [ets]
+; ETSMaxClass=8
+; ETSBWbyPG=0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+
+; [pfc]
+; PFCMaxClass=8
+; PFCPriorityEnabled=0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0  
+```
+Please check [ini file](https://en.wikipedia.org/wiki/INI_file) for more detail.
+
+### Execution and Troubleshooting
+
+**Tool must be run with Administrator/Sudo privilege**
+
+```
+/src (release ✗) $ ./SwitchValidationTool -h
+Usage of ./SwitchValidationTool:
+  -iniFilePath string
+        Please input INI file path. (default "./input.ini")
+
+/src (release ✗) $ sudo ./SwitchValidationTool 
+2023/02/22 19:41:52 ./input.ini founded.
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [1 / 300 (Max)]
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [2 / 300 (Max)]
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [3 / 300 (Max)]
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [4 / 300 (Max)]
+...
+2023/02/22 19:41:56 Collecting Network Packages from Interface : [300 / 300 (Max)]
+2023/02/22 19:41:56 ./eth0.pcap founded.
+---------------------
+Report Files have been generated.
+```
+
+### Notes
 
 - To avoid endless running, the tool has preset maximum timeout condition, and will stop collecting whenever hit first.
 
@@ -104,7 +171,6 @@ Report Files have been generated.
   - 300 network packets
 
 - Please double check the interface connection and configuration if no network packet being collected.
-
 
 ## Validation Support List
 
@@ -143,6 +209,17 @@ Please check [Troubleshooting_Manual](./Troubleshooting_Manual.md) to find match
 ### Host not able to run the tool or `alert security scan required`
 
 Current version is still beta version, so hasn't signed, so that cause the alert, but it will be passed if running with `administrator` level.
+
+### What should I do after finish the validation?
+
+After the tool execution successfully, there will be `five` files:
+- PDF File
+- JSON File
+- YAML File
+- Log File
+- PACP file
+
+Please group them and share with Microsoft team for review.
 
 # Contributing
 
