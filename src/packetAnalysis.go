@@ -13,7 +13,7 @@ import (
 	"github.com/google/gopacket/pcapgo"
 )
 
-func writePcapFile(inputObj *InputType, pcapFilePath string) {
+func writePcapFile(intfName, pcapFilePath string) {
 	var (
 		// False will only collect packages to the interface
 		promiscuous    bool          = true
@@ -31,9 +31,9 @@ func writePcapFile(inputObj *InputType, pcapFilePath string) {
 	defer f.Close()
 
 	// Open the device for capturing
-	handle, err := pcap.OpenLive(inputObj.InterfaceGUID, packetMaxSize, promiscuous, timeout)
+	handle, err := pcap.OpenLive(intfName, packetMaxSize, promiscuous, timeout)
 	if err != nil {
-		log.Fatalf("Error opening interface %s, %v", inputObj.InterfaceGUID, err)
+		log.Fatalf("Error opening interface %s, %v", intfName, err)
 	}
 	// Create timeout for Live Session
 	go OpenLiveTimeout(handle, sessionTimeout)

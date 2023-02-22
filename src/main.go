@@ -6,9 +6,12 @@ import (
 	"io"
 	"log"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"gopkg.in/ini.v1"
 )
 
 type FeatureResult struct {
@@ -29,6 +32,7 @@ type OutputType struct {
 }
 
 type InputType struct {
+	InterfaceName      string
 	InterfaceGUID      string
 	InterfaceAlias     string
 	NativeVlanID       int
@@ -43,10 +47,11 @@ type InputType struct {
 var (
 	logFilePath = "./result.log"
 
-	inputObj     = &InputType{}
-	OutputObj    = &OutputType{}
-	VLANIDList   []int
-	NativeVLANID int
+	inputObj                                = &InputType{}
+	OutputObj                               = &OutputType{}
+	VLANIDList                              []int
+	NativeVLANID                            int
+	pdfFilePath, yamlFilePath, jsonFilePath string
 )
 
 func init() {
@@ -64,24 +69,46 @@ func init() {
 
 func main() {
 	// parse input variables
-	inputObj.loadInputVariable()
+	if runtime.GOOS == "windows" {
+		// fmt.Println("Running on Windows")
+		inputObj.loadInputVariable()
+		// Scan and collect traffic data to pcap file
+		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
+		writePcapFile(inputObj.InterfaceGUID, pcapFilePath)
+		// srcFolder, err := os.Getwd()
+		// if err != nil {
+		// 	panic(err)
+		// }
+		// testFolder := filepath.Join(srcFolder, "test")
+		// testInputFolder := filepath.Join(testFolder, "testInput")
+		// pcapFilePath := filepath.Join(testInputFolder, "storage_pass.pcap")
+		fileIsExist(pcapFilePath)
+		OutputObj.resultAnalysis(pcapFilePath, inputObj)
+		// log.Println(OutputObj)
+		pdfFilePath = fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
+		yamlFilePath = fmt.Sprintf("./Report_%s.yml", inputObj.InterfaceAlias)
+		jsonFilePath = fmt.Sprintf("./Report_%s.json", inputObj.InterfaceAlias)
+	} else if runtime.GOOS == "linux" {
+		// fmt.Println("Running on Linux")
+		var iniFilePath string
+		// Parse iniFile to Input Object
+		flag.StringVar(&iniFilePath, "iniFilePath", "./input.ini", "Please input INI file path.")
+		flag.Parse()
+		fileIsExist(iniFilePath)
+		inputObj.loadIniFile(iniFilePath)
 
-	// Scan and collect traffic data to pcap file
-	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
-	writePcapFile(inputObj, pcapFilePath)
-	// srcFolder, err := os.Getwd()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// testFolder := filepath.Join(srcFolder, "test")
-	// testInputFolder := filepath.Join(testFolder, "testInput")
-	// pcapFilePath := filepath.Join(testInputFolder, "storage_pass.pcap")
-	fileIsExist(pcapFilePath)
-	OutputObj.resultAnalysis(pcapFilePath, inputObj)
-	// log.Println(OutputObj)
-	pdfFilePath := fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
-	yamlFilePath := fmt.Sprintf("./Report_%s.yml", inputObj.InterfaceAlias)
-	jsonFilePath := fmt.Sprintf("./Report_%s.json", inputObj.InterfaceAlias)
+		// Scan and collect traffic data to pcap file
+		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceName)
+		writePcapFile(inputObj.InterfaceName, pcapFilePath)
+		fileIsExist(pcapFilePath)
+		OutputObj.resultAnalysis(pcapFilePath, inputObj)
+		pdfFilePath = fmt.Sprintf("./%s.pdf", inputObj.InterfaceName)
+		yamlFilePath = fmt.Sprintf("./%s.yml", inputObj.InterfaceName)
+		jsonFilePath = fmt.Sprintf("./%s.json", inputObj.InterfaceName)
+	} else {
+		fmt.Println(runtime.GOOS, "Not Support")
+	}
+
 	OutputObj.outputPDFFile(pdfFilePath)
 	OutputObj.outputYAMLFile(yamlFilePath)
 	OutputObj.outputJSONFile(jsonFilePath)
@@ -118,6 +145,21 @@ func (i *InputType) loadInputVariable() {
 		}
 		i.AllVlanIDs = append(i.AllVlanIDs, vlanid)
 	}
+}
+
+func (i *InputType) loadIniFile(filePath string) {
+	cfg, err := ini.Load(filePath)
+	if err != nil {
+		log.Fatalf("Fail to read file: %v\n", err)
+	}
+	i.InterfaceName = cfg.Section("host").Key("interfaceName").String()
+	i.NativeVlanID = cfg.Section("vlan").Key("nativeVlanID").MustInt()
+	i.AllVlanIDs = cfg.Section("vlan").Key("allVlanIDs").ValidInts(",")
+	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
+	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
+	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
+	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
+	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
 }
 
 func RemoveSliceDup(intSlice []int) []int {
