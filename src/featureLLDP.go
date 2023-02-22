@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log"
-	"strings"
 
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -49,19 +48,6 @@ func (l *LLDPResultType) decodeLLDPPacket(packet gopacket.Packet) {
 				PFCStatusDec := bytesToDec(v.Value[5:])
 				l.SubtypeB_PFC.PFCConfig = postProPFCStatus(PFCStatusDec)
 			}
-
-			// //Subtype: ETS Recommendation 0x0a
-			// if v.Length == 25 && v.Value[3] == 10 {
-			// 	PGIDs := hex.EncodeToString(v.Value[5:9])
-			// 	BWbyPGID := make(map[int]int)
-			// 	if len(PGIDs) != 0 {
-			// 		l.Subtype9_ETS.ETSTotalPG = len(PGIDs)
-			// 		for i := 0; i < 8; i++ {
-			// 			BWbyPGID[i] = int(v.Value[9+i])
-			// 		}
-			// 		l.Subtype9_ETS.ETSBWbyPGID = BWbyPGID
-			// 	}
-			// }
 
 			//Subtype: ETS Configuration 0x09
 			if v.Length == 25 && v.Value[3] == 9 {
@@ -114,103 +100,127 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 
 func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 
-	var LLDPSubtype1ReportType TypeResult
-	LLDPSubtype1ReportType.TypeName = LLDP_Subtype1_PortVLANID
-	if l.Subtype1_PortVLANID != i.NativeVlanID {
-		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype1_PortVLANID, i.NativeVlanID, l.Subtype1_PortVLANID)
-		LLDPSubtype1ReportType.TypePass = FAIL
-		LLDPSubtype1ReportType.TypeLog = errMsg
+	var LLDPSubtype1ReportType FeatureResult
+	LLDPSubtype1ReportType.FeatureName = LLDP_Subtype1_PortVLANID
+	if l.Subtype1_PortVLANID == 0 {
+		errMsg := LLDP_Subtype1_NOT_DETECT
+		LLDPSubtype1ReportType.FeaturePass = FAIL
+		LLDPSubtype1ReportType.FeatureLog = errMsg
+	} else if l.Subtype1_PortVLANID != i.NativeVlanID {
+		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype1_MISMATCH, l.Subtype1_PortVLANID, i.NativeVlanID)
+		LLDPSubtype1ReportType.FeaturePass = FAIL
+		LLDPSubtype1ReportType.FeatureLog = errMsg
 	} else {
-		LLDPSubtype1ReportType.TypePass = PASS
+		LLDPSubtype1ReportType.FeaturePass = PASS
 	}
-	LLDPSubtype1ReportType.TypeRoles = []string{MANAGEMENT}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPSubtype1ReportType)
+	LLDPSubtype1ReportType.FeatureRoles = []string{MANAGEMENT}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype1ReportType)
 
-	var LLDPSubtype3ReportType TypeResult
-	LLDPSubtype3ReportType.TypeName = LLDP_Subtype3_VLANList
-	if len(l.Subtype3_VLANList) != len(i.AllVlanIDs) {
-		errMsg := fmt.Sprintf("%s - Input: %d, Found: %d", INCORRECT_LLDP_Subtype3_VLANList, i.AllVlanIDs, l.Subtype3_VLANList)
-		LLDPSubtype3ReportType.TypePass = FAIL
-		LLDPSubtype3ReportType.TypeLog = errMsg
+	var LLDPSubtype3ReportType FeatureResult
+	LLDPSubtype3ReportType.FeatureName = LLDP_Subtype3_VLANList
+	if len(l.Subtype3_VLANList) == 0 {
+		errMsg := LLDP_Subtype3_NOT_DETECT
+		LLDPSubtype3ReportType.FeaturePass = FAIL
+		LLDPSubtype3ReportType.FeatureLog = errMsg
+	} else if len(l.Subtype3_VLANList) != len(i.AllVlanIDs) {
+		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype3_MISMATCH, l.Subtype3_VLANList, i.AllVlanIDs)
+		LLDPSubtype3ReportType.FeaturePass = FAIL
+		LLDPSubtype3ReportType.FeatureLog = errMsg
 	} else {
-		LLDPSubtype3ReportType.TypePass = PASS
+		LLDPSubtype3ReportType.FeaturePass = PASS
 	}
-	LLDPSubtype3ReportType.TypeRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPSubtype3ReportType)
+	LLDPSubtype3ReportType.FeatureRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype3ReportType)
 
-	var LLDPSubtype4ReportType TypeResult
-	LLDPSubtype4ReportType.TypeName = LLDP_MAXIMUM_FRAME_SIZE
-	if l.Subtype4_MaxFrameSize != i.MTUSize {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_MAXIMUM_FRAME_SIZE, i.MTUSize, l.Subtype4_MaxFrameSize)
-		LLDPSubtype4ReportType.TypePass = FAIL
-		LLDPSubtype4ReportType.TypeLog = errMsg
+	var LLDPSubtype4ReportType FeatureResult
+	LLDPSubtype4ReportType.FeatureName = LLDP_Subtype4_MAX_FRAME_SIZE
+	if l.Subtype4_MaxFrameSize == 0 {
+		errMsg := LLDP_Subtype4_NOT_DETECT
+		LLDPSubtype4ReportType.FeaturePass = FAIL
+		LLDPSubtype4ReportType.FeatureLog = errMsg
+	} else if l.Subtype4_MaxFrameSize != i.MTUSize {
+		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype4_MISMATCH, l.Subtype4_MaxFrameSize, i.MTUSize)
+		LLDPSubtype4ReportType.FeaturePass = FAIL
+		LLDPSubtype4ReportType.FeatureLog = errMsg
 	} else {
-		LLDPSubtype4ReportType.TypePass = PASS
+		LLDPSubtype4ReportType.FeaturePass = PASS
 	}
-	LLDPSubtype4ReportType.TypeRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPSubtype4ReportType)
+	LLDPSubtype4ReportType.FeatureRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype4ReportType)
 
-	var LLDPSubtype7ReportType TypeResult
-	LLDPSubtype7ReportType.TypeName = LLDP_LINK_AGGREGATION
+	var LLDPSubtype7ReportType FeatureResult
+	LLDPSubtype7ReportType.FeatureName = LLDP_Subtype7_LINK_AGGREGATION
 	if !l.Subtype7_LinkAggCap {
-		errMsg := fmt.Sprint(UNSUPPORT_LLDP_LINK_AGGREGATION)
-		LLDPSubtype7ReportType.TypePass = FAIL
-		LLDPSubtype7ReportType.TypeLog = errMsg
+		errMsg := LLDP_Subtype7_NOT_DETECT
+		LLDPSubtype7ReportType.FeaturePass = FAIL
+		LLDPSubtype7ReportType.FeatureLog = errMsg
 	} else {
-		LLDPSubtype7ReportType.TypePass = PASS
+		LLDPSubtype7ReportType.FeaturePass = PASS
 	}
-	LLDPSubtype7ReportType.TypeRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPSubtype7ReportType)
+	LLDPSubtype7ReportType.FeatureRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype7ReportType)
 
-	var LLDPETSMaxClassReportType TypeResult
-	LLDPETSMaxClassReportType.TypeName = LLDP_ETS_MAX_CLASSES
-	if l.Subtype9_ETS.ETSTotalPG != i.ETSMaxClass {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_ETS_MAX_CLASSES, i.ETSMaxClass, l.Subtype9_ETS.ETSTotalPG)
-		LLDPETSMaxClassReportType.TypePass = FAIL
-		LLDPETSMaxClassReportType.TypeLog = errMsg
+	var LLDPETSMaxClassReportType FeatureResult
+	LLDPETSMaxClassReportType.FeatureName = LLDP_Subtype9_ETS_MAX_CLASSES
+	if l.Subtype9_ETS.ETSTotalPG == 0 {
+		errMsg := LLDP_Subtype9_ETS_MAX_CLASSES_NOT_DETECT
+		LLDPETSMaxClassReportType.FeaturePass = FAIL
+		LLDPETSMaxClassReportType.FeatureLog = errMsg
+	} else if l.Subtype9_ETS.ETSTotalPG != i.ETSMaxClass {
+		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype9_ETS_MAX_CLASSES_MISMATCH, l.Subtype9_ETS.ETSTotalPG, i.ETSMaxClass)
+		LLDPETSMaxClassReportType.FeaturePass = FAIL
+		LLDPETSMaxClassReportType.FeatureLog = errMsg
 	} else {
-		LLDPETSMaxClassReportType.TypePass = PASS
+		LLDPETSMaxClassReportType.FeaturePass = PASS
 	}
-	LLDPETSMaxClassReportType.TypeRoles = []string{STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPETSMaxClassReportType)
+	LLDPETSMaxClassReportType.FeatureRoles = []string{STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPETSMaxClassReportType)
 
-	var LLDPETSBWReportType TypeResult
-	LLDPETSBWReportType.TypeName = LLDP_ETS_BW
-	etsBWString := mapintToSlicestring(l.Subtype9_ETS.ETSBWbyPGID)
-	if etsBWString != i.ETSBWbyPG {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", INCORRECT_LLDP_ETS_BW, i.ETSBWbyPG, etsBWString)
-		LLDPETSBWReportType.TypePass = FAIL
-		LLDPETSBWReportType.TypeLog = errMsg
+	var LLDPETSBWReportType FeatureResult
+	LLDPETSBWReportType.FeatureName = LLDP_Subtype9_ETS_BW
+	// etsBWMap := stringToMap(i.ETSBWbyPG)
+	// bwLogs := comparePriorityMap(l.Subtype9_ETS.ETSBWbyPGID, etsBWMap)
+	detectEtsBW := mapToString(l.Subtype9_ETS.ETSBWbyPGID)
+	if detectEtsBW != i.ETSBWbyPG {
+		errMsg := fmt.Sprintf("%s - Detect %s, but should be %s", LLDP_Subtype9_ETS_BW_MISMATCH, detectEtsBW, i.ETSBWbyPG)
+		LLDPETSBWReportType.FeaturePass = FAIL
+		LLDPETSBWReportType.FeatureLog = errMsg
 	} else {
-		LLDPETSBWReportType.TypePass = PASS
+		LLDPETSBWReportType.FeaturePass = PASS
 	}
-	LLDPETSBWReportType.TypeRoles = []string{STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPETSBWReportType)
+	LLDPETSBWReportType.FeatureRoles = []string{STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPETSBWReportType)
 
-	var LLDPPFCMaxClassReportType TypeResult
-	LLDPPFCMaxClassReportType.TypeName = LLDP_PFC_MAX_CLASSES
-	if l.SubtypeB_PFC.PFCMaxClasses != i.PFCMaxClass {
-		errMsg := fmt.Sprintf("%s - Input:%d, Found: %d", INCORRECT_LLDP_PFC_MAX_CLASSES, i.PFCMaxClass, l.SubtypeB_PFC.PFCMaxClasses)
-		LLDPPFCMaxClassReportType.TypePass = FAIL
-		LLDPPFCMaxClassReportType.TypeLog = errMsg
+	var LLDPPFCMaxClassReportType FeatureResult
+	LLDPPFCMaxClassReportType.FeatureName = LLDP_SubtypeB_PFC_MAX_CLASSES
+	if l.SubtypeB_PFC.PFCMaxClasses == 0 {
+		errMsg := LLDP_SubtypeB_PFC_MAX_CLASSES_NOT_DETECT
+		LLDPPFCMaxClassReportType.FeaturePass = FAIL
+		LLDPPFCMaxClassReportType.FeatureLog = errMsg
+	} else if l.SubtypeB_PFC.PFCMaxClasses != i.PFCMaxClass {
+		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_SubtypeB_PFC_MAX_CLASSES_MISMATCH, l.SubtypeB_PFC.PFCMaxClasses, i.PFCMaxClass)
+		LLDPPFCMaxClassReportType.FeaturePass = FAIL
+		LLDPPFCMaxClassReportType.FeatureLog = errMsg
 	} else {
-		LLDPPFCMaxClassReportType.TypePass = PASS
+		LLDPPFCMaxClassReportType.FeaturePass = PASS
 	}
-	LLDPPFCMaxClassReportType.TypeRoles = []string{STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPPFCMaxClassReportType)
+	LLDPPFCMaxClassReportType.FeatureRoles = []string{STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPPFCMaxClassReportType)
 
-	var LLDPPFCEnableReportType TypeResult
-	LLDPPFCEnableReportType.TypeName = LLDP_PFC_ENABLE
-	pfcEnableString := mapintToSlicestring(l.SubtypeB_PFC.PFCConfig)
-	if pfcEnableString != i.PFCPriorityEnabled {
-		errMsg := fmt.Sprintf("%s:\n \t\tInput:%s\n \t\tFound: %s", INCORRECT_LLDP_PFC_ENABLE, i.PFCPriorityEnabled, pfcEnableString)
-		LLDPPFCEnableReportType.TypePass = FAIL
-		LLDPPFCEnableReportType.TypeLog = errMsg
+	var LLDPPFCEnableReportType FeatureResult
+	LLDPPFCEnableReportType.FeatureName = LLDP_SubtypeB_PFC_ENABLE
+	// pfcBWMap := stringToMap(i.PFCPriorityEnabled)
+	// pfcLogs := comparePriorityMap(l.SubtypeB_PFC.PFCConfig, pfcBWMap)
+	detectPfcConfig := mapToString(l.SubtypeB_PFC.PFCConfig)
+	if detectPfcConfig == i.PFCPriorityEnabled {
+		errMsg := fmt.Sprintf("%s - Detect %s, but should be %s", LLDP_SubtypeB_PFC_ENABLE_MISMATCH, detectPfcConfig, i.PFCPriorityEnabled)
+		LLDPPFCEnableReportType.FeaturePass = FAIL
+		LLDPPFCEnableReportType.FeatureLog = errMsg
 	} else {
-		LLDPPFCEnableReportType.TypePass = PASS
+		LLDPPFCEnableReportType.FeaturePass = PASS
 	}
-	LLDPPFCEnableReportType.TypeRoles = []string{STORAGE}
-	o.TypeReportSummary = append(o.TypeReportSummary, LLDPPFCEnableReportType)
+	LLDPPFCEnableReportType.FeatureRoles = []string{STORAGE}
+	o.FeatureSummary = append(o.FeatureSummary, LLDPPFCEnableReportType)
 
 }
 
@@ -231,12 +241,12 @@ func postProPFCStatus(decNum int) map[int]int {
 	return pfcStatus
 }
 
-func mapintToSlicestring(mapint map[int]int) string {
-	var outputStringSlice []string
-
+// input: map[int]int{0:48, 1:0, 2:0, 3:50, 4:0, 5:2, 6:0, 7:0}
+// output: string 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+func mapToString(inputMap map[int]int) string {
+	outputString := ""
 	for i := 0; i < 8; i++ {
-		outputStringSlice = append(outputStringSlice, fmt.Sprintf("%d:%d", i, mapint[i]))
+		outputString += fmt.Sprintf("%d:%d,", i, inputMap[i])
 	}
-
-	return strings.Join(outputStringSlice, ",")
+	return outputString[:len(outputString)-1]
 }

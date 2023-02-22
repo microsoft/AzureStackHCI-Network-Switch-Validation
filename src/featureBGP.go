@@ -29,17 +29,17 @@ func decodeBGPPacket(packet gopacket.Packet) bool {
 
 func (o *OutputType) BGPResultValidation(b *BGPResultType) {
 
-	var BGPReportType TypeResult
+	var BGPReportType FeatureResult
 
-	BGPReportType.TypeName = BGP
+	BGPReportType.FeatureName = BGP
 
 	if !b.BGPTCPPacketDetected {
-		BGPReportType.TypePass = FAIL
-		BGPReportType.TypeLog = BGPPacket_NOT_Detect
+		BGPReportType.FeaturePass = FAIL
+		BGPReportType.FeatureLog = BGPPacket_NOT_Detect
 	} else {
-		BGPReportType.TypePass = PASS
+		BGPReportType.FeaturePass = PASS
 	}
 
-	BGPReportType.TypeRoles = []string{COMPUTESDN}
-	o.TypeReportSummary = append(o.TypeReportSummary, BGPReportType)
+	BGPReportType.FeatureRoles = []string{COMPUTESDN}
+	o.FeatureSummary = append(o.FeatureSummary, BGPReportType)
 }

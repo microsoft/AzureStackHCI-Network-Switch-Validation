@@ -41,15 +41,15 @@ func (d *DHCPResultType) decodeDHCPRelayPacket(packet gopacket.Packet) {
 
 func (o *OutputType) DHCPResultValidation(d *DHCPResultType) {
 
-	var DHCPRelayReportType TypeResult
+	var DHCPRelayReportType FeatureResult
 
-	DHCPRelayReportType.TypeName = DHCPRelay
+	DHCPRelayReportType.FeatureName = DHCPRelay
 	if d.RelayAgentIP == nil {
-		DHCPRelayReportType.TypePass = FAIL
-		DHCPRelayReportType.TypeLog = DHCPRelay_AgentIP_Not_Detect
+		DHCPRelayReportType.FeaturePass = FAIL
+		DHCPRelayReportType.FeatureLog = DHCPRelay_AgentIP_Not_Detect
 	} else {
-		DHCPRelayReportType.TypePass = PASS
+		DHCPRelayReportType.FeaturePass = PASS
 	}
-	DHCPRelayReportType.TypeRoles = []string{MANAGEMENT}
-	o.TypeReportSummary = append(o.TypeReportSummary, DHCPRelayReportType)
+	DHCPRelayReportType.FeatureRoles = []string{MANAGEMENT}
+	o.FeatureSummary = append(o.FeatureSummary, DHCPRelayReportType)
 }
