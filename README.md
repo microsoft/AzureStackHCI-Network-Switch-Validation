@@ -55,6 +55,7 @@ The following image demonstrates a sample switch configuration based on [DellOS1
 ### Run On Windows
 
 #### Download Tool Files
+SwitchValidationTool_windows.zip, which includes
 - SwitchValidation.psm1
 - SwitchValidationTool.exe
 
@@ -108,6 +109,7 @@ Report Files have been generated.
 ### Run On Linux
 
 #### Download Tool Files
+SwitchValidationTool_linux.zip, which includes
 - input.ini
 - SwitchValidationTool
 
