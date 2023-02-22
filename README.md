@@ -61,7 +61,8 @@ SwitchValidationTool_windows.zip, which includes
 
 #### Get Test Host Interface Index
 The index of interface which connected to switch is required for Windows OS users, so please check and validate the `ifIndex` number for your own test host which will be used for the tool execution.
-```
+
+```powershell
 PS C:\> Get-NetAdapter
 Name                      InterfaceDescription            ifIndex Status                   
 ----                      --------------------            ------- ------                   
@@ -146,7 +147,7 @@ Please check [ini file](https://en.wikipedia.org/wiki/INI_file) for more detail.
 
 **Tool must be run with Administrator/Sudo privilege**
 
-```
+```shell
 /src (release ✗) $ ./SwitchValidationTool -h
 Usage of ./SwitchValidationTool:
   -iniFilePath string
