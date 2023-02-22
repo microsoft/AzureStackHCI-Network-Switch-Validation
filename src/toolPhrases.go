@@ -2,65 +2,58 @@ package main
 
 const (
 	//Role Types
-	MANAGEMENT            = "Management"
-	COMPUTEBASIC          = "Compute(Basic)"
-	COMPUTESDN            = "Compute(SDN)"
-	STORAGE               = "Storage"
-	PASS                  = "Pass"
-	FAIL                  = "Fail"
-	REPORT_SUMMARY_TITTLE = "Supported Role-Types"
-	TEST_FAIL_TYPE        = "Test Fail Types"
-	ALL_LOGS              = "ALL Detail Logs"
-	INPUT_VARIABLES       = "Input Variables"
-
-	// Output
-	CONSOLE_OUTPUT        = "### Validation Summary Result ###"
-	GENERATE_REPORT_FILES = "Report Files have been generated."
-
-	// Host
-	NO_INTF        = "!!! No Interfaces being detected"
-	INTF_NOT_MATCH = "[Error] No matched host interface found by IP, please check all host interfaces in menu and update input.ini accordingly."
+	MANAGEMENT             = "Management"
+	COMPUTEBASIC           = "Compute (Basic)"
+	COMPUTESDN             = "Compute (SDN)"
+	STORAGE                = "Storage"
+	PASS                   = "Pass"
+	FAIL                   = "Fail"
+	ROLE_SUMMARY_TITTLE    = "Supported Role-Types:"
+	FEATURE_SUMMARY_TITTLE = "Feature Test Result List:"
+	ALL_LOGS               = "ALL Detail Logs"
+	INPUT_VARIABLES        = "Input Variables"
+	GENERATE_REPORT_FILES  = "Report Files have been generated."
 
 	// BGP
-	BGP = "BGP"
+	BGP                  = "BGP"
+	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected from switch, please check switch BGP configuration."
 
 	// VLAN
-	VLAN                     = "VLAN"
-	INCORRECT_NATIVE_VLAN_ID = "Incorrect Native VLAN ID"
-	INCORRECT_VLAN_ID_LIST   = "Incorrect VLAN ID List"
+	VLAN            = "VLAN"
+	VLAN_NOT_DETECT = "No VLAN detected, please check the VLAN configuration on switch"
+	VLAN_MISMATCH   = "VLAN Mismatch"
 
 	// DHCPRelay
-	DHCPRelay                    = "DHCP Relay Agent IP"
-	DHCPPacket_NOT_Detect        = "DHCP Packet Not Detected from switch"
-	DHCPRelay_AgentIP_Not_Detect = "DHCP Relay Agent IP Not Detected from switch"
-
-	// DHCPRelay
-	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected from switch"
+	DHCPRelay                    = "DHCP - Relay Agent IP"
+	DHCPRelay_AgentIP_Not_Detect = "DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration."
 
 	// LLDP
-	LLDP_Subtype1_PortVLANID = "LLDP-Port VLAN ID (Subtype = 1)"
-	LLDP_Subtype3_VLANList   = "LLDP-VLAN Name (Subtype = 3)"
-	LLDP_MAXIMUM_FRAME_SIZE  = "LLDP-Maximum Frame Size"
-	LLDP_ETS_MAX_CLASSES     = "LLDP-ETS Maximum Number of Traffic Classes"
-	LLDP_ETS_BW              = "LLDP-ETS Class Bandwidth Configured"
-	LLDP_PFC_MAX_CLASSES     = "LLDP-PFC Maximum Number of Traffic Classes"
-	LLDP_PFC_ENABLE          = "LLDP-PFC Priority Class Enabled"
-	LLDP_LINK_AGGREGATION    = "LLDP-Link Aggregation"
+	LLDP_Subtype1_PortVLANID = "LLDP - Port VLAN ID (Subtype = 1)"
+	LLDP_Subtype1_NOT_DETECT = "LLDP Subtype1 not detected from switch"
+	LLDP_Subtype1_MISMATCH   = "LLDP Subtype1 Mismatch, please check switch VLAN configuration"
 
-	NO_LLDP_PACKET                     = "!!! No LLDP Packets Detected from switch via the Interface"
-	CHASIS_ID_TYPE                     = "MAC Address"
-	NO_LLDP_SYS_DSC                    = "No System Description detected from switch"
-	NO_LLDP_CHASSIS_SUBTYPE            = "No Chassis Subtype detected from switch"
-	NO_LLDP_PORT_SUBTYPE               = "No Port Subtype detected from switch"
-	INCORRECT_LLDP_MAXIMUM_FRAME_SIZE  = "Incorrect Maximum Frame Size"
-	INCORRECT_LLDP_Subtype1_PortVLANID = "Incorrect Subtype1 PortVLANID"
-	INCORRECT_LLDP_Subtype3_VLANList   = "Incorrect LLDP Subtype3 VLANList"
-	INCORRECT_LLDP_ETS_MAX_CLASSES     = "Incorrect ETS Maximum Number of Traffic Classes"
-	INCORRECT_LLDP_ETS_BW              = "Incorrect ETS Class Bandwidth Configured"
-	INCORRECT_LLDP_PFC_MAX_CLASSES     = "Incorrect PFC Maximum Number of Traffic Classes"
-	INCORRECT_LLDP_PFC_ENABLE          = "Incorrect PFC Priority Class Enabled"
-	UNSUPPORT_LLDP_LINK_AGGREGATION    = "No Link Aggregation Support"
+	LLDP_Subtype3_VLANList   = "LLDP - VLAN Name (Subtype = 3)"
+	LLDP_Subtype3_NOT_DETECT = "LLDP Subtype3 not detected from switch"
+	LLDP_Subtype3_MISMATCH   = "LLDP Subtype3 Mismatch, please check switch VLAN configuration"
 
-	// MTU
-	INCORRECT_MTU_SIZE = "Incorrect MTU Size"
+	LLDP_Subtype4_MAX_FRAME_SIZE = "LLDP - Maximum Frame Size (Subtype = 4)"
+	LLDP_Subtype4_NOT_DETECT     = "LLDP Subtype4 not detected from switch"
+	LLDP_Subtype4_MISMATCH       = "LLDP Subtype4 Mismatch, please check switch MTU configuration"
+
+	LLDP_Subtype7_LINK_AGGREGATION = "LLDP - Link Aggregation (Subtype = 7)"
+	LLDP_Subtype7_NOT_DETECT       = "LLDP Subtype7 not detected from switch"
+
+	LLDP_Subtype9_ETS_MAX_CLASSES            = "LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)"
+	LLDP_Subtype9_ETS_MAX_CLASSES_NOT_DETECT = "ETS Maximum Number of Traffic Classes not detected from switch"
+	LLDP_Subtype9_ETS_MAX_CLASSES_MISMATCH   = "ETS Maximum Number of Traffic Classes Mismatch"
+
+	LLDP_Subtype9_ETS_BW          = "LLDP - ETS Class Bandwidth Configuration (Subtype = 9)"
+	LLDP_Subtype9_ETS_BW_MISMATCH = "Priority 0~7 Mismatch"
+
+	LLDP_SubtypeB_PFC_MAX_CLASSES            = "LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)"
+	LLDP_SubtypeB_PFC_MAX_CLASSES_NOT_DETECT = "PFC Maximum Number of Traffic Classes not detected from switch"
+	LLDP_SubtypeB_PFC_MAX_CLASSES_MISMATCH   = "PFC Maximum Number of Traffic Classes Mismatch"
+
+	LLDP_SubtypeB_PFC_ENABLE          = "LLDP - PFC Priority Class Enabled (Subtype = B)"
+	LLDP_SubtypeB_PFC_ENABLE_MISMATCH = "Priority 0~7 Mismatch"
 )
