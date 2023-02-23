@@ -1,0 +1,57 @@
+name: Create Artifact
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+
+  build-project:
+
+    strategy:
+      matrix:
+        GO_VERSION: [1.18]
+        OS_WINDOWS: [windows]
+        OS_LINUX: [linux]
+        ARTIFACT_NAME: [SwitchValidationTool]
+        ARTIFACT_DIR: [SwitchValidationTool]
+
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.GO_VERSION }}
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install PCAP Compiler
+      run: sudo apt install libpcap-dev -y
+
+    - name: Unit Test
+      run: |
+        cd ./src
+        ls -R
+        go test -v
+
+    - name: Build Windows Artifact
+      run: |
+        cd ./src
+        go mod tidy
+        GOOS=${{ matrix.OS_WINDOWS }} GOARCH=amd64 go build -o ./${{ matrix.ARTIFACT_DIR }}/${{ matrix.OS_WINDOWS }}/
+        cp SwitchValidation.psm1 ./${{ matrix.ARTIFACT_DIR }}/${{ matrix.OS_WINDOWS }}/
+
+    - name: Build Linux Artifact
+      run: |
+        cd ./src
+        go mod tidy
+        GOOS=${{ matrix.OS_LINUX }} GOARCH=amd64 go build -o ./${{ matrix.ARTIFACT_DIR }}/${{ matrix.OS_LINUX }}/
+        cp input.ini ./${{ matrix.ARTIFACT_DIR }}/${{ matrix.OS_LINUX }}/
+        
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.ARTIFACT_DIR }}
+        path: ./src/${{ matrix.ARTIFACT_DIR }}/
