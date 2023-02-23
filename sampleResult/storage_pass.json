@@ -1,8 +1,8 @@
 {
   "TestDate": "2022-11-06T05:22:06.701322Z",
   "RoleSummary": {
-    "Compute (Basic)": "Pass",
     "Compute (SDN)": "Fail",
+    "Compute (Standard)": "Pass",
     "Management": "Fail",
     "Storage": "Pass"
   },
@@ -21,7 +21,7 @@
       "FeatureLog": "",
       "FeatureRoles": [
         "Management",
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -47,7 +47,7 @@
       "FeaturePass": "Pass",
       "FeatureLog": "",
       "FeatureRoles": [
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -57,7 +57,7 @@
       "FeaturePass": "Pass",
       "FeatureLog": "",
       "FeatureRoles": [
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -68,7 +68,7 @@
       "FeatureLog": "",
       "FeatureRoles": [
         "Management",
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]

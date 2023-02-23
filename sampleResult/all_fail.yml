@@ -1,7 +1,7 @@
 TestDate: 2022-04-14T22:38:35.099334Z
 RoleSummary:
-    Compute (Basic): Fail
     Compute (SDN): Fail
+    Compute (Standard): Fail
     Management: Fail
     Storage: Fail
 FeatureSummary:
@@ -15,7 +15,7 @@ FeatureSummary:
       featurelog: No VLAN detected, please check the VLAN configuration on switch
       featureroles:
         - Management
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: DHCP - Relay Agent IP
@@ -32,14 +32,14 @@ FeatureSummary:
       featurepass: Fail
       featurelog: LLDP Subtype3 not detected from switch
       featureroles:
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - Maximum Frame Size (Subtype = 4)
       featurepass: Fail
       featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
       featureroles:
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - Link Aggregation (Subtype = 7)
@@ -47,7 +47,7 @@ FeatureSummary:
       featurelog: ""
       featureroles:
         - Management
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
