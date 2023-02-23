@@ -1,7 +1,7 @@
 TestDate: 2022-11-06T05:22:06.701322Z
 RoleSummary:
-    Compute (Basic): Pass
     Compute (SDN): Fail
+    Compute (Standard): Pass
     Management: Fail
     Storage: Pass
 FeatureSummary:
@@ -15,7 +15,7 @@ FeatureSummary:
       featurelog: ""
       featureroles:
         - Management
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: DHCP - Relay Agent IP
@@ -32,14 +32,14 @@ FeatureSummary:
       featurepass: Pass
       featurelog: ""
       featureroles:
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - Maximum Frame Size (Subtype = 4)
       featurepass: Pass
       featurelog: ""
       featureroles:
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - Link Aggregation (Subtype = 7)
@@ -47,7 +47,7 @@ FeatureSummary:
       featurelog: ""
       featureroles:
         - Management
-        - Compute (Basic)
+        - Compute (Standard)
         - Compute (SDN)
         - Storage
     - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)

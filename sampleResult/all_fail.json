@@ -1,8 +1,8 @@
 {
   "TestDate": "2022-04-14T22:38:35.099334Z",
   "RoleSummary": {
-    "Compute (Basic)": "Fail",
     "Compute (SDN)": "Fail",
+    "Compute (Standard)": "Fail",
     "Management": "Fail",
     "Storage": "Fail"
   },
@@ -21,7 +21,7 @@
       "FeatureLog": "No VLAN detected, please check the VLAN configuration on switch",
       "FeatureRoles": [
         "Management",
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -47,7 +47,7 @@
       "FeaturePass": "Fail",
       "FeatureLog": "LLDP Subtype3 not detected from switch",
       "FeatureRoles": [
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -57,7 +57,7 @@
       "FeaturePass": "Fail",
       "FeatureLog": "LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214",
       "FeatureRoles": [
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
@@ -68,7 +68,7 @@
       "FeatureLog": "",
       "FeatureRoles": [
         "Management",
-        "Compute (Basic)",
+        "Compute (Standard)",
         "Compute (SDN)",
         "Storage"
       ]
