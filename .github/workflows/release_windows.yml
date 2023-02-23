@@ -1,0 +1,48 @@
+name: Create Windows Artifact
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+
+  build-project:
+
+    strategy:
+      matrix:
+        go-version: [1.18]
+        goos: [windows]
+        release-filename: [SwitchValidationTool]
+
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install PCAP Compiler
+      run: sudo apt install libpcap-dev -y
+
+    - name: Build Go
+      run: |
+        cd ./src
+        go mod tidy
+        GOOS=${{ matrix.goos }} GOARCH=amd64 go build -o ./${{ matrix.goos }}/
+        cp SwitchValidation.psm1 ./${{ matrix.goos }}/
+
+    - name: Test Go
+      run: |
+        cd ./src
+        ls -R
+        go test -v
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.release-filename }}_${{ matrix.goos }}
+        path: ./src/${{ matrix.goos }}/
