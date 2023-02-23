@@ -3,7 +3,7 @@ package main
 const (
 	//Role Types
 	MANAGEMENT             = "Management"
-	COMPUTEBASIC           = "Compute (Standard)"
+	COMPUTEBASIC           = "Compute (Basic)"
 	COMPUTESDN             = "Compute (SDN)"
 	STORAGE                = "Storage"
 	PASS                   = "Pass"
