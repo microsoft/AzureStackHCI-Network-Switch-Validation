@@ -13,7 +13,7 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 	v.NativeVlanID = NativeVLANID
 	v.AllVlanIDs = VLANIDList
 
-	var VLANReportType FeatureResult
+	var VLANReportType FeatureResultType
 
 	VLANReportType.FeatureName = VLAN
 	if len(v.AllVlanIDs) == 0 {
@@ -28,5 +28,5 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 		VLANReportType.FeaturePass = PASS
 	}
 	VLANReportType.FeatureRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, VLANReportType)
+	o.FeatureResultList = append(o.FeatureResultList, VLANReportType)
 }

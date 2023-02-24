@@ -13,7 +13,7 @@ import (
 
 func (o *OutputType) resultAnalysis(pcapFilePath string, i *InputType) {
 	o.decodePacketLayer(pcapFilePath)
-	o.FeatureSummary = []FeatureResult{}
+	o.FeatureResultList = []FeatureResultType{}
 	o.BGPResultValidation(&o.BGPResult)
 	o.VLANResultValidation(&o.VLANResult, i)
 	o.DHCPResultValidation(&o.DHCPResult)
@@ -23,20 +23,23 @@ func (o *OutputType) resultAnalysis(pcapFilePath string, i *InputType) {
 
 func (o *OutputType) RoleTypeResult() {
 
-	o.RoleSummary = map[string]string{
-		MANAGEMENT:   PASS,
-		COMPUTEBASIC: PASS,
-		COMPUTESDN:   PASS,
-		STORAGE:      PASS,
+	o.RoleResultList = map[string]RoleResultType{
+		MANAGEMENT:   {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
+		COMPUTEBASIC: {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
+		COMPUTESDN:   {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
+		STORAGE:      {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
 	}
 
-	for _, v := range o.FeatureSummary {
-		for _, role := range v.FeatureRoles {
-			if v.FeaturePass == FAIL {
-				if o.RoleSummary[role] != FAIL {
-					o.RoleSummary[role] = FAIL
+	for _, featureResultObj := range o.FeatureResultList {
+		for _, role := range featureResultObj.FeatureRoles {
+			tmpMap := o.RoleResultList[role]
+			tmpMap.FeaturesByRole = append(tmpMap.FeaturesByRole, featureResultObj)
+			if featureResultObj.FeaturePass == FAIL {
+				if tmpMap.RolePass != FAIL {
+					tmpMap.RolePass = FAIL
 				}
 			}
+			o.RoleResultList[role] = tmpMap
 		}
 	}
 }
@@ -55,15 +58,15 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf.Ln(10)
 
 	pdf.SetFont("Arial", "", 16)
-	for key, value := range o.RoleSummary {
+	for roleName, roleObj := range o.RoleResultList {
 		pdf.SetX(20)
 		pdf.SetFont("Arial", "B", 14)
-		if value == FAIL {
+		if roleObj.RolePass == FAIL {
 			pdf.SetTextColor(255, 0, 0)
 		} else {
 			pdf.SetTextColor(0, 255, 0)
 		}
-		roleTitle := fmt.Sprintf("%s - %s", key, value)
+		roleTitle := fmt.Sprintf("%s - %s", roleName, roleObj.RolePass)
 		pdf.Cell(40, 10, roleTitle)
 		pdf.Ln(10)
 	}
@@ -74,7 +77,7 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf.Cell(100, 10, FEATURE_SUMMARY_TITTLE)
 	pdf.Ln(10)
 	// Feature Summary List
-	for _, featureObj := range o.FeatureSummary {
+	for _, featureObj := range o.FeatureResultList {
 		titleWidth, contentWidth := 20.0, 150.0
 		// Set the font to Arial regular, size 12
 		pdf.SetFont("Arial", "", 8)
