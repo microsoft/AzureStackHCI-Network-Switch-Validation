@@ -1,12 +1,232 @@
 {
   "TestDate": "2022-11-06T05:22:06.701322Z",
-  "RoleSummary": {
-    "Compute (SDN)": "Fail",
-    "Compute (Standard)": "Pass",
-    "Management": "Fail",
-    "Storage": "Pass"
+  "RoleResultList": {
+    "Compute (SDN)": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "BGP",
+          "FeaturePass": "Fail",
+          "FeatureLog": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
+          "FeatureRoles": [
+            "Compute (SDN)"
+          ]
+        },
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Compute (Standard)": {
+      "RolePass": "Pass",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Management": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "DHCP - Relay Agent IP",
+          "FeaturePass": "Fail",
+          "FeatureLog": "DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration.",
+          "FeatureRoles": [
+            "Management"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Port VLAN ID (Subtype = 1)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype1 Mismatch, please check switch VLAN configuration - Detect: 1, but Input: 710",
+          "FeatureRoles": [
+            "Management"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Storage": {
+      "RolePass": "Pass",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - ETS Class Bandwidth Configuration (Subtype = 9)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - PFC Priority Class Enabled (Subtype = B)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        }
+      ]
+    }
   },
-  "FeatureSummary": [
+  "FeatureResultList": [
     {
       "FeatureName": "BGP",
       "FeaturePass": "Fail",

@@ -46,11 +46,11 @@ func TestResultOutput(t *testing.T) {
 			// Parse Golden Yaml to Go Object to compare
 			goldenYamlFile := filepath.Join(testGoldenFolder, tc.inputFileName+".yml")
 			want := parseYamlToGo(goldenYamlFile)
-			if !reflect.DeepEqual(want.RoleSummary, got.RoleSummary) {
-				t.Errorf("%s - RoleSummary Failed \n want: %v \n got: %v", name, want.RoleSummary, got.RoleSummary)
+			if !reflect.DeepEqual(want.RoleResultList, got.RoleResultList) {
+				t.Errorf("%s - RoleSummary Failed \n want: %v \n got: %v", name, want.RoleResultList, got.RoleResultList)
 			}
-			if !reflect.DeepEqual(want.FeatureSummary, got.FeatureSummary) {
-				t.Errorf("%s - FeatureSummary Failed \n want: %v \n got: %v", name, want.FeatureSummary, got.FeatureSummary)
+			if !reflect.DeepEqual(want.FeatureResultList, got.FeatureResultList) {
+				t.Errorf("%s - FeatureResultList Failed \n want: %v \n got: %v", name, want.FeatureResultList, got.FeatureResultList)
 			}
 			if !reflect.DeepEqual(want.LLDPResult, got.LLDPResult) {
 				t.Errorf("%s - LLDPResult Failed \n want: %v \n got: %v", name, want.LLDPResult, got.LLDPResult)

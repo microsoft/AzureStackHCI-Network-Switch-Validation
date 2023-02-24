@@ -29,7 +29,7 @@ func decodeBGPPacket(packet gopacket.Packet) bool {
 
 func (o *OutputType) BGPResultValidation(b *BGPResultType) {
 
-	var BGPReportType FeatureResult
+	var BGPReportType FeatureResultType
 
 	BGPReportType.FeatureName = BGP
 
@@ -41,5 +41,5 @@ func (o *OutputType) BGPResultValidation(b *BGPResultType) {
 	}
 
 	BGPReportType.FeatureRoles = []string{COMPUTESDN}
-	o.FeatureSummary = append(o.FeatureSummary, BGPReportType)
+	o.FeatureResultList = append(o.FeatureResultList, BGPReportType)
 }

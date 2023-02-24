@@ -1,12 +1,232 @@
 {
   "TestDate": "2022-04-14T22:38:35.099334Z",
-  "RoleSummary": {
-    "Compute (SDN)": "Fail",
-    "Compute (Standard)": "Fail",
-    "Management": "Fail",
-    "Storage": "Fail"
+  "RoleResultList": {
+    "Compute (SDN)": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "BGP",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (SDN)"
+          ]
+        },
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Fail",
+          "FeatureLog": "No VLAN detected, please check the VLAN configuration on switch",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 not detected from switch",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Compute (Standard)": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Fail",
+          "FeatureLog": "No VLAN detected, please check the VLAN configuration on switch",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 not detected from switch",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Management": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Fail",
+          "FeatureLog": "No VLAN detected, please check the VLAN configuration on switch",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "DHCP - Relay Agent IP",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Port VLAN ID (Subtype = 1)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    "Storage": {
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Fail",
+          "FeatureLog": "No VLAN detected, please check the VLAN configuration on switch",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 not detected from switch",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - ETS Class Bandwidth Configuration (Subtype = 9)",
+          "FeaturePass": "Fail",
+          "FeatureLog": "Priority 0~7 Mismatch - Detect 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - PFC Priority Class Enabled (Subtype = B)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Storage"
+          ]
+        }
+      ]
+    }
   },
-  "FeatureSummary": [
+  "FeatureResultList": [
     {
       "FeatureName": "BGP",
       "FeaturePass": "Pass",

@@ -100,7 +100,7 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 
 func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 
-	var LLDPSubtype1ReportType FeatureResult
+	var LLDPSubtype1ReportType FeatureResultType
 	LLDPSubtype1ReportType.FeatureName = LLDP_Subtype1_PortVLANID
 	if l.Subtype1_PortVLANID == 0 {
 		errMsg := LLDP_Subtype1_NOT_DETECT
@@ -114,9 +114,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPSubtype1ReportType.FeaturePass = PASS
 	}
 	LLDPSubtype1ReportType.FeatureRoles = []string{MANAGEMENT}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype1ReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPSubtype1ReportType)
 
-	var LLDPSubtype3ReportType FeatureResult
+	var LLDPSubtype3ReportType FeatureResultType
 	LLDPSubtype3ReportType.FeatureName = LLDP_Subtype3_VLANList
 	if len(l.Subtype3_VLANList) == 0 {
 		errMsg := LLDP_Subtype3_NOT_DETECT
@@ -130,9 +130,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPSubtype3ReportType.FeaturePass = PASS
 	}
 	LLDPSubtype3ReportType.FeatureRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype3ReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPSubtype3ReportType)
 
-	var LLDPSubtype4ReportType FeatureResult
+	var LLDPSubtype4ReportType FeatureResultType
 	LLDPSubtype4ReportType.FeatureName = LLDP_Subtype4_MAX_FRAME_SIZE
 	if l.Subtype4_MaxFrameSize == 0 {
 		errMsg := LLDP_Subtype4_NOT_DETECT
@@ -146,9 +146,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPSubtype4ReportType.FeaturePass = PASS
 	}
 	LLDPSubtype4ReportType.FeatureRoles = []string{COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype4ReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPSubtype4ReportType)
 
-	var LLDPSubtype7ReportType FeatureResult
+	var LLDPSubtype7ReportType FeatureResultType
 	LLDPSubtype7ReportType.FeatureName = LLDP_Subtype7_LINK_AGGREGATION
 	if !l.Subtype7_LinkAggCap {
 		errMsg := LLDP_Subtype7_NOT_DETECT
@@ -158,9 +158,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPSubtype7ReportType.FeaturePass = PASS
 	}
 	LLDPSubtype7ReportType.FeatureRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPSubtype7ReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPSubtype7ReportType)
 
-	var LLDPETSMaxClassReportType FeatureResult
+	var LLDPETSMaxClassReportType FeatureResultType
 	LLDPETSMaxClassReportType.FeatureName = LLDP_Subtype9_ETS_MAX_CLASSES
 	if l.Subtype9_ETS.ETSTotalPG == 0 {
 		errMsg := LLDP_Subtype9_ETS_MAX_CLASSES_NOT_DETECT
@@ -174,9 +174,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPETSMaxClassReportType.FeaturePass = PASS
 	}
 	LLDPETSMaxClassReportType.FeatureRoles = []string{STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPETSMaxClassReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPETSMaxClassReportType)
 
-	var LLDPETSBWReportType FeatureResult
+	var LLDPETSBWReportType FeatureResultType
 	LLDPETSBWReportType.FeatureName = LLDP_Subtype9_ETS_BW
 	// etsBWMap := stringToMap(i.ETSBWbyPG)
 	// bwLogs := comparePriorityMap(l.Subtype9_ETS.ETSBWbyPGID, etsBWMap)
@@ -189,9 +189,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPETSBWReportType.FeaturePass = PASS
 	}
 	LLDPETSBWReportType.FeatureRoles = []string{STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPETSBWReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPETSBWReportType)
 
-	var LLDPPFCMaxClassReportType FeatureResult
+	var LLDPPFCMaxClassReportType FeatureResultType
 	LLDPPFCMaxClassReportType.FeatureName = LLDP_SubtypeB_PFC_MAX_CLASSES
 	if l.SubtypeB_PFC.PFCMaxClasses == 0 {
 		errMsg := LLDP_SubtypeB_PFC_MAX_CLASSES_NOT_DETECT
@@ -205,9 +205,9 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPPFCMaxClassReportType.FeaturePass = PASS
 	}
 	LLDPPFCMaxClassReportType.FeatureRoles = []string{STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPPFCMaxClassReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPPFCMaxClassReportType)
 
-	var LLDPPFCEnableReportType FeatureResult
+	var LLDPPFCEnableReportType FeatureResultType
 	LLDPPFCEnableReportType.FeatureName = LLDP_SubtypeB_PFC_ENABLE
 	// pfcBWMap := stringToMap(i.PFCPriorityEnabled)
 	// pfcLogs := comparePriorityMap(l.SubtypeB_PFC.PFCConfig, pfcBWMap)
@@ -220,7 +220,7 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 		LLDPPFCEnableReportType.FeaturePass = PASS
 	}
 	LLDPPFCEnableReportType.FeatureRoles = []string{STORAGE}
-	o.FeatureSummary = append(o.FeatureSummary, LLDPPFCEnableReportType)
+	o.FeatureResultList = append(o.FeatureResultList, LLDPPFCEnableReportType)
 
 }
 

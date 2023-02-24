@@ -14,7 +14,12 @@ import (
 	"gopkg.in/ini.v1"
 )
 
-type FeatureResult struct {
+type RoleResultType struct {
+	RolePass       string
+	FeaturesByRole []FeatureResultType
+}
+
+type FeatureResultType struct {
 	FeatureName  string
 	FeaturePass  string
 	FeatureLog   string
@@ -22,13 +27,13 @@ type FeatureResult struct {
 }
 
 type OutputType struct {
-	TestDate       time.Time         `yaml:"TestDate"`
-	RoleSummary    map[string]string `yaml:"RoleSummary"`
-	FeatureSummary []FeatureResult   `yaml:"FeatureSummary"`
-	VLANResult     VLANResultType    `yaml:"VLANResult"`
-	LLDPResult     LLDPResultType    `yaml:"LLDPResult"`
-	DHCPResult     DHCPResultType    `yaml:"DHCPResult"`
-	BGPResult      BGPResultType     `yaml:"BGPResult"`
+	TestDate          time.Time                 `yaml:"TestDate"`
+	RoleResultList    map[string]RoleResultType `yaml:"RoleResultList"`
+	FeatureResultList []FeatureResultType       `yaml:"FeatureResultList"`
+	VLANResult        VLANResultType            `yaml:"VLANResult"`
+	LLDPResult        LLDPResultType            `yaml:"LLDPResult"`
+	DHCPResult        DHCPResultType            `yaml:"DHCPResult"`
+	BGPResult         BGPResultType             `yaml:"BGPResult"`
 }
 
 type InputType struct {
