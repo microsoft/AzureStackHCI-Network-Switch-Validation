@@ -38,7 +38,7 @@ Untested: Other Linux versions
 ## Preparation
 
 The following shows the reference lab setup that can be modified accordingly based on needs.
-![Reference Lab Setup](./images/switchValidationLab01.png)
+![Reference Lab Setup](./images/sampleLabSetup.png)
 
 #### Configure Network Switch
 
