@@ -1,7 +1,7 @@
 ---
 name: "Tool result upload \U0001F680"
 about: 'Upload your passing result documents '
-title: ''
+title: "[ORGANIZATION] - [MODEL] - Results"
 labels: ''
 assignees: SwitchValidationTeam
 
