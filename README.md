@@ -48,7 +48,7 @@ Please check the [sample switch configuration](./switchReferenceConfig) for refe
 
 - LLDP must be enabled.
 
-## Get Start
+## Get Started
 
 ### Run On Windows
 
@@ -173,21 +173,16 @@ Report Files have been generated.
 
 - Please double check the interface connection and configuration if no network packet being collected.
 
-## Validation Support List
+### What should I do after finish the validation?
 
-| Category | Validation Feature | Status |
-|--------------|-----------|------------|
-| LLDP | IEEE 802.1 Port VLAN ID (Subtype=1) |Support|
-| LLDP | IEEE 802.1 VLAN Name List (Subtype=3) |Support|
-| LLDP | IEEE 802.1 Link Aggregation (Subtype=7) |Support|
-| LLDP | IEEE 802.1 ETS Configuration (Subtype=9) |Support|
-| LLDP | IEEE 802.1 PFC Configuration (Subtype=B)  |Support|
-| LLDP | IEEE 802.3 Maximum Frame Size (Subtype=4) |Support|
-| VLAN | Native VLAN |Support|
-| VLAN | All Trunked VLAN |Support|
-| BGP | BGP TCP Establishment |Support|
-| DHCP Relay| DHCP Relay Agent Discover  |Support|
-| DCB| Cross hosts traffic bandwidth testing |To Do|
+After the tool execution successfully, there will be `five` files:
+- PDF File
+- JSON File
+- YAML File
+- Log File
+- PACP file
+
+Please group them, navigate to "Issues" and submit "Tool upload result" for the Microsoft team to review.
 
 ## Common Questions
 
@@ -210,17 +205,6 @@ Please check [Troubleshooting_Manual](./Troubleshooting_Manual.md) to find match
 ### Host not able to run the tool or `alert security scan required`
 
 Current version is still beta version, so hasn't signed, so that cause the alert, but it will be passed if running with `administrator` level.
-
-### What should I do after finish the validation?
-
-After the tool execution successfully, there will be `five` files:
-- PDF File
-- JSON File
-- YAML File
-- Log File
-- PACP file
-
-Please group them and share with Microsoft team for review.
 
 # Contributing
 
