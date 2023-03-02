@@ -11,6 +11,7 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
 - Review the [sample report](./switchReferenceConfig) which will be PDF/JSON/YAML files.
 - The validation tool will collect network traffic and decode packages to validate protocol value required. 
+- Upload results under under the "Issues" tab in GitHub
 
 ### Logic Diagram
 ```mermaid
