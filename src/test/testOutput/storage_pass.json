@@ -1,109 +1,8 @@
 {
   "TestDate": "2022-11-06T05:22:06.701322Z",
-  "RoleResultList": {
-    "Compute (SDN)": {
-      "RolePass": "Fail",
-      "FeaturesByRole": [
-        {
-          "FeatureName": "BGP",
-          "FeaturePass": "Fail",
-          "FeatureLog": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
-          "FeatureRoles": [
-            "Compute (SDN)"
-          ]
-        },
-        {
-          "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Management",
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Management",
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        }
-      ]
-    },
-    "Compute (Standard)": {
-      "RolePass": "Pass",
-      "FeaturesByRole": [
-        {
-          "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Management",
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        },
-        {
-          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
-          "FeatureRoles": [
-            "Management",
-            "Compute (Standard)",
-            "Compute (SDN)",
-            "Storage"
-          ]
-        }
-      ]
-    },
-    "Management": {
+  "RoleResultList": [
+    {
+      "RoleName": "Management",
       "RolePass": "Fail",
       "FeaturesByRole": [
         {
@@ -146,7 +45,8 @@
         }
       ]
     },
-    "Storage": {
+    {
+      "RoleName": "Storage",
       "RolePass": "Pass",
       "FeaturesByRole": [
         {
@@ -224,8 +124,112 @@
           ]
         }
       ]
+    },
+    {
+      "RoleName": "Compute (Standard)",
+      "RolePass": "Pass",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
+    },
+    {
+      "RoleName": "Compute (SDN)",
+      "RolePass": "Fail",
+      "FeaturesByRole": [
+        {
+          "FeatureName": "BGP",
+          "FeaturePass": "Fail",
+          "FeatureLog": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
+          "FeatureRoles": [
+            "Compute (SDN)"
+          ]
+        },
+        {
+          "FeatureName": "VLAN",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        },
+        {
+          "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
+          "FeaturePass": "Pass",
+          "FeatureLog": "",
+          "FeatureRoles": [
+            "Management",
+            "Compute (Standard)",
+            "Compute (SDN)",
+            "Storage"
+          ]
+        }
+      ]
     }
-  },
+  ],
   "FeatureResultList": [
     {
       "FeatureName": "BGP",

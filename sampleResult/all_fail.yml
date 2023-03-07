@@ -1,158 +1,158 @@
 TestDate: 2022-04-14T22:38:35.099334Z
 RoleResultList:
-    Compute (SDN):
-        rolepass: Fail
-        featuresbyrole:
-            - featurename: BGP
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Compute (SDN)
-            - featurename: VLAN
-              featurepass: Fail
-              featurelog: No VLAN detected, please check the VLAN configuration on switch
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - VLAN Name (Subtype = 3)
-              featurepass: Fail
-              featurelog: LLDP Subtype3 not detected from switch
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-              featurepass: Fail
-              featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Link Aggregation (Subtype = 7)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-    Compute (Standard):
-        rolepass: Fail
-        featuresbyrole:
-            - featurename: VLAN
-              featurepass: Fail
-              featurelog: No VLAN detected, please check the VLAN configuration on switch
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - VLAN Name (Subtype = 3)
-              featurepass: Fail
-              featurelog: LLDP Subtype3 not detected from switch
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-              featurepass: Fail
-              featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Link Aggregation (Subtype = 7)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-    Management:
-        rolepass: Fail
-        featuresbyrole:
-            - featurename: VLAN
-              featurepass: Fail
-              featurelog: No VLAN detected, please check the VLAN configuration on switch
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: DHCP - Relay Agent IP
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-            - featurename: LLDP - Port VLAN ID (Subtype = 1)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-            - featurename: LLDP - Link Aggregation (Subtype = 7)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-    Storage:
-        rolepass: Fail
-        featuresbyrole:
-            - featurename: VLAN
-              featurepass: Fail
-              featurelog: No VLAN detected, please check the VLAN configuration on switch
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - VLAN Name (Subtype = 3)
-              featurepass: Fail
-              featurelog: LLDP Subtype3 not detected from switch
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-              featurepass: Fail
-              featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
-              featureroles:
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - Link Aggregation (Subtype = 7)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Management
-                - Compute (Standard)
-                - Compute (SDN)
-                - Storage
-            - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Storage
-            - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
-              featurepass: Fail
-              featurelog: Priority 0~7 Mismatch - Detect 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
-              featureroles:
-                - Storage
-            - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Storage
-            - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
-              featurepass: Pass
-              featurelog: ""
-              featureroles:
-                - Storage
+    - rolename: Management
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelog: No VLAN detected, please check the VLAN configuration on switch
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: DHCP - Relay Agent IP
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+        - featurename: LLDP - Port VLAN ID (Subtype = 1)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+    - rolename: Storage
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelog: No VLAN detected, please check the VLAN configuration on switch
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelog: LLDP Subtype3 not detected from switch
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Fail
+          featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Storage
+        - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
+          featurepass: Fail
+          featurelog: Priority 0~7 Mismatch - Detect 0:46,1:1,2:1,3:48,4:1,5:1,6:1,7:1, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+          featureroles:
+            - Storage
+        - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Storage
+        - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Storage
+    - rolename: Compute (Standard)
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelog: No VLAN detected, please check the VLAN configuration on switch
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelog: LLDP Subtype3 not detected from switch
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Fail
+          featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+    - rolename: Compute (SDN)
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: BGP
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Compute (SDN)
+        - featurename: VLAN
+          featurepass: Fail
+          featurelog: No VLAN detected, please check the VLAN configuration on switch
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelog: LLDP Subtype3 not detected from switch
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Fail
+          featurelog: 'LLDP Subtype4 Mismatch, please check switch MTU configuration - Detect: 9216, but Input: 9214'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelog: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
 FeatureResultList:
     - featurename: BGP
       featurepass: Pass
