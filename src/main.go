@@ -15,6 +15,7 @@ import (
 )
 
 type RoleResultType struct {
+	RoleName       string
 	RolePass       string
 	FeaturesByRole []FeatureResultType
 }
@@ -27,13 +28,13 @@ type FeatureResultType struct {
 }
 
 type OutputType struct {
-	TestDate          time.Time                 `yaml:"TestDate"`
-	RoleResultList    map[string]RoleResultType `yaml:"RoleResultList"`
-	FeatureResultList []FeatureResultType       `yaml:"FeatureResultList"`
-	VLANResult        VLANResultType            `yaml:"VLANResult"`
-	LLDPResult        LLDPResultType            `yaml:"LLDPResult"`
-	DHCPResult        DHCPResultType            `yaml:"DHCPResult"`
-	BGPResult         BGPResultType             `yaml:"BGPResult"`
+	TestDate          time.Time           `yaml:"TestDate"`
+	RoleResultList    []RoleResultType    `yaml:"RoleResultList"`
+	FeatureResultList []FeatureResultType `yaml:"FeatureResultList"`
+	VLANResult        VLANResultType      `yaml:"VLANResult"`
+	LLDPResult        LLDPResultType      `yaml:"LLDPResult"`
+	DHCPResult        DHCPResultType      `yaml:"DHCPResult"`
+	BGPResult         BGPResultType       `yaml:"BGPResult"`
 }
 
 type InputType struct {
@@ -114,9 +115,10 @@ func main() {
 		fmt.Println(runtime.GOOS, "Not Support")
 	}
 
-	OutputObj.outputPDFFile(pdfFilePath)
-	OutputObj.outputYAMLFile(yamlFilePath)
 	OutputObj.outputJSONFile(jsonFilePath)
+	OutputObj.outputYAMLFile(yamlFilePath)
+	OutputObj.outputPDFFile(pdfFilePath)
+
 	fmt.Println("---------------------")
 	fmt.Println(GENERATE_REPORT_FILES)
 }

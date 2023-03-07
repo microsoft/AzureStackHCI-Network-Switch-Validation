@@ -22,25 +22,34 @@ func (o *OutputType) resultAnalysis(pcapFilePath string, i *InputType) {
 }
 
 func (o *OutputType) RoleTypeResult() {
+	o.RoleResultList = append(o.RoleResultList, RoleResultType{RoleName: MANAGEMENT, RolePass: PASS, FeaturesByRole: []FeatureResultType{}})
+	o.RoleResultList = append(o.RoleResultList, RoleResultType{RoleName: STORAGE, RolePass: PASS, FeaturesByRole: []FeatureResultType{}})
+	o.RoleResultList = append(o.RoleResultList, RoleResultType{RoleName: COMPUTEBASIC, RolePass: PASS, FeaturesByRole: []FeatureResultType{}})
+	o.RoleResultList = append(o.RoleResultList, RoleResultType{RoleName: COMPUTESDN, RolePass: PASS, FeaturesByRole: []FeatureResultType{}})
 
-	o.RoleResultList = map[string]RoleResultType{
+	// Create Tmp Map to store role based object
+	roleResultMap := map[string]RoleResultType{
 		MANAGEMENT:   {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
 		COMPUTEBASIC: {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
 		COMPUTESDN:   {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
 		STORAGE:      {RolePass: PASS, FeaturesByRole: []FeatureResultType{}},
 	}
-
 	for _, featureResultObj := range o.FeatureResultList {
 		for _, role := range featureResultObj.FeatureRoles {
-			tmpMap := o.RoleResultList[role]
+			tmpMap := roleResultMap[role]
 			tmpMap.FeaturesByRole = append(tmpMap.FeaturesByRole, featureResultObj)
 			if featureResultObj.FeaturePass == FAIL {
 				if tmpMap.RolePass != FAIL {
 					tmpMap.RolePass = FAIL
 				}
 			}
-			o.RoleResultList[role] = tmpMap
+			roleResultMap[role] = tmpMap
 		}
+	}
+
+	for idx, roleObj := range o.RoleResultList {
+		o.RoleResultList[idx].RolePass = roleResultMap[roleObj.RoleName].RolePass
+		o.RoleResultList[idx].FeaturesByRole = roleResultMap[roleObj.RoleName].FeaturesByRole
 	}
 }
 
@@ -58,17 +67,38 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf.Ln(10)
 
 	pdf.SetFont("Arial", "", 16)
-	for roleName, roleObj := range o.RoleResultList {
-		pdf.SetX(20)
+
+	for _, roleObj := range o.RoleResultList {
+		// pdf.SetX(20)
 		pdf.SetFont("Arial", "B", 14)
 		if roleObj.RolePass == FAIL {
 			pdf.SetTextColor(255, 0, 0)
 		} else {
 			pdf.SetTextColor(0, 255, 0)
 		}
-		roleTitle := fmt.Sprintf("%s - %s", roleName, roleObj.RolePass)
+		roleTitle := fmt.Sprintf("%s - %s", roleObj.RoleName, roleObj.RolePass)
 		pdf.Cell(40, 10, roleTitle)
 		pdf.Ln(10)
+		// Fail Feature Summary based on Role
+		for _, featureObj := range roleObj.FeaturesByRole {
+			titleWidth, contentWidth := 20.0, 150.0
+			pdf.SetFont("Arial", "", 8)
+			if featureObj.FeaturePass == FAIL {
+				pdf.CellFormat(titleWidth, 7, "Feature", "1", 0, "", false, 0, "")
+				pdf.CellFormat(contentWidth, 7, featureObj.FeatureName, "1", 0, "", false, 0, "")
+				pdf.Ln(7)
+				pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
+				pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
+				pdf.Ln(7)
+				pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
+				pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
+				pdf.Ln(7)
+				pdf.CellFormat(titleWidth, 7, "RoleType", "1", 0, "", false, 0, "")
+				pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ", "), "1", 0, "", false, 0, "")
+				// Line break
+				pdf.Ln(10)
+			}
+		}
 	}
 	pdf.Ln(10)
 
@@ -79,7 +109,6 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	// Feature Summary List
 	for _, featureObj := range o.FeatureResultList {
 		titleWidth, contentWidth := 20.0, 150.0
-		// Set the font to Arial regular, size 12
 		pdf.SetFont("Arial", "", 8)
 
 		if featureObj.FeaturePass == "Fail" {
