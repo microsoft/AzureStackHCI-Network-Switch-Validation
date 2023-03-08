@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/go-pdf/fpdf"
 	"gopkg.in/yaml.v3"
@@ -80,25 +79,25 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 		pdf.Cell(40, 10, roleTitle)
 		pdf.Ln(10)
 		// Fail Feature Summary based on Role
-		for _, featureObj := range roleObj.FeaturesByRole {
-			titleWidth, contentWidth := 20.0, 150.0
-			pdf.SetFont("Arial", "", 8)
-			if featureObj.FeaturePass == FAIL {
-				pdf.CellFormat(titleWidth, 7, "Feature", "1", 0, "", false, 0, "")
-				pdf.CellFormat(contentWidth, 7, featureObj.FeatureName, "1", 0, "", false, 0, "")
-				pdf.Ln(7)
-				pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
-				pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
-				pdf.Ln(7)
-				pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
-				pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
-				pdf.Ln(7)
-				pdf.CellFormat(titleWidth, 7, "RoleType", "1", 0, "", false, 0, "")
-				pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ", "), "1", 0, "", false, 0, "")
-				// Line break
-				pdf.Ln(10)
-			}
-		}
+		// for _, featureObj := range roleObj.FeaturesByRole {
+		// 	titleWidth, contentWidth := 20.0, 150.0
+		// 	pdf.SetFont("Arial", "", 8)
+		// 	if featureObj.FeaturePass == FAIL {
+		// 		pdf.CellFormat(titleWidth, 7, "Feature", "1", 0, "", false, 0, "")
+		// 		pdf.CellFormat(contentWidth, 7, featureObj.FeatureName, "1", 0, "", false, 0, "")
+		// 		pdf.Ln(7)
+		// 		pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
+		// 		pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
+		// 		pdf.Ln(7)
+		// 		pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
+		// 		pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
+		// 		pdf.Ln(7)
+		// 		pdf.CellFormat(titleWidth, 7, "RoleType", "1", 0, "", false, 0, "")
+		// 		pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ", "), "1", 0, "", false, 0, "")
+		// 		// Line break
+		// 		pdf.Ln(10)
+		// 	}
+		// }
 	}
 	pdf.Ln(10)
 
@@ -107,28 +106,36 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf.Cell(100, 10, FEATURE_SUMMARY_TITTLE)
 	pdf.Ln(10)
 	// Feature Summary List
-	for _, featureObj := range o.FeatureResultList {
-		titleWidth, contentWidth := 20.0, 150.0
-		pdf.SetFont("Arial", "", 8)
-
-		if featureObj.FeaturePass == "Fail" {
+	for _, roleObj := range o.RoleResultList {
+		// pdf.SetX(20)
+		pdf.SetFont("Arial", "B", 14)
+		if roleObj.RolePass == FAIL {
 			pdf.SetTextColor(255, 0, 0)
 		} else {
-			pdf.SetTextColor(0, 0, 0)
+			pdf.SetTextColor(0, 255, 0)
 		}
-		pdf.CellFormat(titleWidth, 7, "Feature", "1", 0, "", false, 0, "")
-		pdf.CellFormat(contentWidth, 7, featureObj.FeatureName, "1", 0, "", false, 0, "")
-		pdf.Ln(7)
-		pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
-		pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
-		pdf.Ln(7)
-		pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
-		pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
-		pdf.Ln(7)
-		pdf.CellFormat(titleWidth, 7, "RoleType", "1", 0, "", false, 0, "")
-		pdf.CellFormat(contentWidth, 7, strings.Join(featureObj.FeatureRoles, ", "), "1", 0, "", false, 0, "")
-		// Line break
+		roleTitle := fmt.Sprintf("%s - %s", roleObj.RoleName, roleObj.RolePass)
+		pdf.Cell(40, 10, roleTitle)
 		pdf.Ln(10)
+		// Fail Feature Summary based on Role
+		for _, featureObj := range roleObj.FeaturesByRole {
+			if featureObj.FeaturePass == FAIL {
+				pdf.SetTextColor(255, 0, 0)
+			} else {
+				pdf.SetTextColor(0, 0, 0)
+			}
+			titleWidth, contentWidth := 20.0, 150.0
+			pdf.SetFont("Arial", "", 8)
+			pdf.CellFormat(titleWidth, 7, "Feature", "1", 0, "", false, 0, "")
+			pdf.CellFormat(contentWidth, 7, featureObj.FeatureName, "1", 0, "", false, 0, "")
+			pdf.Ln(7)
+			pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
+			pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
+			pdf.Ln(7)
+			pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
+			pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
+			pdf.Ln(10)
+		}
 	}
 
 	// Logs

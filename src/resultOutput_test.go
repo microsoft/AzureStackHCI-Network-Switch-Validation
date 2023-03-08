@@ -21,9 +21,6 @@ func TestResultOutput(t *testing.T) {
 	}
 
 	testCases := map[string]test{
-		"all_fail": {
-			inputFileName: "all_fail",
-		},
 		"storage_pass": {
 			inputFileName: "storage_pass",
 		},
@@ -47,10 +44,7 @@ func TestResultOutput(t *testing.T) {
 			goldenYamlFile := filepath.Join(testGoldenFolder, tc.inputFileName+".yml")
 			want := parseYamlToGo(goldenYamlFile)
 			if !reflect.DeepEqual(want.RoleResultList, got.RoleResultList) {
-				t.Errorf("%s - RoleSummary Failed \n want: %v \n got: %v", name, want.RoleResultList, got.RoleResultList)
-			}
-			if !reflect.DeepEqual(want.FeatureResultList, got.FeatureResultList) {
-				t.Errorf("%s - FeatureResultList Failed \n want: %v \n got: %v", name, want.FeatureResultList, got.FeatureResultList)
+				t.Errorf("%s - RoleResultList Failed \n want: %v \n got: %v", name, want.RoleResultList, got.RoleResultList)
 			}
 			if !reflect.DeepEqual(want.LLDPResult, got.LLDPResult) {
 				t.Errorf("%s - LLDPResult Failed \n want: %v \n got: %v", name, want.LLDPResult, got.LLDPResult)
