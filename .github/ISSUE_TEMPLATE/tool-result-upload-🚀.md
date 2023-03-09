@@ -1,23 +1,25 @@
 ---
 name: "Tool result upload \U0001F680"
 about: 'Upload your passing result documents '
-title: "[ORGANIZATION] - [MODEL] - Results"
+title: "[ORGANIZATION] - [SERIES] - Results"
 labels: ''
 assignees: SwitchValidationTeam
 
 ---
 
-Please fill in the following:
+## Please fill in the following:
 
-- Organization:
+- Organization (As you want it to appear on the website):
 
-- Device model:
+- Device series:
 
 - Speeds supported (GbE):
 
 - Minimum firmware version requirement:
 
-After the tool execution successfully, there will be five files:
+- Linke to device datasheet: 
+
+## After the tool execution successfully, there will be five files:
 
 PDF File
 JSON File
