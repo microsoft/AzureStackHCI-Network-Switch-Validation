@@ -113,7 +113,7 @@ Linux folder includes
 - input.ini
 - SwitchValidationTool
 
-#### Update Variables in ini file
+#### Update variables in ini file
 Update switch configured value in ini file, so the tool can parse and compare with what actually detect based on network packages. 
 ```ini
 # ini format
@@ -174,7 +174,7 @@ Report Files have been generated.
 
 - Please double check the interface connection and configuration if no network packet being collected.
 
-### What should I do after finish the validation?
+### What should I do after finishing the validation?
 
 After the tool execution successfully, there will be `five` files:
 - PDF File
