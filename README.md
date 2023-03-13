@@ -2,7 +2,7 @@
 
 ## Background
 
-This tool is intended to be used as a device testing tool for Azure Stack HCI. For more information on the requirements, please see: [Physical network requirements for Azure Stack HCI](https://docs.microsoft.com/en-us/azure-stack/hci/concepts/physical-network-requirements)
+This tool is intended to be used as a device testing tool for Azure Stack HCI. For more information on the requirements, please see: [Physical network requirements for Azure Stack HCI](https://learn.microsoft.com/en-us/azure-stack/hci/concepts/physical-network-requirements?tabs=20-21H2%2C20-21H2reqs)
 
 ## How to use the tool
 
@@ -14,8 +14,7 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Upload results under under the "Issues" tab in GitHub
 
 ### Logic Diagram
-```mermaid
-flowchart LR
+![Logic Diagram](./images/logicdiagram.png)
 
 A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
 B --> C{Match Requirements?}
