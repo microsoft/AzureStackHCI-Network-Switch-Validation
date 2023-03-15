@@ -14,7 +14,8 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Upload results under under the "Issues" tab in GitHub
 
 ### Logic Diagram
-![Logic Diagram](./images/logicdiagram.png)
+```mermaid
+flowchart LR
 
 A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
 B --> C{Match Requirements?}
