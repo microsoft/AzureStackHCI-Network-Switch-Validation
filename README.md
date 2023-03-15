@@ -18,8 +18,8 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 flowchart LR
 
 A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
-B --> C{Match Requirements?}
-C --> |True|D(Send report to MSFT)
+B --> C{Matches Requirements?}
+C --> |True|D(Send report to Microsoft)
 C --> |False|E[Review switch configuration]
 E --> |Update input variables accordingly and re-test | A
 ```
