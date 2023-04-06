@@ -4,8 +4,8 @@ RoleResultList:
       rolepass: Fail
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]'
           featureroles:
             - Management
             - Compute (Standard)
@@ -30,19 +30,19 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Storage
-      rolepass: Pass
+      rolepass: Fail
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]'
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -83,19 +83,19 @@ RoleResultList:
           featureroles:
             - Storage
     - rolename: Compute (Standard)
-      rolepass: Pass
+      rolepass: Fail
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]'
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -124,16 +124,16 @@ RoleResultList:
           featureroles:
             - Compute (SDN)
         - featurename: VLAN
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]'
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelog: ""
+          featurepass: Fail
+          featurelog: 'LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)

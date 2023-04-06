@@ -52,7 +52,7 @@ func (o *OutputType) RoleTypeResult() {
 	}
 }
 
-func (o *OutputType) outputPDFFile(pdfFilePath string) {
+func (o *OutputType) outputPDFFile(pdfFilePath string, inputObj *InputType) {
 	pdf := fpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
 	pdf.SetFont("Arial", "B", 20)

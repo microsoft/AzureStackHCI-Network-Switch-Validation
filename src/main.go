@@ -78,6 +78,9 @@ func main() {
 	if runtime.GOOS == "windows" {
 		// fmt.Println("Running on Windows")
 		inputObj.loadInputVariable()
+		if len(inputObj.AllVlanIDs) < 10 {
+			log.Fatalln(VLAN_MINIMUM_10_ERROR)
+		}
 		// Scan and collect traffic data to pcap file
 		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
 		writePcapFile(inputObj.InterfaceGUID, pcapFilePath)
@@ -102,7 +105,9 @@ func main() {
 		flag.Parse()
 		fileIsExist(iniFilePath)
 		inputObj.loadIniFile(iniFilePath)
-
+		if len(inputObj.AllVlanIDs) < 10 {
+			log.Fatalln(VLAN_MINIMUM_10_ERROR)
+		}
 		// Scan and collect traffic data to pcap file
 		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceName)
 		writePcapFile(inputObj.InterfaceName, pcapFilePath)
@@ -117,7 +122,7 @@ func main() {
 
 	OutputObj.outputJSONFile(jsonFilePath)
 	OutputObj.outputYAMLFile(yamlFilePath)
-	OutputObj.outputPDFFile(pdfFilePath)
+	OutputObj.outputPDFFile(pdfFilePath, inputObj)
 
 	fmt.Println("---------------------")
 	fmt.Println(GENERATE_REPORT_FILES)
@@ -133,8 +138,8 @@ func fileIsExist(filepath string) {
 
 func (i *InputType) loadInputVariable() {
 	var allVlanIDs string
-	flag.IntVar(&i.NativeVlanID, "nativeVlanID", 1, "native vlan id")
-	flag.StringVar(&allVlanIDs, "allVlanIDs", "1,710,711,712", "vlan list string separate with comma")
+	flag.IntVar(&i.NativeVlanID, "nativeVlanID", 710, "native vlan id")
+	flag.StringVar(&allVlanIDs, "allVlanIDs", "710,711,712,713,714,715,716,717,718,719,720", "vlan list string separate with comma. Minimum 10 vlans required.")
 	flag.IntVar(&i.MTUSize, "mtu", 9214, "mtu value configured on the switch interface")
 	flag.IntVar(&i.ETSMaxClass, "etsMaxClass", 8, "maximum number of traffic classes in ETS configuration")
 	flag.StringVar(&i.ETSBWbyPG, "etsBWbyPG", "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", "bandwidth for PGID in ETS configuration")

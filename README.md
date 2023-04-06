@@ -15,13 +15,14 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 
 ### Logic Diagram
 ```mermaid
-flowchart LR
+flowchart TB
 
-A[Execute Tool] -->|Scan interface| B(Collect and Analyst .pcap file)
-B --> C{Matches Requirements?}
-C --> |True|D(Send report to Microsoft)
-C --> |False|E[Review switch configuration]
-E --> |Update input variables accordingly and re-test | A
+A[Execute Tool] -->|Scan Select Interface| B([Collect and Analyst .pcap file])
+C --> |False| E[Review switch configuration]
+E --> |Review Input Variables and Test Again | A
+B --> C{Match Requirements?}
+C --> |True| D(Upload Result via Issues)
+C --> |Questions| F[Create Bug or Request via Issues]
 ```
 
 ### Platform Support
@@ -65,8 +66,7 @@ The index of interface which connected to switch is required for Windows OS user
 ```powershell
 PS C:\> Get-NetAdapter
 Name                      InterfaceDescription            ifIndex Status                   
-----                      --------------------            ------- ------                   
-Wi-Fi                     Intel(R) Wi-Fi 6                16       Up               
+----                      --------------------            ------- ------                               
 Ethernet 1                Ethernet Adapter                2        Up    
 ```
 Please check [Get-NetAdapter](https://docs.microsoft.com/en-us/powershell/module/netadapter/get-netadapter?view=windowsserver2022-ps) for more detail.
@@ -95,7 +95,7 @@ C:\> Invoke-SwitchValidation
 Supply values for the following parameters:
 ifIndex: [Your Interface ifIndex Number], example: 12
 nativeVlanID: [Switch Port Native VLAN ID], example: 710
-allVlanIDs: [Switch Trunk Allowed VLAN IDs], example: 710,711,712
+allVlanIDs: [Switch Trunk Allowed VLAN IDs], example: 710,711,712,713,714,715,716,717,718,719,720
 interface Wi-Fi is selected
 -interfaceAlias "Wi-Fi" -interfaceGUID "{A91A8E1F-C8B3-4D96-A403-78B9E758EA38}"
 PS C:\switchValidationTool> 2022/06/03 15:29:56 Collecting Network Packages from Interface Ethernet1: [1 / 300 (Max)]
@@ -124,8 +124,8 @@ interfaceName="eth0"
 # Switch Information
 # Switch vlan allowed via Trunk
 [vlan]
-nativeVlanID=1
-allVlanIDs=1,710,711,712
+nativeVlanID=710
+allVlanIDs=710,711,712,713,714,715,716,717,718,719,720
 
 # Switch interface configured MTU
 [mtu]

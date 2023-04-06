@@ -7,8 +7,8 @@
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -47,12 +47,12 @@
     },
     {
       "RoleName": "Storage",
-      "RolePass": "Pass",
+      "RolePass": "Fail",
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -62,8 +62,8 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -127,12 +127,12 @@
     },
     {
       "RoleName": "Compute (Standard)",
-      "RolePass": "Pass",
+      "RolePass": "Fail",
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -142,8 +142,8 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -187,8 +187,8 @@
         },
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "Minimum 10 VLANs need to be input and configured - Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -198,8 +198,8 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLog": "LLDP Subtype3 Mismatch, please check switch VLAN configuration - Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",

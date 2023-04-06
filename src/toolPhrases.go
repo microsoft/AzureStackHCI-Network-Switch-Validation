@@ -19,9 +19,10 @@ const (
 	BGPPacket_NOT_Detect = "TCP 179 Packet Not Detected from switch, please check switch BGP configuration."
 
 	// VLAN
-	VLAN            = "VLAN"
-	VLAN_NOT_DETECT = "No VLAN detected, please check the VLAN configuration on switch"
-	VLAN_MISMATCH   = "VLAN Mismatch"
+	VLAN                  = "VLAN"
+	VLAN_NOT_DETECT       = "No VLAN detected, please check the VLAN configuration on switch"
+	VLAN_MISMATCH         = "VLAN Mismatch"
+	VLAN_MINIMUM_10_ERROR = "Minimum 10 VLANs need to be input and configured"
 
 	// DHCPRelay
 	DHCPRelay                    = "DHCP - Relay Agent IP"
