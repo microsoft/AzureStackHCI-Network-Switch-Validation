@@ -103,13 +103,13 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPSubtype1ReportType FeatureResultType
 	LLDPSubtype1ReportType.FeatureName = LLDP_Subtype1_PortVLANID
 	if l.Subtype1_PortVLANID == 0 {
-		errMsg := LLDP_Subtype1_NOT_DETECT
 		LLDPSubtype1ReportType.FeaturePass = FAIL
-		LLDPSubtype1ReportType.FeatureLog = errMsg
+		LLDPSubtype1ReportType.FeatureLogSubject = LLDP_Subtype1_NOT_DETECT
 	} else if l.Subtype1_PortVLANID != i.NativeVlanID {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype1_MISMATCH, l.Subtype1_PortVLANID, i.NativeVlanID)
 		LLDPSubtype1ReportType.FeaturePass = FAIL
-		LLDPSubtype1ReportType.FeatureLog = errMsg
+		LLDPSubtype1ReportType.FeatureLogSubject = LLDP_Subtype1_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", l.Subtype1_PortVLANID, i.NativeVlanID)
+		LLDPSubtype1ReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPSubtype1ReportType.FeaturePass = PASS
 	}
@@ -119,13 +119,13 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPSubtype3ReportType FeatureResultType
 	LLDPSubtype3ReportType.FeatureName = LLDP_Subtype3_VLANList
 	if len(l.Subtype3_VLANList) == 0 {
-		errMsg := LLDP_Subtype3_NOT_DETECT
 		LLDPSubtype3ReportType.FeaturePass = FAIL
-		LLDPSubtype3ReportType.FeatureLog = errMsg
+		LLDPSubtype3ReportType.FeatureLogSubject = LLDP_Subtype3_NOT_DETECT
 	} else if len(l.Subtype3_VLANList) != len(i.AllVlanIDs) {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype3_MISMATCH, l.Subtype3_VLANList, i.AllVlanIDs)
 		LLDPSubtype3ReportType.FeaturePass = FAIL
-		LLDPSubtype3ReportType.FeatureLog = errMsg
+		LLDPSubtype3ReportType.FeatureLogSubject = LLDP_Subtype3_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", l.Subtype3_VLANList, i.AllVlanIDs)
+		LLDPSubtype3ReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPSubtype3ReportType.FeaturePass = PASS
 	}
@@ -135,13 +135,13 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPSubtype4ReportType FeatureResultType
 	LLDPSubtype4ReportType.FeatureName = LLDP_Subtype4_MAX_FRAME_SIZE
 	if l.Subtype4_MaxFrameSize == 0 {
-		errMsg := LLDP_Subtype4_NOT_DETECT
 		LLDPSubtype4ReportType.FeaturePass = FAIL
-		LLDPSubtype4ReportType.FeatureLog = errMsg
+		LLDPSubtype4ReportType.FeatureLogSubject = LLDP_Subtype4_NOT_DETECT
 	} else if l.Subtype4_MaxFrameSize != i.MTUSize {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype4_MISMATCH, l.Subtype4_MaxFrameSize, i.MTUSize)
 		LLDPSubtype4ReportType.FeaturePass = FAIL
-		LLDPSubtype4ReportType.FeatureLog = errMsg
+		LLDPSubtype4ReportType.FeatureLogSubject = LLDP_Subtype4_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", l.Subtype4_MaxFrameSize, i.MTUSize)
+		LLDPSubtype4ReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPSubtype4ReportType.FeaturePass = PASS
 	}
@@ -151,9 +151,8 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPSubtype7ReportType FeatureResultType
 	LLDPSubtype7ReportType.FeatureName = LLDP_Subtype7_LINK_AGGREGATION
 	if !l.Subtype7_LinkAggCap {
-		errMsg := LLDP_Subtype7_NOT_DETECT
 		LLDPSubtype7ReportType.FeaturePass = FAIL
-		LLDPSubtype7ReportType.FeatureLog = errMsg
+		LLDPSubtype7ReportType.FeatureLogSubject = LLDP_Subtype7_NOT_DETECT
 	} else {
 		LLDPSubtype7ReportType.FeaturePass = PASS
 	}
@@ -163,13 +162,13 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPETSMaxClassReportType FeatureResultType
 	LLDPETSMaxClassReportType.FeatureName = LLDP_Subtype9_ETS_MAX_CLASSES
 	if l.Subtype9_ETS.ETSTotalPG == 0 {
-		errMsg := LLDP_Subtype9_ETS_MAX_CLASSES_NOT_DETECT
 		LLDPETSMaxClassReportType.FeaturePass = FAIL
-		LLDPETSMaxClassReportType.FeatureLog = errMsg
+		LLDPETSMaxClassReportType.FeatureLogSubject = LLDP_Subtype9_ETS_MAX_CLASSES_NOT_DETECT
 	} else if l.Subtype9_ETS.ETSTotalPG != i.ETSMaxClass {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_Subtype9_ETS_MAX_CLASSES_MISMATCH, l.Subtype9_ETS.ETSTotalPG, i.ETSMaxClass)
 		LLDPETSMaxClassReportType.FeaturePass = FAIL
-		LLDPETSMaxClassReportType.FeatureLog = errMsg
+		LLDPETSMaxClassReportType.FeatureLogSubject = LLDP_Subtype9_ETS_MAX_CLASSES_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", l.Subtype9_ETS.ETSTotalPG, i.ETSMaxClass)
+		LLDPETSMaxClassReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPETSMaxClassReportType.FeaturePass = PASS
 	}
@@ -182,9 +181,10 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	// bwLogs := comparePriorityMap(l.Subtype9_ETS.ETSBWbyPGID, etsBWMap)
 	detectEtsBW := mapToString(l.Subtype9_ETS.ETSBWbyPGID)
 	if detectEtsBW != i.ETSBWbyPG {
-		errMsg := fmt.Sprintf("%s - Detect %s, but should be %s", LLDP_Subtype9_ETS_BW_MISMATCH, detectEtsBW, i.ETSBWbyPG)
 		LLDPETSBWReportType.FeaturePass = FAIL
-		LLDPETSBWReportType.FeatureLog = errMsg
+		LLDPETSBWReportType.FeatureLogSubject = LLDP_Subtype9_ETS_BW_MISMATCH
+		errMsg := fmt.Sprintf("Detect %s, but should be %s", detectEtsBW, i.ETSBWbyPG)
+		LLDPETSBWReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPETSBWReportType.FeaturePass = PASS
 	}
@@ -194,13 +194,13 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	var LLDPPFCMaxClassReportType FeatureResultType
 	LLDPPFCMaxClassReportType.FeatureName = LLDP_SubtypeB_PFC_MAX_CLASSES
 	if l.SubtypeB_PFC.PFCMaxClasses == 0 {
-		errMsg := LLDP_SubtypeB_PFC_MAX_CLASSES_NOT_DETECT
 		LLDPPFCMaxClassReportType.FeaturePass = FAIL
-		LLDPPFCMaxClassReportType.FeatureLog = errMsg
+		LLDPPFCMaxClassReportType.FeatureLogSubject = LLDP_SubtypeB_PFC_MAX_CLASSES_NOT_DETECT
 	} else if l.SubtypeB_PFC.PFCMaxClasses != i.PFCMaxClass {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", LLDP_SubtypeB_PFC_MAX_CLASSES_MISMATCH, l.SubtypeB_PFC.PFCMaxClasses, i.PFCMaxClass)
 		LLDPPFCMaxClassReportType.FeaturePass = FAIL
-		LLDPPFCMaxClassReportType.FeatureLog = errMsg
+		LLDPPFCMaxClassReportType.FeatureLogSubject = LLDP_SubtypeB_PFC_MAX_CLASSES_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", l.SubtypeB_PFC.PFCMaxClasses, i.PFCMaxClass)
+		LLDPPFCMaxClassReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPPFCMaxClassReportType.FeaturePass = PASS
 	}
@@ -213,9 +213,10 @@ func (o *OutputType) LLDPResultValidation(l *LLDPResultType, i *InputType) {
 	// pfcLogs := comparePriorityMap(l.SubtypeB_PFC.PFCConfig, pfcBWMap)
 	detectPfcConfig := mapToString(l.SubtypeB_PFC.PFCConfig)
 	if detectPfcConfig != i.PFCPriorityEnabled {
-		errMsg := fmt.Sprintf("%s - Detect %s, but should be %s", LLDP_SubtypeB_PFC_ENABLE_MISMATCH, detectPfcConfig, i.PFCPriorityEnabled)
 		LLDPPFCEnableReportType.FeaturePass = FAIL
-		LLDPPFCEnableReportType.FeatureLog = errMsg
+		LLDPPFCEnableReportType.FeatureLogSubject = LLDP_SubtypeB_PFC_ENABLE_MISMATCH
+		errMsg := fmt.Sprintf("Detect %s, but should be %s", detectPfcConfig, i.PFCPriorityEnabled)
+		LLDPPFCEnableReportType.FeatureLogDetail = errMsg
 	} else {
 		LLDPPFCEnableReportType.FeaturePass = PASS
 	}

@@ -18,17 +18,18 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 
 	VLANReportType.FeatureName = VLAN
 	if len(v.AllVlanIDs) == 0 {
-		errMsg := VLAN_NOT_DETECT
 		VLANReportType.FeaturePass = FAIL
-		VLANReportType.FeatureLog = errMsg
+		VLANReportType.FeatureLogSubject = VLAN_NOT_DETECT
 	} else if len(v.AllVlanIDs) < 10 {
-		errMsg := fmt.Sprintf("%s - Detect: %d", VLAN_MINIMUM_10_ERROR, v.AllVlanIDs)
 		VLANReportType.FeaturePass = FAIL
-		VLANReportType.FeatureLog = errMsg
+		VLANReportType.FeatureLogSubject = VLAN_MINIMUM_10_ERROR
+		errMsg := fmt.Sprintf("Detect: %d", v.AllVlanIDs)
+		VLANReportType.FeatureLogDetail = errMsg
 	} else if EqualArray(v.AllVlanIDs, i.AllVlanIDs) {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", VLAN_MISMATCH, v.AllVlanIDs, i.AllVlanIDs)
 		VLANReportType.FeaturePass = FAIL
-		VLANReportType.FeatureLog = errMsg
+		VLANReportType.FeatureLogSubject = VLAN_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", v.AllVlanIDs, i.AllVlanIDs)
+		VLANReportType.FeatureLogDetail = errMsg
 	} else {
 		VLANReportType.FeaturePass = PASS
 	}

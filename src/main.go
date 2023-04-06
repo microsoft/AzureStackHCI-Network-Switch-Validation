@@ -21,10 +21,11 @@ type RoleResultType struct {
 }
 
 type FeatureResultType struct {
-	FeatureName  string
-	FeaturePass  string
-	FeatureLog   string
-	FeatureRoles []string
+	FeatureName       string
+	FeaturePass       string
+	FeatureLogSubject string
+	FeatureLogDetail  string
+	FeatureRoles      []string
 }
 
 type OutputType struct {
