@@ -17,7 +17,7 @@ assignees: SwitchValidationTeam
 
 - Minimum firmware version requirement:
 
-- Linke to device datasheet: 
+- Link to device datasheet: 
 
 ## After the tool execution successfully, there will be five files:
 
