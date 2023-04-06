@@ -48,6 +48,7 @@ Please check the [sample switch configuration](./switchReferenceConfig) for refe
 ##### Notice:
 
 - LLDP must be enabled.
+- A minimum of 10 VLANs must be configured.
 
 ## Get Started
 
