@@ -35,7 +35,7 @@ func (o *OutputType) BGPResultValidation(b *BGPResultType) {
 
 	if !b.BGPTCPPacketDetected {
 		BGPReportType.FeaturePass = FAIL
-		BGPReportType.FeatureLog = BGPPacket_NOT_Detect
+		BGPReportType.FeatureLogSubject = BGPPacket_NOT_Detect
 	} else {
 		BGPReportType.FeaturePass = PASS
 	}

@@ -46,7 +46,7 @@ func (o *OutputType) DHCPResultValidation(d *DHCPResultType) {
 	DHCPRelayReportType.FeatureName = DHCPRelay
 	if d.RelayAgentIP == nil {
 		DHCPRelayReportType.FeaturePass = FAIL
-		DHCPRelayReportType.FeatureLog = DHCPRelay_AgentIP_Not_Detect
+		DHCPRelayReportType.FeatureLogSubject = DHCPRelay_AgentIP_Not_Detect
 	} else {
 		DHCPRelayReportType.FeaturePass = PASS
 	}

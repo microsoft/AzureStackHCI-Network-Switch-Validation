@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 type VLANResultType struct {
@@ -17,16 +18,35 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 
 	VLANReportType.FeatureName = VLAN
 	if len(v.AllVlanIDs) == 0 {
-		errMsg := VLAN_NOT_DETECT
 		VLANReportType.FeaturePass = FAIL
-		VLANReportType.FeatureLog = errMsg
-	} else if len(v.AllVlanIDs) != len(i.AllVlanIDs) {
-		errMsg := fmt.Sprintf("%s - Detect: %d, but Input: %d", VLAN_MISMATCH, v.AllVlanIDs, i.AllVlanIDs)
+		VLANReportType.FeatureLogSubject = VLAN_NOT_DETECT
+	} else if len(v.AllVlanIDs) < 10 {
 		VLANReportType.FeaturePass = FAIL
-		VLANReportType.FeatureLog = errMsg
+		VLANReportType.FeatureLogSubject = VLAN_MINIMUM_10_ERROR
+		errMsg := fmt.Sprintf("Detect: %d", v.AllVlanIDs)
+		VLANReportType.FeatureLogDetail = errMsg
+	} else if EqualArray(v.AllVlanIDs, i.AllVlanIDs) {
+		VLANReportType.FeaturePass = FAIL
+		VLANReportType.FeatureLogSubject = VLAN_MISMATCH
+		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", v.AllVlanIDs, i.AllVlanIDs)
+		VLANReportType.FeatureLogDetail = errMsg
 	} else {
 		VLANReportType.FeaturePass = PASS
 	}
 	VLANReportType.FeatureRoles = []string{MANAGEMENT, COMPUTEBASIC, COMPUTESDN, STORAGE}
 	o.FeatureResultList = append(o.FeatureResultList, VLANReportType)
+}
+
+func EqualArray(a, b []int) bool {
+	sort.Ints(a)
+	sort.Ints(b)
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }

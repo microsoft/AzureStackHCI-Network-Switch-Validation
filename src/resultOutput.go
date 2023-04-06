@@ -52,7 +52,7 @@ func (o *OutputType) RoleTypeResult() {
 	}
 }
 
-func (o *OutputType) outputPDFFile(pdfFilePath string) {
+func (o *OutputType) outputPDFFile(pdfFilePath string, inputObj *InputType) {
 	pdf := fpdf.New("P", "mm", "A4", "")
 	pdf.AddPage()
 	pdf.SetFont("Arial", "B", 20)
@@ -105,6 +105,9 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 	pdf.SetFont("Arial", "B", 16)
 	pdf.Cell(100, 10, FEATURE_SUMMARY_TITTLE)
 	pdf.Ln(10)
+	pdf.SetFont("Arial", "", 10)
+	pdf.Cell(100, 10, LOG_DETAIL_BELOW)
+	pdf.Ln(10)
 	// Feature Summary List
 	for _, roleObj := range o.RoleResultList {
 		// pdf.SetX(20)
@@ -132,8 +135,8 @@ func (o *OutputType) outputPDFFile(pdfFilePath string) {
 			pdf.CellFormat(titleWidth, 7, "Result", "1", 0, "", false, 0, "")
 			pdf.CellFormat(contentWidth, 7, featureObj.FeaturePass, "1", 0, "", false, 0, "")
 			pdf.Ln(7)
-			pdf.CellFormat(titleWidth, 7, "Log", "1", 0, "", false, 0, "")
-			pdf.CellFormat(contentWidth, 7, featureObj.FeatureLog, "1", 0, "", false, 0, "")
+			pdf.CellFormat(titleWidth, 7, "LogSubject", "1", 0, "", false, 0, "")
+			pdf.CellFormat(contentWidth, 7, featureObj.FeatureLogSubject, "1", 0, "", false, 0, "")
 			pdf.Ln(10)
 		}
 	}

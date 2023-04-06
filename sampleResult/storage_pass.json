@@ -7,8 +7,9 @@
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
+          "FeatureLogDetail": "Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -19,7 +20,8 @@
         {
           "FeatureName": "DHCP - Relay Agent IP",
           "FeaturePass": "Fail",
-          "FeatureLog": "DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration.",
+          "FeatureLogSubject": "DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration.",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management"
           ]
@@ -27,7 +29,8 @@
         {
           "FeatureName": "LLDP - Port VLAN ID (Subtype = 1)",
           "FeaturePass": "Fail",
-          "FeatureLog": "LLDP Subtype1 Mismatch, please check switch VLAN configuration - Detect: 1, but Input: 710",
+          "FeatureLogSubject": "LLDP Subtype 1 Mismatch, please check switch VLAN configuration",
+          "FeatureLogDetail": "Detect: 1, but Input: 710",
           "FeatureRoles": [
             "Management"
           ]
@@ -35,7 +38,8 @@
         {
           "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -47,12 +51,13 @@
     },
     {
       "RoleName": "Storage",
-      "RolePass": "Pass",
+      "RolePass": "Fail",
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
+          "FeatureLogDetail": "Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -62,8 +67,9 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
+          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -73,7 +79,8 @@
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -83,7 +90,8 @@
         {
           "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -94,7 +102,8 @@
         {
           "FeatureName": "LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Storage"
           ]
@@ -102,7 +111,8 @@
         {
           "FeatureName": "LLDP - ETS Class Bandwidth Configuration (Subtype = 9)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Storage"
           ]
@@ -110,7 +120,8 @@
         {
           "FeatureName": "LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Storage"
           ]
@@ -118,7 +129,8 @@
         {
           "FeatureName": "LLDP - PFC Priority Class Enabled (Subtype = B)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Storage"
           ]
@@ -127,12 +139,13 @@
     },
     {
       "RoleName": "Compute (Standard)",
-      "RolePass": "Pass",
+      "RolePass": "Fail",
       "FeaturesByRole": [
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
+          "FeatureLogDetail": "Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -142,8 +155,9 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
+          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -153,7 +167,8 @@
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -163,7 +178,8 @@
         {
           "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -180,15 +196,17 @@
         {
           "FeatureName": "BGP",
           "FeaturePass": "Fail",
-          "FeatureLog": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
+          "FeatureLogSubject": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Compute (SDN)"
           ]
         },
         {
           "FeatureName": "VLAN",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
+          "FeatureLogDetail": "Detect: [1 710 711 712]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -198,8 +216,9 @@
         },
         {
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
-          "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
+          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -209,7 +228,8 @@
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -219,7 +239,8 @@
         {
           "FeatureName": "LLDP - Link Aggregation (Subtype = 7)",
           "FeaturePass": "Pass",
-          "FeatureLog": "",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
