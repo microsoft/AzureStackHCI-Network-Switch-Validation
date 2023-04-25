@@ -1,5 +1,5 @@
 {
-  "TestDate": "2022-11-06T05:22:06.701322Z",
+  "TestDate": "2023-04-25T01:10:19.56808Z",
   "ToolBuildDate": "2023-04-25",
   "RoleResultList": [
     {
@@ -9,8 +9,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -20,8 +20,8 @@
         },
         {
           "FeatureName": "DHCP - Relay Agent IP",
-          "FeaturePass": "Fail",
-          "FeatureLogSubject": "DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration.",
+          "FeaturePass": "Pass",
+          "FeatureLogSubject": "",
           "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management"
@@ -29,9 +29,9 @@
         },
         {
           "FeatureName": "LLDP - Port VLAN ID (Subtype = 1)",
-          "FeaturePass": "Fail",
-          "FeatureLogSubject": "LLDP Subtype 1 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: 1, but Input: 710",
+          "FeaturePass": "Pass",
+          "FeatureLogSubject": "",
+          "FeatureLogDetail": "",
           "FeatureRoles": [
             "Management"
           ]
@@ -57,8 +57,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -70,7 +70,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -79,9 +79,9 @@
         },
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 4 Mismatch, please check switch MTU configuration",
+          "FeatureLogDetail": "Detect: 9198, but Input: 9214",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -102,27 +102,27 @@
         },
         {
           "FeatureName": "LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "ETS Maximum Number of Traffic Classes Mismatch",
+          "FeatureLogDetail": "Detect: 3, but Input: 8",
           "FeatureRoles": [
             "Storage"
           ]
         },
         {
           "FeatureName": "LLDP - ETS Class Bandwidth Configuration (Subtype = 9)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "Priority 0~7 Mismatch",
+          "FeatureLogDetail": "Detect 0:48,1:50,2:2,3:0,4:0,5:0,6:0,7:0, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0",
           "FeatureRoles": [
             "Storage"
           ]
         },
         {
           "FeatureName": "LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "PFC Maximum Number of Traffic Classes Mismatch",
+          "FeatureLogDetail": "Detect: 7, but Input: 8",
           "FeatureRoles": [
             "Storage"
           ]
@@ -145,8 +145,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -158,7 +158,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -167,9 +167,9 @@
         },
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 4 Mismatch, please check switch MTU configuration",
+          "FeatureLogDetail": "Detect: 9198, but Input: 9214",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -196,8 +196,8 @@
       "FeaturesByRole": [
         {
           "FeatureName": "BGP",
-          "FeaturePass": "Fail",
-          "FeatureLogSubject": "TCP 179 Packet Not Detected from switch, please check switch BGP configuration.",
+          "FeaturePass": "Pass",
+          "FeatureLogSubject": "",
           "FeatureLogDetail": "",
           "FeatureRoles": [
             "Compute (SDN)"
@@ -206,8 +206,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -219,7 +219,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -228,9 +228,9 @@
         },
         {
           "FeatureName": "LLDP - Maximum Frame Size (Subtype = 4)",
-          "FeaturePass": "Pass",
-          "FeatureLogSubject": "",
-          "FeatureLogDetail": "",
+          "FeaturePass": "Fail",
+          "FeatureLogSubject": "LLDP Subtype 4 Mismatch, please check switch MTU configuration",
+          "FeatureLogDetail": "Detect: 9198, but Input: 9214",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -253,43 +253,55 @@
     }
   ],
   "VLANResult": {
-    "NativeVlanID": 1,
+    "NativeVlanID": 710,
     "AllVlanIDs": [
       1,
       710,
       711,
-      712
+      712,
+      713,
+      714,
+      715,
+      717,
+      718,
+      719
     ]
   },
   "LLDPResult": {
-    "SysDes": "Cumulus Linux version 5.2.1 running on Mellanox Technologies Ltd. MSN2100",
-    "PortName": "swp1",
-    "ChasisID": "98039b5cbb20",
+    "SysDes": "Aruba JL635A  GL.10.11.1010",
+    "PortName": "1/1/4",
+    "ChasisID": "9020c2bc6900",
     "ChasisIDType": "MAC Address",
-    "Subtype1_PortVLANID": 1,
+    "Subtype1_PortVLANID": 710,
     "Subtype3_VLANList": [
       1,
       710,
       711,
-      712
+      712,
+      713,
+      714,
+      715,
+      717,
+      718,
+      719
     ],
-    "Subtype4_MaxFrameSize": 9214,
+    "Subtype4_MaxFrameSize": 9198,
     "Subtype7_LinkAggCap": true,
     "Subtype9_ETS": {
-      "ETSTotalPG": 8,
+      "ETSTotalPG": 3,
       "ETSBWbyPGID": {
         "0": 48,
-        "1": 0,
-        "2": 0,
-        "3": 50,
+        "1": 50,
+        "2": 2,
+        "3": 0,
         "4": 0,
-        "5": 2,
+        "5": 0,
         "6": 0,
         "7": 0
       }
     },
     "SubtypeB_PFC": {
-      "PFCMaxClasses": 8,
+      "PFCMaxClasses": 7,
       "PFCConfig": {
         "0": 0,
         "1": 0,
@@ -304,13 +316,13 @@
   },
   "DHCPResult": {
     "DHCPPacketDetected": true,
-    "RelayAgentIP": ""
+    "RelayAgentIP": "10.10.12.1"
   },
   "BGPResult": {
-    "BGPTCPPacketDetected": false,
-    "SwitchInterfaceIP": "",
-    "SwitchInterfaceMAC": "",
-    "HostInterfaceIP": "",
-    "HostInterfaceMAC": ""
+    "BGPTCPPacketDetected": true,
+    "SwitchInterfaceIP": "10.10.10.1",
+    "SwitchInterfaceMAC": "90:20:c2:bc:69:00",
+    "HostInterfaceIP": "10.10.10.11",
+    "HostInterfaceMAC": "00:50:56:96:9e:3b"
   }
 }

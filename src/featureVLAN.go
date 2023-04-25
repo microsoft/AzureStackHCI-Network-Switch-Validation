@@ -25,7 +25,7 @@ func (o *OutputType) VLANResultValidation(v *VLANResultType, i *InputType) {
 		VLANReportType.FeatureLogSubject = VLAN_MINIMUM_10_ERROR
 		errMsg := fmt.Sprintf("Detect: %d", v.AllVlanIDs)
 		VLANReportType.FeatureLogDetail = errMsg
-	} else if EqualArray(v.AllVlanIDs, i.AllVlanIDs) {
+	} else if !EqualArray(v.AllVlanIDs, i.AllVlanIDs) {
 		VLANReportType.FeaturePass = FAIL
 		VLANReportType.FeatureLogSubject = VLAN_MISMATCH
 		errMsg := fmt.Sprintf("Detect: %d, but Input: %d", v.AllVlanIDs, i.AllVlanIDs)
@@ -42,11 +42,13 @@ func EqualArray(a, b []int) bool {
 	sort.Ints(b)
 	if len(a) != len(b) {
 		return false
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
+	} else {
+		for i := range a {
+			fmt.Println(a[i], b[i])
+			if a[i] != b[i] {
+				return false
+			}
 		}
+		return true
 	}
-	return true
 }

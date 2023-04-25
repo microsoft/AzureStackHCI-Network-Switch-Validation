@@ -30,6 +30,7 @@ type FeatureResultType struct {
 
 type OutputType struct {
 	TestDate          time.Time           `yaml:"TestDate"`
+	ToolBuildDate     string              `yaml:"ToolBuildDate"`
 	RoleResultList    []RoleResultType    `yaml:"RoleResultList"`
 	FeatureResultList []FeatureResultType `yaml:"-" json:"-"`
 	VLANResult        VLANResultType      `yaml:"VLANResult"`
