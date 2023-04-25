@@ -3,9 +3,11 @@ name: "Tool result upload \U0001F680"
 about: 'Upload your passing result documents '
 title: "[ORGANIZATION] - [SERIES] - Results"
 labels: ''
-assignees: SwitchValidationTeam
+assignees: liunick-msft, bkablawi, SwitchValidationTeam
 
 ---
+
+*Ensure you are utilizing the latest version of the tool from the release page*
 
 ## Please fill in the following:
 
