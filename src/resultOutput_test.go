@@ -24,6 +24,9 @@ func TestResultOutput(t *testing.T) {
 		"storage_pass": {
 			inputFileName: "storage_pass",
 		},
+		"aruba_switch": {
+			inputFileName: "aruba_switch",
+		},
 	}
 
 	srcFolder, err := os.Getwd()
