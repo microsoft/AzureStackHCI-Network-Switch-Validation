@@ -21,11 +21,11 @@ func TestResultOutput(t *testing.T) {
 	}
 
 	testCases := map[string]test{
-		"storage_pass": {
-			inputFileName: "storage_pass",
+		"lldp_test": {
+			inputFileName: "lldp_test",
 		},
-		"aruba_switch": {
-			inputFileName: "aruba_switch",
+		"vlan_test": {
+			inputFileName: "vlan_test",
 		},
 	}
 
