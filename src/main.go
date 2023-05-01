@@ -30,7 +30,7 @@ type FeatureResultType struct {
 
 type OutputType struct {
 	TestDate          time.Time           `yaml:"TestDate"`
-	ToolBuildDate     string              `yaml:"ToolBuildDate"`
+	ToolBuildVersion  string              `yaml:"ToolBuildVersion"`
 	RoleResultList    []RoleResultType    `yaml:"RoleResultList"`
 	FeatureResultList []FeatureResultType `yaml:"-" json:"-"`
 	VLANResult        VLANResultType      `yaml:"VLANResult"`
@@ -53,7 +53,8 @@ type InputType struct {
 }
 
 var (
-	logFilePath = "./result.log"
+	logFilePath      = "./result.log"
+	ToolBuildVersion = "1.2305.01"
 
 	inputObj                                = &InputType{}
 	OutputObj                               = &OutputType{}

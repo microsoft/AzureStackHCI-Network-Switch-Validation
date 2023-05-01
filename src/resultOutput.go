@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 
 	"github.com/go-pdf/fpdf"
 	"gopkg.in/yaml.v3"
@@ -19,7 +18,7 @@ func (o *OutputType) resultAnalysis(pcapFilePath string, i *InputType) {
 	o.DHCPResultValidation(&o.DHCPResult)
 	o.LLDPResultValidation(&o.LLDPResult, i)
 	o.RoleTypeResult()
-	o.ToolBuildDate = time.Now().Format("2006-01-02")
+	o.ToolBuildVersion = ToolBuildVersion
 }
 
 func (o *OutputType) RoleTypeResult() {
@@ -59,7 +58,7 @@ func (o *OutputType) outputPDFFile(pdfFilePath string, inputObj *InputType) {
 	pdf.AddPage()
 	// Print Tool Version and Compiled Date
 	pdf.SetFont("Arial", "B", 10)
-	toolBuildInfo := fmt.Sprintf("Tool Build Date: %s\n", o.ToolBuildDate)
+	toolBuildInfo := fmt.Sprintf("Tool Build Version: %s\n", o.ToolBuildVersion)
 	pdf.Cell(40, 10, toolBuildInfo)
 	pdf.Ln(10)
 	// Print Validation Test Date
