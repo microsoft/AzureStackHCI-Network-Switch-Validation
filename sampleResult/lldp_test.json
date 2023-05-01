@@ -1,6 +1,6 @@
 {
   "TestDate": "2022-11-06T05:22:06.701322Z",
-  "ToolBuildDate": "2023-04-25",
+  "ToolBuildVersion": "1.2305.01",
   "RoleResultList": [
     {
       "RoleName": "Management",

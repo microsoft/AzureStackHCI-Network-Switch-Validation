@@ -1,6 +1,6 @@
 {
   "TestDate": "2022-11-06T05:22:06.701322Z",
-  "ToolBuildDate": "2023-04-25",
+  "ToolBuildVersion": "1.2305.01",
   "RoleResultList": [
     {
       "RoleName": "Management",
@@ -9,8 +9,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -57,8 +57,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -70,7 +70,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -145,8 +145,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -158,7 +158,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -206,8 +206,8 @@
         {
           "FeatureName": "VLAN",
           "FeaturePass": "Fail",
-          "FeatureLogSubject": "Minimum of 10 VLANs need to be input and configured",
-          "FeatureLogDetail": "Detect: [1 710 711 712]",
+          "FeatureLogSubject": "VLAN Mismatch",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Management",
             "Compute (Standard)",
@@ -219,7 +219,7 @@
           "FeatureName": "LLDP - VLAN Name (Subtype = 3)",
           "FeaturePass": "Fail",
           "FeatureLogSubject": "LLDP Subtype 3 Mismatch, please check switch VLAN configuration",
-          "FeatureLogDetail": "Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
+          "FeatureLogDetail": "Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]",
           "FeatureRoles": [
             "Compute (Standard)",
             "Compute (SDN)",
@@ -258,7 +258,13 @@
       1,
       710,
       711,
-      712
+      712,
+      713,
+      714,
+      715,
+      717,
+      718,
+      719
     ]
   },
   "LLDPResult": {
@@ -271,7 +277,13 @@
       1,
       710,
       711,
-      712
+      712,
+      713,
+      714,
+      715,
+      717,
+      718,
+      719
     ],
     "Subtype4_MaxFrameSize": 9214,
     "Subtype7_LinkAggCap": true,

@@ -1,13 +1,13 @@
 TestDate: 2022-11-06T05:22:06.701322Z
-ToolBuildDate: "2023-04-25"
+ToolBuildVersion: 1.2305.01
 RoleResultList:
     - rolename: Management
       rolepass: Fail
       featuresbyrole:
         - featurename: VLAN
           featurepass: Fail
-          featurelogsubject: Minimum of 10 VLANs need to be input and configured
-          featurelogdetail: 'Detect: [1 710 711 712]'
+          featurelogsubject: VLAN Mismatch
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Management
             - Compute (Standard)
@@ -39,8 +39,8 @@ RoleResultList:
       featuresbyrole:
         - featurename: VLAN
           featurepass: Fail
-          featurelogsubject: Minimum of 10 VLANs need to be input and configured
-          featurelogdetail: 'Detect: [1 710 711 712]'
+          featurelogsubject: VLAN Mismatch
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Management
             - Compute (Standard)
@@ -49,7 +49,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -100,8 +100,8 @@ RoleResultList:
       featuresbyrole:
         - featurename: VLAN
           featurepass: Fail
-          featurelogsubject: Minimum of 10 VLANs need to be input and configured
-          featurelogdetail: 'Detect: [1 710 711 712]'
+          featurelogsubject: VLAN Mismatch
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Management
             - Compute (Standard)
@@ -110,7 +110,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -143,8 +143,8 @@ RoleResultList:
             - Compute (SDN)
         - featurename: VLAN
           featurepass: Fail
-          featurelogsubject: Minimum of 10 VLANs need to be input and configured
-          featurelogdetail: 'Detect: [1 710 711 712]'
+          featurelogsubject: VLAN Mismatch
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Management
             - Compute (Standard)
@@ -153,7 +153,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -182,6 +182,12 @@ VLANResult:
         - 710
         - 711
         - 712
+        - 713
+        - 714
+        - 715
+        - 717
+        - 718
+        - 719
 LLDPResult:
     sysdes: Cumulus Linux version 5.2.1 running on Mellanox Technologies Ltd. MSN2100
     portname: swp1
@@ -193,6 +199,12 @@ LLDPResult:
         - 710
         - 711
         - 712
+        - 713
+        - 714
+        - 715
+        - 717
+        - 718
+        - 719
     subtype4_maxframesize: 9214
     subtype7_linkaggcap: true
     subtype9_ets:
