@@ -209,7 +209,7 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 handle, err := pcap.OpenLive("eth0", 1600, true, pcap.BlockForever)
 ```
 
-- Windows
+##### Windows
 ```bash
 # Get interface name in Windows
 > Get-NetAdapter | Select-Object InterfaceAlias,InterfaceIndex,InterfaceGuid
