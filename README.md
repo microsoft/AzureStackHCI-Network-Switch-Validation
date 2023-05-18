@@ -9,7 +9,7 @@ This tool is intended to be used as a device testing tool for Azure Stack HCI. F
 - Prepare a host which has at least two NICs which connect to switch device under test (DUT)
 - Download `SwitchValidationTool.zip` from [Release page](https://github.com/microsoft/AzureStackHCI-Network-Switch-Validation/releases) and store them in a folder on the host
 - The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
-- Review the [sample report](./switchReferenceConfig) which will be PDF/YAML files.
+- Review the [sample test data](./samples/) to have better understand the input and output.
 - The validation tool will collect network traffic and decode packages to validate protocol value required. 
 - Upload results under the "Issues" tab in GitHub
 
