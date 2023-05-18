@@ -224,8 +224,8 @@ handle, err := pcap.OpenLive("\Device\NPF_{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}
 
 
 #### Reference Links
-[Golang and Windows Network Interfaces](https://haydz.github.io/2020/07/06/Go-Windows-NIC.html)
-[net: get npcap usable windows network device names](https://github.com/golang/go/issues/35095#issuecomment-545528366%3E)
+- [Golang and Windows Network Interfaces](https://haydz.github.io/2020/07/06/Go-Windows-NIC.html)
+- [net: get npcap usable windows network device names](https://github.com/golang/go/issues/35095#issuecomment-545528366%3E)
 
 ### What should do if met errors while running the tool?
 
