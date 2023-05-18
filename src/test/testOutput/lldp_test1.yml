@@ -1,0 +1,228 @@
+TestDate: 2022-11-06T05:22:06.701322Z
+ToolBuildVersion: 1.2305.01
+RoleResultList:
+    - rolename: Management
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelogsubject: Minimum of 10 VLANs need to be input and configured
+          featurelogdetail: 'Detect: [1 710 711 712]'
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: DHCP - Relay Agent IP
+          featurepass: Fail
+          featurelogsubject: DHCP Relay Agent IP Not Detected from switch, please check switch dhcp configuration.
+          featurelogdetail: ""
+          featureroles:
+            - Management
+        - featurename: LLDP - Port VLAN ID (Subtype = 1)
+          featurepass: Fail
+          featurelogsubject: LLDP Subtype 1 Mismatch, please check switch VLAN configuration
+          featurelogdetail: 'Detect: 1, but Input: 710'
+          featureroles:
+            - Management
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+    - rolename: Storage
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelogsubject: Minimum of 10 VLANs need to be input and configured
+          featurelogdetail: 'Detect: [1 710 711 712]'
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Storage
+        - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Storage
+        - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Storage
+        - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Storage
+    - rolename: Compute (Standard)
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: VLAN
+          featurepass: Fail
+          featurelogsubject: Minimum of 10 VLANs need to be input and configured
+          featurelogdetail: 'Detect: [1 710 711 712]'
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+    - rolename: Compute (SDN)
+      rolepass: Fail
+      featuresbyrole:
+        - featurename: BGP
+          featurepass: Fail
+          featurelogsubject: TCP 179 Packet Not Detected from switch, please check switch BGP configuration.
+          featurelogdetail: ""
+          featureroles:
+            - Compute (SDN)
+        - featurename: VLAN
+          featurepass: Fail
+          featurelogsubject: Minimum of 10 VLANs need to be input and configured
+          featurelogdetail: 'Detect: [1 710 711 712]'
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - VLAN Name (Subtype = 3)
+          featurepass: Fail
+          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+        - featurename: LLDP - Link Aggregation (Subtype = 7)
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
+          featureroles:
+            - Management
+            - Compute (Standard)
+            - Compute (SDN)
+            - Storage
+VLANResult:
+    nativevlanid: 1
+    allvlanids:
+        - 1
+        - 710
+        - 711
+        - 712
+LLDPResult:
+    sysdes: Cumulus Linux version 5.2.1 running on Mellanox Technologies Ltd. MSN2100
+    portname: swp1
+    chasisid: 98039b5cbb20
+    chasisidtype: MAC Address
+    subtype1_portvlanid: 1
+    subtype3_vlanlist:
+        - 1
+        - 710
+        - 711
+        - 712
+    subtype4_maxframesize: 9214
+    subtype7_linkaggcap: true
+    subtype9_ets:
+        etstotalpg: 8
+        etsbwbypgid:
+            0: 48
+            1: 0
+            2: 0
+            3: 50
+            4: 0
+            5: 2
+            6: 0
+            7: 0
+    subtypeb_pfc:
+        pfcmaxclasses: 8
+        pfcconfig:
+            0: 0
+            1: 0
+            2: 0
+            3: 1
+            4: 0
+            5: 0
+            6: 0
+            7: 0
+DHCPResult:
+    dhcppacketdetected: true
+    relayagentip: ""
+BGPResult:
+    bgptcppacketdetected: false
+    switchinterfaceip: ""
+    switchinterfacemac: ""
+    hostinterfaceip: ""
+    hostinterfacemac: ""

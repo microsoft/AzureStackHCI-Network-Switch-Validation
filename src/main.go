@@ -1,17 +1,18 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
 	"log"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
 	"time"
-
-	"gopkg.in/ini.v1"
 )
 
 type RoleResultType struct {
@@ -41,8 +42,8 @@ type OutputType struct {
 
 type InputType struct {
 	InterfaceName      string
-	InterfaceGUID      string
 	InterfaceAlias     string
+	InterfaceIndex     int
 	NativeVlanID       int
 	AllVlanIDs         []int
 	MTUSize            int
@@ -50,6 +51,12 @@ type InputType struct {
 	ETSBWbyPG          string
 	PFCMaxClass        int
 	PFCPriorityEnabled string
+}
+
+type WinNetAdapter struct {
+	InterfaceAlias string `json:"InterfaceAlias"`
+	InterfaceIndex int    `json:"InterfaceIndex"`
+	InterfaceGuid  string `json:"InterfaceGuid"`
 }
 
 var (
@@ -78,52 +85,24 @@ func init() {
 
 func main() {
 	// parse input variables
-	if runtime.GOOS == "windows" {
-		// fmt.Println("Running on Windows")
-		inputObj.loadInputVariable()
-		if len(inputObj.AllVlanIDs) < 10 {
-			log.Fatalln(VLAN_MINIMUM_10_ERROR)
-		}
-		// Scan and collect traffic data to pcap file
-		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
-		writePcapFile(inputObj.InterfaceGUID, pcapFilePath)
-		// srcFolder, err := os.Getwd()
-		// if err != nil {
-		// 	panic(err)
-		// }
-		// testFolder := filepath.Join(srcFolder, "test")
-		// testInputFolder := filepath.Join(testFolder, "testInput")
-		// pcapFilePath := filepath.Join(testInputFolder, "storage_pass.pcap")
-		fileIsExist(pcapFilePath)
-		OutputObj.resultAnalysis(pcapFilePath, inputObj)
-		// log.Println(OutputObj)
-		pdfFilePath = fmt.Sprintf("./Report_%s.pdf", inputObj.InterfaceAlias)
-		yamlFilePath = fmt.Sprintf("./Report_%s.yml", inputObj.InterfaceAlias)
-		jsonFilePath = fmt.Sprintf("./Report_%s.json", inputObj.InterfaceAlias)
-	} else if runtime.GOOS == "linux" {
-		// fmt.Println("Running on Linux")
-		var iniFilePath string
-		// Parse iniFile to Input Object
-		flag.StringVar(&iniFilePath, "iniFilePath", "./input.ini", "Please input INI file path.")
-		flag.Parse()
-		fileIsExist(iniFilePath)
-		inputObj.loadIniFile(iniFilePath)
-		if len(inputObj.AllVlanIDs) < 10 {
-			log.Fatalln(VLAN_MINIMUM_10_ERROR)
-		}
-		// Scan and collect traffic data to pcap file
-		pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceName)
-		writePcapFile(inputObj.InterfaceName, pcapFilePath)
-		fileIsExist(pcapFilePath)
-		OutputObj.resultAnalysis(pcapFilePath, inputObj)
-		pdfFilePath = fmt.Sprintf("./%s.pdf", inputObj.InterfaceName)
-		yamlFilePath = fmt.Sprintf("./%s.yml", inputObj.InterfaceName)
-		jsonFilePath = fmt.Sprintf("./%s.json", inputObj.InterfaceName)
-	} else {
-		fmt.Println(runtime.GOOS, "Not Support")
+	inputObj.loadInputVariable()
+	if len(inputObj.AllVlanIDs) < 10 {
+		log.Fatalln(VLAN_MINIMUM_10_ERROR)
 	}
-
-	OutputObj.outputJSONFile(jsonFilePath)
+	inputObj.UpdateInterfaceValues()
+	log.Printf("## Interface Name %s is selected, start collecting packages[Maximum 90s or 300 packages]: ##", inputObj.InterfaceAlias)
+	log.Println()
+	// Scan and collect traffic data to pcap file
+	pcapFilePath := fmt.Sprintf("./%s.pcap", inputObj.InterfaceAlias)
+	writePcapFile(inputObj.InterfaceName, pcapFilePath)
+	// Analyst traffic packages
+	fileIsExist(pcapFilePath)
+	OutputObj.resultAnalysis(pcapFilePath, inputObj)
+	// Write result to format outputs
+	pdfFilePath = fmt.Sprintf("./Result_%s.pdf", inputObj.InterfaceAlias)
+	yamlFilePath = fmt.Sprintf("./Result_%s.yml", inputObj.InterfaceAlias)
+	// jsonFilePath = fmt.Sprintf("./Result_%s.json", inputObj.InterfaceAlias)
+	// OutputObj.outputJSONFile(jsonFilePath)
 	OutputObj.outputYAMLFile(yamlFilePath)
 	OutputObj.outputPDFFile(pdfFilePath, inputObj)
 
@@ -131,16 +110,10 @@ func main() {
 	fmt.Println(GENERATE_REPORT_FILES)
 }
 
-func fileIsExist(filepath string) {
-	_, err := os.Stat(filepath)
-	if err != nil {
-		log.Fatalf("[Error] Fail founding %s: %v\n", filepath, err)
-	}
-	log.Println(filepath, "founded.")
-}
-
 func (i *InputType) loadInputVariable() {
 	var allVlanIDs string
+	flag.StringVar(&i.InterfaceName, "InterfaceName", "eth0", "[Linux Only - ifconfig] name of interface connects with network device to be validated")
+	flag.IntVar(&i.InterfaceIndex, "InterfaceIndex", 15, "[Windows Only - Get-NetAdapter] index of interface connects with network device to be validated")
 	flag.IntVar(&i.NativeVlanID, "nativeVlanID", 710, "native vlan id")
 	flag.StringVar(&allVlanIDs, "allVlanIDs", "710,711,712,713,714,715,716,717,718,719,720", "vlan list string separate with comma. Minimum 10 vlans required.")
 	flag.IntVar(&i.MTUSize, "mtu", 9214, "mtu value configured on the switch interface")
@@ -148,8 +121,6 @@ func (i *InputType) loadInputVariable() {
 	flag.StringVar(&i.ETSBWbyPG, "etsBWbyPG", "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", "bandwidth for PGID in ETS configuration")
 	flag.IntVar(&i.PFCMaxClass, "pfcMaxClass", 8, "maximum PFC enabled traffic classes in PFC configuration")
 	flag.StringVar(&i.PFCPriorityEnabled, "pfcPriorityEnabled", "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0", "PFC for priority in PFC configuration")
-	flag.StringVar(&i.InterfaceGUID, "interfaceGUID", "", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
-	flag.StringVar(&i.InterfaceAlias, "interfaceAlias", "", "Powershell: Get-NetAdapter | Select-Object InterfaceAlias,InterfaceGuid")
 
 	flag.Parse()
 	res := strings.Split(allVlanIDs, ",")
@@ -162,19 +133,49 @@ func (i *InputType) loadInputVariable() {
 	}
 }
 
-func (i *InputType) loadIniFile(filePath string) {
-	cfg, err := ini.Load(filePath)
-	if err != nil {
-		log.Fatalf("Fail to read file: %v\n", err)
+func (i *InputType) UpdateInterfaceValues() {
+	if runtime.GOOS == "windows" {
+		// Define the modified PowerShell command to execute
+		command := exec.Command("powershell.exe", "-Command", "Get-NetAdapter | Select-Object InterfaceAlias,InterfaceIndex,InterfaceGuid | ConvertTo-Json")
+		// Run the command and collect the output
+		output, err := command.Output()
+		if err != nil {
+			log.Fatal(err)
+		}
+		// Parse Get-NetAdapter JSON output
+		var winNetAdapters []WinNetAdapter
+		err = json.Unmarshal(output, &winNetAdapters)
+		if err != nil {
+			log.Println(output)
+			log.Fatal(err)
+		}
+		// Update Interface Name based on Interface Index
+		for _, adapter := range winNetAdapters {
+			// fmt.Println("Name:", adapter.InterfaceAlias)
+			// fmt.Println("Interface Index:", adapter.InterfaceIndex)
+			// fmt.Println("Status:", adapter.InterfaceGuid)
+			// fmt.Println()
+			if i.InterfaceIndex == adapter.InterfaceIndex {
+				i.InterfaceAlias = adapter.InterfaceAlias
+				// Customized the interface name to fit gopackage
+				// "{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}" -> "\Device\NPF_{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}"
+				winIntfName := fmt.Sprintf("NPF_%s", adapter.InterfaceGuid)
+				i.InterfaceName = filepath.Join("Device", winIntfName)
+			}
+		}
+	} else if runtime.GOOS == "linux" {
+		i.InterfaceAlias = i.InterfaceName
+	} else {
+		log.Fatalln(runtime.GOOS, "Not Support")
 	}
-	i.InterfaceName = cfg.Section("host").Key("interfaceName").String()
-	i.NativeVlanID = cfg.Section("vlan").Key("nativeVlanID").MustInt()
-	i.AllVlanIDs = cfg.Section("vlan").Key("allVlanIDs").ValidInts(",")
-	i.MTUSize = cfg.Section("mtu").Key("mtuSize").MustInt(9174)
-	i.ETSMaxClass = cfg.Section("ets").Key("ETSMaxClass").MustInt(8)
-	i.ETSBWbyPG = cfg.Section("ets").Key("ETSBWbyPG").MustString("0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0")
-	i.PFCMaxClass = cfg.Section("pfc").Key("PFCMaxClass").MustInt(8)
-	i.PFCPriorityEnabled = cfg.Section("pfc").Key("PFCPriorityEnabled").MustString("0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0")
+}
+
+func fileIsExist(filepath string) {
+	_, err := os.Stat(filepath)
+	if err != nil {
+		log.Fatalf("[Error] Fail founding %s: %v\n", filepath, err)
+	}
+	log.Println(filepath, "founded.")
 }
 
 func RemoveSliceDup(intSlice []int) []int {
