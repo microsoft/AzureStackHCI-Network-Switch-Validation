@@ -227,9 +227,27 @@ handle, err := pcap.OpenLive("\Device\NPF_{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}
 - [Golang and Windows Network Interfaces](https://haydz.github.io/2020/07/06/Go-Windows-NIC.html)
 - [net: get npcap usable windows network device names](https://github.com/golang/go/issues/35095#issuecomment-545528366%3E)
 
-### What should do if met errors while running the tool?
+### How can I know if the tool run successfully or not?
+The tool will print log with collecting process when it successfully run.
+```bash
+2023/05/18 22:42:33 ## Interface Name eth1 is selected, start collecting packages[Maximum 90s or 300 packages]: ## 
 
-Please check [Troubleshooting_Manual](./Troubleshooting_Manual.md) to find matched error. If error not existing, please file issues to the repository.
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [1 / 300 (Max)]
+2023/02/22 19:41:53 Collecting Network Packages from Interface : [2 / 300 (Max)]
+...
+2023/02/22 19:41:56 Collecting Network Packages from Interface : [300 / 300 (Max)]
+2023/02/22 19:41:56 ./eth1.pcap founded.
+---------------------
+Report Files have been generated.
+```
+
+### What should I do if the tool not collecting network packages?
+The tool is using open source pcap library, which is same tcpdump or Wireshark using, so please try to use `tcpdump` or `Wireshark` to validate if the selected interface does have certail network traffic being colected, like *LLDP* or *BGP*.
+- If no packages detected, it proves the lab setup issue, please double check the lab connections.
+- If has packages detected, it could be a potential bug of this validation tool, so please file an issue, so we can track on it.
+
+### How can I verify if the tool capture the *LLDP* package?
+The tool is using open source pcap library, which is same tcpdump or Wireshark using, and a pcap file will be saved in the tool folder after testing. The pcap file be opened by `Wireshark`, and you can filter *LLDP* to check if being collected or not.
 
 ### Host not able to run the tool or `alert security scan required`
 

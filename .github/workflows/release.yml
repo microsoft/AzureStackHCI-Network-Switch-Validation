@@ -3,6 +3,8 @@ name: Create Artifact
 on:
   push:
     branches: [release]
+    paths-ignore:
+      - '**.md'
 
 jobs:
 
