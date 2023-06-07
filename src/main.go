@@ -160,7 +160,7 @@ func (i *InputType) UpdateInterfaceValues() {
 				// Customized the interface name to fit gopackage
 				// "{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}" -> "\Device\NPF_{89A8C9DB-D0A4-4E79-8D7D-2FB8A578A221}"
 				winIntfName := fmt.Sprintf("NPF_%s", adapter.InterfaceGuid)
-				i.InterfaceName = filepath.Join("Device", winIntfName)
+				i.InterfaceName = filepath.Join("\\", "Device", winIntfName)
 			}
 		}
 	} else if runtime.GOOS == "linux" {
