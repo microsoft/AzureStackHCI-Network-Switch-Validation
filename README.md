@@ -1,3 +1,5 @@
+[![Build Status](https://msazure.visualstudio.com/One/_apis/build/status%2FOneBranch%2FAzureStackHCI-Network-Switch-Validation%2FAzureStackHCI-Network-Switch-Validation-Official?repoName=AzureStackHCI-Network-Switch-Validation&branchName=main)](https://msazure.visualstudio.com/One/_build/latest?definitionId=314745&repoName=AzureStackHCI-Network-Switch-Validation&branchName=main)
+
 #  Azure Stack HCI - Network Switch Device Validation
 
 ## Background
