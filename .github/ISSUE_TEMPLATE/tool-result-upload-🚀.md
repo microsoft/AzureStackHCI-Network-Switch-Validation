@@ -3,7 +3,7 @@ name: "Tool result upload \U0001F680"
 about: 'Upload your passing result documents '
 title: "[ORGANIZATION] - [SERIES] - Results"
 labels: ''
-assignees: liunick-msft, bkablawi, SwitchValidationTeam
+assignees: bkablawi, liunick-msft, SwitchValidationTeam
 
 ---
 
@@ -27,6 +27,6 @@ PDF File
 JSON File
 YAML File
 Log File
-PACP file
+PCAP file
 
 Please attach these here and submit for review!
