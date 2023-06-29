@@ -3,7 +3,7 @@ name: "Feature request/idea \U0001F4A1"
 about: Suggest a new feature or improvement
 title: ''
 labels: ''
-assignees: liunick-msft, bkablawi, SwitchValidationTeam
+assignees: bkablawi, liunick-msft, SwitchValidationTeam
 
 ---
 
