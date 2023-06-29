@@ -1,13 +1,13 @@
-TestDate: 2023-04-25T01:10:19.56808Z
+TestDate: 2023-06-05T15:12:41.554232Z
 ToolBuildVersion: 1.2305.01
 RoleResultList:
     - rolename: Management
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Fail
-          featurelogsubject: VLAN Mismatch
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Management
             - Compute (Standard)
@@ -35,29 +35,29 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Storage
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Fail
-          featurelogsubject: VLAN Mismatch
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -72,21 +72,21 @@ RoleResultList:
             - Compute (SDN)
             - Storage
         - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
-          featurepass: Fail
-          featurelogsubject: ETS Maximum Number of Traffic Classes Mismatch
-          featurelogdetail: 'Detect: 3, but Input: 8'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
-          featurepass: Fail
-          featurelogsubject: Priority 0~7 Mismatch
-          featurelogdetail: Detect 0:48,1:50,2:2,3:0,4:0,5:0,6:0,7:0, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
-          featurepass: Fail
-          featurelogsubject: PFC Maximum Number of Traffic Classes Mismatch
-          featurelogdetail: 'Detect: 7, but Input: 8'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
@@ -96,29 +96,29 @@ RoleResultList:
           featureroles:
             - Storage
     - rolename: Compute (Standard)
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: VLAN
-          featurepass: Fail
-          featurelogsubject: VLAN Mismatch
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -133,7 +133,7 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Compute (SDN)
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: BGP
           featurepass: Pass
@@ -142,26 +142,26 @@ RoleResultList:
           featureroles:
             - Compute (SDN)
         - featurename: VLAN
-          featurepass: Fail
-          featurelogsubject: VLAN Mismatch
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Management
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712 713 714 715 716 717 718 719], but Input: [710 711 712 713 714 715 716 717 718 719]'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -178,7 +178,6 @@ RoleResultList:
 VLANResult:
     nativevlanid: 710
     allvlanids:
-        - 1
         - 710
         - 711
         - 712
@@ -190,13 +189,12 @@ VLANResult:
         - 718
         - 719
 LLDPResult:
-    sysdes: Aruba JL635A  GL.10.11.1010
-    portname: 1/1/4
-    chasisid: 9020c2bc6900
+    sysdes: Aruba R9W94A  LL.10.12.0006
+    portname: 1/1/19
+    chasisid: 882510e5bd80
     chasisidtype: MAC Address
     subtype1_portvlanid: 710
     subtype3_vlanlist:
-        - 1
         - 710
         - 711
         - 712
@@ -221,7 +219,7 @@ LLDPResult:
             6: 0
             7: 0
     subtypeb_pfc:
-        pfcmaxclasses: 7
+        pfcmaxclasses: 2
         pfcconfig:
             0: 0
             1: 0
@@ -233,10 +231,10 @@ LLDPResult:
             7: 0
 DHCPResult:
     dhcppacketdetected: true
-    relayagentip: 10.10.12.1
+    relayagentip: 10.10.11.1
 BGPResult:
     bgptcppacketdetected: true
     switchinterfaceip: 10.10.10.1
-    switchinterfacemac: 90:20:c2:bc:69:00
+    switchinterfacemac: 88:25:10:e5:bd:80
     hostinterfaceip: 10.10.10.11
-    hostinterfacemac: 00:50:56:96:9e:3b
+    hostinterfacemac: 00:50:56:96:ec:2f
