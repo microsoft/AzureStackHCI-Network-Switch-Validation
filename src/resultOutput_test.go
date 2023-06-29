@@ -30,6 +30,9 @@ func TestResultOutput(t *testing.T) {
 		"vlan_test2": {
 			inputFileName: "vlan_test2",
 		},
+		"pass_test1": {
+			inputFileName: "pass_test1",
+		},
 	}
 
 	srcFolder, err := os.Getwd()
