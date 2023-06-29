@@ -102,7 +102,10 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 
 		// Subtype1_PortVLANID
 		NativeVLANID = int(info8021.PVID)
-		l.Subtype1_PortVLANID = NativeVLANID
+
+		if NativeVLANID != 0 {
+			l.Subtype1_PortVLANID = NativeVLANID
+		}
 
 		// Subtype7_LinkAgg
 		l.Subtype7_LinkAggCap = info8021.LinkAggregation.Supported

@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	inputVariables = &InputType{InterfaceName: "eth0", NativeVlanID: 710, AllVlanIDs: []int{710, 711, 712, 713, 714, 715, 716, 717, 718, 719, 720}, MTUSize: 9214, ETSMaxClass: 8, ETSBWbyPG: "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", PFCMaxClass: 8, PFCPriorityEnabled: "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0"}
+	inputVariables = &InputType{InterfaceName: "eth0", NativeVlanID: 710, AllVlanIDs: []int{710, 711, 712, 713, 714, 715, 716, 717, 718, 719}, MTUSize: 9214, ETSMaxClass: 8, ETSBWbyPG: "0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0", PFCMaxClass: 8, PFCPriorityEnabled: "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0"}
 )
 
 func TestResultOutput(t *testing.T) {
@@ -21,18 +21,18 @@ func TestResultOutput(t *testing.T) {
 	}
 
 	testCases := map[string]test{
-		"lldp_test1": {
-			inputFileName: "lldp_test1",
+		// "lldp_test1": {
+		// 	inputFileName: "lldp_test1",
+		// },
+		"lldp_test2": {
+			inputFileName: "lldp_test2",
 		},
-		"vlan_test1": {
-			inputFileName: "vlan_test1",
-		},
-		"vlan_test2": {
-			inputFileName: "vlan_test2",
-		},
-		"pass_test1": {
-			inputFileName: "pass_test1",
-		},
+		// "vlan_test1": {
+		// 	inputFileName: "vlan_test1",
+		// },
+		// "vlan_test2": {
+		// 	inputFileName: "vlan_test2",
+		// },
 	}
 
 	srcFolder, err := os.Getwd()

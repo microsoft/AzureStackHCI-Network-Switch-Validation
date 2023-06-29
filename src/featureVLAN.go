@@ -44,7 +44,7 @@ func EqualArray(a, b []int) bool {
 		return false
 	} else {
 		for i := range a {
-			fmt.Println(a[i], b[i])
+			// fmt.Println(a[i], b[i])
 			if a[i] != b[i] {
 				return false
 			}

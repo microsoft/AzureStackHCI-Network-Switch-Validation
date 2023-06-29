@@ -49,7 +49,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -110,7 +110,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -153,7 +153,7 @@ RoleResultList:
         - featurename: LLDP - VLAN Name (Subtype = 3)
           featurepass: Fail
           featurelogsubject: LLDP Subtype 3 Mismatch, please check switch VLAN configuration
-          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719 720]'
+          featurelogdetail: 'Detect: [1 710 711 712], but Input: [710 711 712 713 714 715 716 717 718 719]'
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
