@@ -35,7 +35,7 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Storage
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: VLAN
           featurepass: Pass
@@ -55,9 +55,9 @@ RoleResultList:
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -72,21 +72,21 @@ RoleResultList:
             - Compute (SDN)
             - Storage
         - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
-          featurepass: Fail
-          featurelogsubject: ETS Maximum Number of Traffic Classes Mismatch
-          featurelogdetail: 'Detect: 3, but Input: 8'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
-          featurepass: Fail
-          featurelogsubject: Priority 0~7 Mismatch
-          featurelogdetail: Detect 0:48,1:50,2:2,3:0,4:0,5:0,6:0,7:0, but should be 0:48,1:0,2:0,3:50,4:0,5:2,6:0,7:0
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
-          featurepass: Fail
-          featurelogsubject: PFC Maximum Number of Traffic Classes Mismatch
-          featurelogdetail: 'Detect: 2, but Input: 8'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Storage
         - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
@@ -96,7 +96,7 @@ RoleResultList:
           featureroles:
             - Storage
     - rolename: Compute (Standard)
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: VLAN
           featurepass: Pass
@@ -116,9 +116,9 @@ RoleResultList:
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
@@ -133,7 +133,7 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Compute (SDN)
-      rolepass: Fail
+      rolepass: Pass
       featuresbyrole:
         - featurename: BGP
           featurepass: Pass
@@ -159,9 +159,9 @@ RoleResultList:
             - Compute (SDN)
             - Storage
         - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Fail
-          featurelogsubject: LLDP Subtype 4 Mismatch, please check switch MTU configuration
-          featurelogdetail: 'Detect: 9198, but Input: 9214'
+          featurepass: Pass
+          featurelogsubject: ""
+          featurelogdetail: ""
           featureroles:
             - Compute (Standard)
             - Compute (SDN)
