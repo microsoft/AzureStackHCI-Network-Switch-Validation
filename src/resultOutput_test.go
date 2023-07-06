@@ -24,6 +24,9 @@ func TestResultOutput(t *testing.T) {
 		"pass_test": {
 			inputFileName: "pass_test",
 		},
+		"8023_test": {
+			inputFileName: "8023_test",
+		},
 	}
 
 	srcFolder, err := os.Getwd()
@@ -44,10 +47,10 @@ func TestResultOutput(t *testing.T) {
 			goldenYamlFile := filepath.Join(testGoldenFolder, tc.inputFileName+".yml")
 			want := parseYamlToGo(goldenYamlFile)
 			if !reflect.DeepEqual(want.RoleResultList, got.RoleResultList) {
-				t.Errorf("%s - RoleResultList Failed \n want: %v \n got: %v", name, want.RoleResultList, got.RoleResultList)
+				t.Errorf("%s - RoleResultList Failed \n want: %#v \n got: %#v", name, want.RoleResultList, got.RoleResultList)
 			}
 			if !reflect.DeepEqual(want.LLDPResult, got.LLDPResult) {
-				t.Errorf("%s - LLDPResult Failed \n want: %v \n got: %v", name, want.LLDPResult, got.LLDPResult)
+				t.Errorf("%s - LLDPResult Failed \n want: %#v \n got: %#v", name, want.LLDPResult, got.LLDPResult)
 			}
 			// Generate Yaml JSON PDF files for view
 			pdfFileName := filepath.Join(testOutputFolder, tc.inputFileName+".pdf")

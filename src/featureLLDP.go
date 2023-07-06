@@ -108,7 +108,7 @@ func (l *LLDPResultType) decodeLLDPInfoPacket(packet gopacket.Packet) {
 		}
 
 		// Subtype7_LinkAgg
-		l.Subtype7_LinkAggCap = info8021.LinkAggregation.Supported
+		l.Subtype7_LinkAggCap = (info8021.LinkAggregation.Supported || info8023.LinkAggregation.Supported)
 	}
 }
 
