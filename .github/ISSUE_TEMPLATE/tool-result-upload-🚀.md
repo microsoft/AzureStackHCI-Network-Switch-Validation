@@ -21,10 +21,9 @@ assignees: bkablawi, liunick-msft, SwitchValidationTeam
 
 - Link to device datasheet: 
 
-## After the tool execution successfully, there will be five files:
+## After the tool execution successfully, there will be four files:
 
 PDF File
-JSON File
 YAML File
 Log File
 PCAP file
