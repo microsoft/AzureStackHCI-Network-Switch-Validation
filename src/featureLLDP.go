@@ -40,6 +40,7 @@ func (l *LLDPResultType) decodeLLDPPacket(packet gopacket.Packet) {
 		l.ChasisID = ChassisIDHex
 		l.ChasisIDType = LLDPType.ChassisID.Subtype.String()
 		l.PortName = string(LLDPType.PortID.ID)
+		
 
 		for _, v := range LLDPType.Values {
 			// Subtype: Priority Flow Control Configuration 0x0b
@@ -51,21 +52,17 @@ func (l *LLDPResultType) decodeLLDPPacket(packet gopacket.Packet) {
 
 			//Subtype: ETS Configuration 0x09
 			if v.Length == 25 && v.Value[3] == 9 {
-				// Interate TSA for Traffic Class to make sure ETS is configured.
+				// Iterate TSA for Traffic Class to make sure ETS is configured.
 				ETSEnableClassList := []int{}
+				l.Subtype9_ETS.ETSTotalPG = 8
 				for idx, ets2 := range v.Value[17:] {
-					// ETS enabled is 0x02
+					// Enhanced Transmission Selection enabled is 0x02
 					if ets2 == 2 {
 						ETSEnableClassList = append(ETSEnableClassList, idx)
 					}
 				}
 				BWbyPGID := make(map[int]int)
 				if len(ETSEnableClassList) > 0 {
-					ETSTotalPG := bytesToDec(v.Value[4:5])
-					if ETSTotalPG == 0 {
-						ETSTotalPG = 8
-					}
-					l.Subtype9_ETS.ETSTotalPG = ETSTotalPG
 					for i := 0; i < 8; i++ {
 						BWbyPGID[i] = int(v.Value[9+i])
 					}

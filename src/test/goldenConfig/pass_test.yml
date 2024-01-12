@@ -1,240 +1,240 @@
-TestDate: 2023-06-05T15:12:41.554232Z
+TestDate: 2023-06-05T08:12:41.554232-07:00
 ToolBuildVersion: 1.2305.01
 RoleResultList:
-    - rolename: Management
-      rolepass: Pass
-      featuresbyrole:
-        - featurename: VLAN
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: DHCP - Relay Agent IP
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-        - featurename: LLDP - Port VLAN ID (Subtype = 1)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-        - featurename: LLDP - Link Aggregation (Subtype = 7)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-    - rolename: Storage
-      rolepass: Pass
-      featuresbyrole:
-        - featurename: VLAN
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Link Aggregation (Subtype = 7)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Storage
-        - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Storage
-        - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Storage
-        - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Storage
-    - rolename: Compute (Standard)
-      rolepass: Pass
-      featuresbyrole:
-        - featurename: VLAN
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Link Aggregation (Subtype = 7)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-    - rolename: Compute (SDN)
-      rolepass: Pass
-      featuresbyrole:
-        - featurename: BGP
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (SDN)
-        - featurename: VLAN
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - VLAN Name (Subtype = 3)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Maximum Frame Size (Subtype = 4)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
-        - featurename: LLDP - Link Aggregation (Subtype = 7)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
-          featureroles:
-            - Management
-            - Compute (Standard)
-            - Compute (SDN)
-            - Storage
+  - rolename: Management
+    rolepass: Pass
+    featuresbyrole:
+      - featurename: VLAN
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: DHCP - Relay Agent IP
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+      - featurename: LLDP - Port VLAN ID (Subtype = 1)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+      - featurename: LLDP - Link Aggregation (Subtype = 7)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+  - rolename: Storage
+    rolepass: Fail
+    featuresbyrole:
+      - featurename: VLAN
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - VLAN Name (Subtype = 3)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Link Aggregation (Subtype = 7)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - ETS Maximum Number of Traffic Classes (Subtype = 9)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Storage
+      - featurename: LLDP - ETS Class Bandwidth Configuration (Subtype = 9)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Storage
+      - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
+        featurepass: Fail
+        featurelogsubject: PFC Maximum Number of Traffic Classes Mismatch
+        featurelogdetail: "Detect: 2, but Input: 8"
+        featureroles:
+          - Storage
+      - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Storage
+  - rolename: Compute (Standard)
+    rolepass: Pass
+    featuresbyrole:
+      - featurename: VLAN
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - VLAN Name (Subtype = 3)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Link Aggregation (Subtype = 7)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+  - rolename: Compute (SDN)
+    rolepass: Pass
+    featuresbyrole:
+      - featurename: BGP
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (SDN)
+      - featurename: VLAN
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - VLAN Name (Subtype = 3)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Maximum Frame Size (Subtype = 4)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
+      - featurename: LLDP - Link Aggregation (Subtype = 7)
+        featurepass: Pass
+        featurelogsubject: ""
+        featurelogdetail: ""
+        featureroles:
+          - Management
+          - Compute (Standard)
+          - Compute (SDN)
+          - Storage
 VLANResult:
-    nativevlanid: 710
-    allvlanids:
-        - 710
-        - 711
-        - 712
-        - 713
-        - 714
-        - 715
-        - 716
-        - 717
-        - 718
-        - 719
+  nativevlanid: 710
+  allvlanids:
+    - 710
+    - 711
+    - 712
+    - 713
+    - 714
+    - 715
+    - 716
+    - 717
+    - 718
+    - 719
 LLDPResult:
-    sysdes: Aruba R9W94A  LL.10.12.0006
-    portname: 1/1/19
-    chasisid: 882510e5bd80
-    chasisidtype: MAC Address
-    subtype1_portvlanid: 710
-    subtype3_vlanlist:
-        - 710
-        - 711
-        - 712
-        - 713
-        - 714
-        - 715
-        - 716
-        - 717
-        - 718
-        - 719
-    subtype4_maxframesize: 9198
-    subtype7_linkaggcap: true
-    subtype9_ets:
-        etstotalpg: 3
-        etsbwbypgid:
-            0: 48
-            1: 50
-            2: 2
-            3: 0
-            4: 0
-            5: 0
-            6: 0
-            7: 0
-    subtypeb_pfc:
-        pfcmaxclasses: 2
-        pfcconfig:
-            0: 0
-            1: 0
-            2: 0
-            3: 1
-            4: 0
-            5: 0
-            6: 0
-            7: 0
+  sysdes: Aruba R9W94A  LL.10.12.0006
+  portname: 1/1/19
+  chasisid: 882510e5bd80
+  chasisidtype: MAC Address
+  subtype1_portvlanid: 710
+  subtype3_vlanlist:
+    - 710
+    - 711
+    - 712
+    - 713
+    - 714
+    - 715
+    - 716
+    - 717
+    - 718
+    - 719
+  subtype4_maxframesize: 9198
+  subtype7_linkaggcap: true
+  subtype9_ets:
+    etstotalpg: 8
+    etsbwbypgid:
+      0: 48
+      1: 50
+      2: 2
+      3: 0
+      4: 0
+      5: 0
+      6: 0
+      7: 0
+  subtypeb_pfc:
+    pfcmaxclasses: 2
+    pfcconfig:
+      0: 0
+      1: 0
+      2: 0
+      3: 1
+      4: 0
+      5: 0
+      6: 0
+      7: 0
 DHCPResult:
-    dhcppacketdetected: true
-    relayagentip: 10.10.11.1
+  dhcppacketdetected: true
+  relayagentip: 10.10.11.1
 BGPResult:
-    bgptcppacketdetected: true
-    switchinterfaceip: 10.10.10.1
-    switchinterfacemac: 88:25:10:e5:bd:80
-    hostinterfaceip: 10.10.10.11
-    hostinterfacemac: 00:50:56:96:ec:2f
+  bgptcppacketdetected: true
+  switchinterfaceip: 10.10.10.1
+  switchinterfacemac: 88:25:10:e5:bd:80
+  hostinterfaceip: 10.10.10.11
+  hostinterfacemac: 00:50:56:96:ec:2f

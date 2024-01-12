@@ -1,4 +1,4 @@
-TestDate: 2023-06-05T15:12:41.554232Z
+TestDate: 2023-06-05T08:12:41.554232-07:00
 ToolBuildVersion: 1.2305.01
 RoleResultList:
     - rolename: Management
@@ -35,7 +35,7 @@ RoleResultList:
             - Compute (SDN)
             - Storage
     - rolename: Storage
-      rolepass: Pass
+      rolepass: Fail
       featuresbyrole:
         - featurename: VLAN
           featurepass: Pass
@@ -84,9 +84,9 @@ RoleResultList:
           featureroles:
             - Storage
         - featurename: LLDP - PFC Maximum Number of Traffic Classes (Subtype = B)
-          featurepass: Pass
-          featurelogsubject: ""
-          featurelogdetail: ""
+          featurepass: Fail
+          featurelogsubject: PFC Maximum Number of Traffic Classes Mismatch
+          featurelogdetail: 'Detect: 2, but Input: 8'
           featureroles:
             - Storage
         - featurename: LLDP - PFC Priority Class Enabled (Subtype = B)
@@ -208,7 +208,7 @@ LLDPResult:
     subtype4_maxframesize: 9198
     subtype7_linkaggcap: true
     subtype9_ets:
-        etstotalpg: 3
+        etstotalpg: 8
         etsbwbypgid:
             0: 48
             1: 50

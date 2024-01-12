@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	inputVariables = &InputType{InterfaceName: "eth0", NativeVlanID: 710, AllVlanIDs: []int{710, 711, 712, 713, 714, 715, 716, 717, 718, 719}, MTUSize: 9198, ETSMaxClass: 3, ETSBWbyPG: "0:48,1:50,2:2,3:0,4:0,5:0,6:0,7:0", PFCMaxClass: 2, PFCPriorityEnabled: "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0"}
+	inputVariables = &InputType{InterfaceName: "eth0", NativeVlanID: 710, AllVlanIDs: []int{710, 711, 712, 713, 714, 715, 716, 717, 718, 719}, MTUSize: 9198, ETSMaxClass: 8, ETSBWbyPG: "0:48,1:50,2:2,3:0,4:0,5:0,6:0,7:0", PFCMaxClass: 8, PFCPriorityEnabled: "0:0,1:0,2:0,3:1,4:0,5:0,6:0,7:0"}
 )
 
 func TestResultOutput(t *testing.T) {
