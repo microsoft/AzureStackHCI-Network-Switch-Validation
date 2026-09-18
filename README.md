@@ -12,7 +12,7 @@ This tool is intended to be used as a device testing tool for Azure Local. For m
 - Download `SwitchValidationTool.zip` from [Release page](https://github.com/microsoft/AzureLocal-Network-Switch-Validation/releases) and store them in a folder on the host
 - The tool will scan all active interfaces on the host but only generate report of `LLDP` enabled interface.
 - Review the [sample test data](./samples/) to have better understand the input and output.
-- The validation tool will collect network traffic and decode packages to validate protocol value required. 
+- The validation tool will collect network traffic and decode packets to validate protocol value required. 
 - Upload results under the "Issues" tab in GitHub
 
 ### Logic Diagram
@@ -41,7 +41,7 @@ Untested: Other Linux versions
 
 ## Preparation
 
-The following shows the reference lab setup that can be modified accordingly based on needs. The tool can work with virtual interfaces but prefer physical interfaces for testing if possible, which close to the real production senario.
+The following shows the reference lab setup that can be modified accordingly based on needs. The tool can work with virtual interfaces but prefer physical interfaces for testing if possible, which close to the real production scenario.
 ![Reference Lab Setup](./images/sampleLabSetup.png)
 
 
@@ -107,7 +107,7 @@ PS C:\SwitchValidationTool\windows> .\SwitchValidationTool.exe  -InterfaceIndex 
 2023/05/18 15:31:47 Collecting Network Packages from Interface Ethernet 1: [3 / 300 (Max)]
 ...
 2023/05/18 15:31:51 Collecting Network Packages from Interface Ethernet 1: [300 / 300 (Max)]
-2023/05/18 15:31:51 ./Ethernet 1.pcap founded.
+2023/05/18 15:31:51 ./Ethernet 1.pcap found.
 ---------------------
 Report Files have been generated.
 ```
@@ -153,7 +153,7 @@ Usage of ./SwitchValidationTool:
 2023/02/22 19:41:53 Collecting Network Packages from Interface : [4 / 300 (Max)]
 ...
 2023/02/22 19:41:56 Collecting Network Packages from Interface : [300 / 300 (Max)]
-2023/02/22 19:41:56 ./eth1.pcap founded.
+2023/02/22 19:41:56 ./eth1.pcap found.
 ---------------------
 Report Files have been generated.
 ```
@@ -179,7 +179,7 @@ Please group them, navigate to "Issues" and submit "Tool upload result" for the 
 
 ## Common Questions
 
-### Error "Could't load wpcap.dll" when run the tool.
+### Error "Couldn't load wpcap.dll" when run the tool.
 
 The tool is written by Go and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap) which requires [libpcap](https://github.com/google/gopacket/blob/master/pcap/pcap_windows.go) pre-installed. The tool will automatically install libpcap based on OS, so Internet is required for the host.
 
@@ -192,7 +192,7 @@ For Windows, here are options:
 ##### Note: libpcap only need to be installed once, and can be uninstalled after the validation.
 
 ### Why there are two interface variables, one for windows and one for linux?
-The tool is written by Golang, and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap), but the network adapter/interface id/name is difference between Linux and Windows, so has to modified to fit the gopacket.
+The tool is written by Golang, and using [gopacket](https://pkg.go.dev/github.com/google/gopacket/pcap), but the network adapter/interface id/name is different between Linux and Windows, so has to be modified to fit the gopacket.
 #### Example
 ##### Linux
 
@@ -238,22 +238,22 @@ The tool will print log with collecting process when it successfully run.
 2023/02/22 19:41:53 Collecting Network Packages from Interface : [2 / 300 (Max)]
 ...
 2023/02/22 19:41:56 Collecting Network Packages from Interface : [300 / 300 (Max)]
-2023/02/22 19:41:56 ./eth1.pcap founded.
+2023/02/22 19:41:56 ./eth1.pcap found.
 ---------------------
 Report Files have been generated.
 ```
 
-### What should I do if the tool not collecting network packages?
-The tool is using open source pcap library, which is same tcpdump or Wireshark using, so please try to use `tcpdump` or `Wireshark` to validate if the selected interface does have certail network traffic being colected, like *LLDP* or *BGP*.
-- If no packages detected, it proves the lab setup issue, please double check the lab connections.
-- If has packages detected, it could be a potential bug of this validation tool, so please file an issue, so we can track on it.
+### What should I do if the tool not collecting network packets?
+The tool is using open source pcap library, which is same tcpdump or Wireshark using, so please try to use `tcpdump` or `Wireshark` to validate if the selected interface does have certain network traffic being collected, like *LLDP* or *BGP*.
+- If no packets detected, it proves there's a lab setup issue, please double check the lab connections.
+- If has packets detected, it could be a potential bug of this validation tool, so please file an issue, so we can track on it.
 
 ### How can I verify if the tool capture the *LLDP* package?
 The tool is using open source pcap library, which is same tcpdump or Wireshark using, and a pcap file will be saved in the tool folder after testing. The pcap file be opened by `Wireshark`, and you can filter *LLDP* to check if being collected or not.
 
 ### Host not able to run the tool or `alert security scan required`
 
-Current version is still beta version, so hasn't signed, so that cause the alert, but it will be passed if running with `administrator` level.
+Current version is still beta version, so hasn't been signed, so that cause the alert, but it will be passed if running with `administrator` level.
 
 # Contributing
 
